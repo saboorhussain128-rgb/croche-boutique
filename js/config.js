@@ -7,8 +7,9 @@ const STORE_CONFIG = {
   handle: "@croche_boutiq",
   instagramUrl: "https://www.instagram.com/croche_boutiq/",
   
-  // WhatsApp Number for instant customer orders (Include country code without '+' or spaces, e.g., '15551234567')
-  whatsappNumber: "1234567890", // Update with client's active WhatsApp phone number
+  // WhatsApp Number for instant customer orders (Country code + number without '+' or spaces)
+  whatsappNumber: "919391040104", 
+  displayPhone: "+91 9391040104",
   
   // Email address to receive inquiries (Uses 100% free FormSubmit.co - no sign up needed)
   inquiryEmail: "thecrochetboutique.orders@gmail.com", // Update with client's active email
