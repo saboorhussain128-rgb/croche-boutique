@@ -233,6 +233,9 @@
               </div>
             </div>
 
+            <!-- Dynamic Product Specs Spotlight (Updates when product is selected) -->
+            <div id="selectedProductSpecsBox" class="selected-product-specs-box" style="display: none;"></div>
+
             <div class="form-group">
               <label for="orderColors" class="form-label">Preferred Colors / Yarn Type</label>
               <input type="text" id="orderColors" name="colors" class="form-control" placeholder="e.g., Pastel pink & cream, Chunky velvet, Organic cotton">
@@ -243,13 +246,41 @@
               <textarea id="orderNotes" name="notes" class="form-control" placeholder="Tell us about sizing, custom character details, need-by dates, or paste an Instagram post link..."></textarea>
             </div>
 
-            <div class="form-submit-actions">
-              <button type="submit" class="btn btn-primary btn-form-email">
-                <i class="fas fa-paper-plane"></i> Send Free Inquiry (Email)
-              </button>
+            <!-- Customer Delivery Channel Preference -->
+            <div class="form-group">
+              <label class="form-label">Where should we send your product details &amp; pricing quote? *</label>
+              <div class="channel-selector-group">
+                <label class="channel-chip">
+                  <input type="radio" name="deliveryChannel" value="whatsapp" checked>
+                  <span class="chip-content">
+                    <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                    <strong>WhatsApp</strong>
+                    <small>Instant chat &amp; full specs</small>
+                  </span>
+                </label>
+                <label class="channel-chip">
+                  <input type="radio" name="deliveryChannel" value="email">
+                  <span class="chip-content">
+                    <i class="fas fa-envelope" style="color: var(--color-primary);"></i>
+                    <strong>Email</strong>
+                    <small>Spec sheet &amp; care guide</small>
+                  </span>
+                </label>
+                <label class="channel-chip">
+                  <input type="radio" name="deliveryChannel" value="both">
+                  <span class="chip-content">
+                    <i class="fas fa-sparkles" style="color: var(--color-accent);"></i>
+                    <strong>Both</strong>
+                    <small>WhatsApp + Email</small>
+                  </span>
+                </label>
+              </div>
+            </div>
 
-              <button type="button" id="btnSubmitWa" class="btn btn-whatsapp btn-form-whatsapp">
-                <i class="fab fa-whatsapp"></i> Instant Order via WhatsApp
+            <div class="form-submit-actions">
+              <button type="submit" id="btnMainSubmit" class="btn btn-primary btn-submit-unified">
+                <i id="btnSubmitIcon" class="fab fa-whatsapp" style="font-size: 1.2rem;"></i>
+                <span id="btnSubmitText">Get Product Details via WhatsApp</span>
               </button>
             </div>
 

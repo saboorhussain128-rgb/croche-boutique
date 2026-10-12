@@ -1,5 +1,7 @@
 /**
  * The Crochet Boutique - Client Application Logic
+ * Featuring dynamic product specs, customer preferences (WhatsApp / Email / Both),
+ * and instant on-screen details delivery.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -13,7 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalBody = document.getElementById("modalBody");
   const inquiryForm = document.getElementById("inquiryForm");
   const itemSelect = document.getElementById("orderItem");
-  const btnSubmitWa = document.getElementById("btnSubmitWa");
+  const specsBox = document.getElementById("selectedProductSpecsBox");
+  const channelRadios = document.querySelectorAll('input[name="deliveryChannel"]');
+  const btnMainSubmit = document.getElementById("btnMainSubmit");
+  const btnSubmitText = document.getElementById("btnSubmitText");
+  const btnSubmitIcon = document.getElementById("btnSubmitIcon");
   const toastContainer = document.getElementById("toastContainer");
   const floatingWaBtn = document.getElementById("floatingWaBtn");
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
@@ -88,87 +94,231 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") closeModal();
   });
 
-  // 8. FormSubmit (Free Email) Handler
+  // 8. Dynamic Channel Preference Selector
+  if (channelRadios) {
+    channelRadios.forEach(radio => {
+      radio.addEventListener("change", (e) => {
+        updateSubmitButtonUI(e.target.value);
+      });
+    });
+  }
+
+  function updateSubmitButtonUI(channel) {
+    if (!btnSubmitText || !btnSubmitIcon) return;
+    if (channel === "whatsapp") {
+      btnSubmitText.textContent = "Send Product Details via WhatsApp";
+      btnSubmitIcon.className = "fab fa-whatsapp";
+      btnSubmitIcon.style.color = "#25D366";
+    } else if (channel === "email") {
+      btnSubmitText.textContent = "Send Product Details via Email";
+      btnSubmitIcon.className = "fas fa-paper-plane";
+      btnSubmitIcon.style.color = "white";
+    } else if (channel === "both") {
+      btnSubmitText.textContent = "Send via WhatsApp & Email";
+      btnSubmitIcon.className = "fas fa-sparkles";
+      btnSubmitIcon.style.color = "#FFE8A3";
+    }
+  }
+
+  // 9. When user changes product in dropdown -> update live specs spotlight box
+  if (itemSelect) {
+    itemSelect.addEventListener("change", (e) => {
+      updateProductSpecsSpotlight(e.target.value);
+    });
+  }
+
+  function updateProductSpecsSpotlight(productName) {
+    if (!specsBox) return;
+    const prod = PRODUCTS.find(p => p.name === productName);
+    if (!prod) {
+      specsBox.style.display = "none";
+      return;
+    }
+
+    specsBox.style.display = "flex";
+    specsBox.innerHTML = `
+      <img src="${prod.image}" alt="${prod.name}" class="selected-product-thumb">
+      <div class="selected-product-details">
+        <h4>${prod.name}</h4>
+        <div class="selected-product-specs-list">
+          <span class="spec-pill">🧶 <strong>Yarn:</strong> ${prod.yarnType}</span>
+          <span class="spec-pill">📐 <strong>Size:</strong> ${prod.dimensions}</span>
+          <span class="spec-pill">🧼 <strong>Care:</strong> ${prod.care}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // 10. Form Submission Handler (WhatsApp / Email / Both)
   if (inquiryForm) {
     inquiryForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      
-      const submitBtn = inquiryForm.querySelector(".btn-form-email");
-      const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = "<span>🌸 Sending Your Order...</span>";
+
+      const custName = document.getElementById("custName")?.value || "Customer";
+      const custPhone = document.getElementById("custPhone")?.value || "Not provided";
+      const custEmail = document.getElementById("custEmail")?.value || "";
+      const itemName = document.getElementById("orderItem")?.value || "Custom Piece";
+      const colors = document.getElementById("orderColors")?.value || "Open to suggestions";
+      const notes = document.getElementById("orderNotes")?.value || "None";
+      const channel = document.querySelector('input[name="deliveryChannel"]:checked')?.value || "whatsapp";
+
+      const matchedProduct = PRODUCTS.find(p => p.name === itemName);
+
+      const submitBtn = btnMainSubmit;
+      const originalHtml = submitBtn.innerHTML;
+      submitBtn.innerHTML = `<span>🌸 Processing Your Request...</span>`;
       submitBtn.disabled = true;
 
-      const formData = new FormData(inquiryForm);
-      const emailEndpoint = `https://formsubmit.co/ajax/${STORE_CONFIG.inquiryEmail}`;
+      // Build structured WhatsApp message
+      const waMessage = 
+`🌸 *THE CROCHET BOUTIQUE - PRODUCT INQUIRY* 🌸
+--------------------------------------------------
+🧶 *Product Requested:* ${itemName}
+${matchedProduct ? `🧵 *Yarn Specs:* ${matchedProduct.yarnType}
+📐 *Dimensions:* ${matchedProduct.dimensions}
+🧼 *Care Guide:* ${matchedProduct.care}
+🎨 *Palette Options:* ${matchedProduct.colors.join(", ")}` : "✨ *Custom Bespoke Request*"}
+--------------------------------------------------
+👤 *Customer Name:* ${custName}
+📞 *Phone / WhatsApp:* ${custPhone}
+📧 *Email Address:* ${custEmail}
+🎨 *Preferred Colors:* ${colors}
+📝 *Custom Sizing / Notes:* ${notes}
+--------------------------------------------------
+Requested via website (${channel.toUpperCase()})`;
 
-      const custEmail = document.getElementById("custEmail")?.value || "";
+      const waUrl = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(waMessage)}`;
+
+      // Prepare custom autoresponse content for FormSubmit
+      const autoresponseInput = inquiryForm.querySelector('input[name="_autoresponse"]');
+      if (autoresponseInput) {
+        autoresponseInput.value = 
+`Hello ${custName},
+
+Thank you for your inquiry with The Crochet Boutique (@croche_boutiq)!
+
+Here are the details for your selected piece:
+--------------------------------------------------
+• Product: ${itemName}
+${matchedProduct ? `• Yarn Material: ${matchedProduct.yarnType}
+• Dimensions & Sizing: ${matchedProduct.dimensions}
+• Care Instructions: ${matchedProduct.care}
+• Available Colors: ${matchedProduct.colors.join(", ")}` : "• Custom Handcrafted Commission"}
+• Your Preferred Color Palette: ${colors}
+• Your Notes & Sizing: ${notes}
+--------------------------------------------------
+
+Our artisan is reviewing your request and will reach out with final yarn availability, custom measurements, and timeline.
+
+You can also chat directly with us on WhatsApp at +91 9391040104 anytime.
+
+With love & cozy stitches,
+The Crochet Boutique
+Instagram: @croche_boutiq`;
+      }
+
+      // Handle delivery based on customer selection
       try {
-        const response = await fetch(emailEndpoint, {
-          method: "POST",
-          headers: {
-            "Accept": "application/json"
-          },
-          body: formData
+        if (channel === "email" || channel === "both") {
+          const formData = new FormData(inquiryForm);
+          const emailEndpoint = `https://formsubmit.co/ajax/${STORE_CONFIG.inquiryEmail}`;
+          await fetch(emailEndpoint, {
+            method: "POST",
+            headers: { "Accept": "application/json" },
+            body: formData
+          });
+        }
+
+        if (channel === "whatsapp" || channel === "both") {
+          window.open(waUrl, "_blank");
+        }
+
+        // Show immediate on-screen Product Specs confirmation modal
+        showSpecsConfirmationModal({
+          name: custName,
+          email: custEmail,
+          phone: custPhone,
+          channel: channel,
+          product: matchedProduct,
+          itemName: itemName,
+          colors: colors,
+          notes: notes,
+          waUrl: waUrl
         });
 
-        if (response.ok) {
-          showToast(`✨ Inquiry sent! A confirmation email will arrive at ${custEmail}.`);
-          inquiryForm.reset();
-        } else {
-          showToast(`🌸 Thank you! We received your inquiry and will email you at ${custEmail}.`);
-        }
+        inquiryForm.reset();
+        if (specsBox) specsBox.style.display = "none";
       } catch (err) {
-        showToast(`🌸 Thank you! Your inquiry was received. We'll be in touch soon!`);
+        if (channel === "whatsapp" || channel === "both") {
+          window.open(waUrl, "_blank");
+        }
+        showToast("🌸 Thank you! Your request was received.");
       } finally {
-        submitBtn.innerHTML = originalText;
+        submitBtn.innerHTML = originalHtml;
         submitBtn.disabled = false;
       }
     });
   }
 
-  // 9. Instant WhatsApp Submit Handler
-  if (btnSubmitWa) {
-    btnSubmitWa.addEventListener("click", () => {
-      checkWhatsAppNumber();
-      const name = document.getElementById("custName")?.value || "Customer";
-      const item = document.getElementById("orderItem")?.value || "Custom Piece";
-      const colors = document.getElementById("orderColors")?.value || "Open to suggestions";
-      const notes = document.getElementById("orderNotes")?.value || "None";
-      const phone = document.getElementById("custPhone")?.value || "Not provided";
+  // 11. On-Screen Product Specs & Confirmation Modal
+  function showSpecsConfirmationModal(data) {
+    if (!quickViewModal || !modalBody) return;
 
-      const message = 
-`🌸 *NEW CROCHET ORDER INQUIRY* 🌸
------------------------------------
-🧶 *Item / Request:* ${item}
-🎨 *Color Palette:* ${colors}
-👤 *Customer Name:* ${name}
-📞 *Contact / WhatsApp:* ${phone}
-📝 *Notes & Sizing:* ${notes}
------------------------------------
-Sent via The Crochet Boutique website`;
+    const channelText = data.channel === "whatsapp" ? "WhatsApp" : data.channel === "email" ? "Email" : "WhatsApp & Email";
 
-      const waUrl = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
-      window.open(waUrl, "_blank");
-      showToast("💬 Opening WhatsApp with your order details!");
-    });
+    modalBody.innerHTML = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="width: 58px; height: 58px; background: var(--color-primary-light); color: var(--color-primary); border-radius: var(--radius-full); display: inline-flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 12px;">
+          <i class="fas fa-check-circle" style="color: #25D366;"></i>
+        </div>
+        <h2 style="font-family: var(--font-heading); font-size: 1.9rem; margin-bottom: 6px;">
+          Product Details &amp; Inquiry Sent!
+        </h2>
+        <p style="color: var(--color-text-muted); font-size: 0.95rem;">
+          Thank you, <strong>${data.name}</strong>! We have dispatched the product details to your <strong>${channelText}</strong>.
+        </p>
+      </div>
+
+      <div style="background: var(--color-surface-tint); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px;">
+        <div style="display: flex; gap: 18px; align-items: center; margin-bottom: 16px;">
+          ${data.product ? `<img src="${data.product.image}" alt="${data.product.name}" style="width: 76px; height: 76px; border-radius: var(--radius-sm); object-fit: cover; box-shadow: var(--shadow-sm);">` : ""}
+          <div>
+            <h3 style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 4px;">${data.itemName}</h3>
+            <span style="font-size: 0.8rem; color: var(--color-secondary); font-weight: 600;">✨ Handcrafted with Love • Made to Order</span>
+          </div>
+        </div>
+
+        ${data.product ? `
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.86rem; border-top: 1px solid var(--color-border-light); padding-top: 14px;">
+          <p><strong>🧶 Yarn:</strong> ${data.product.yarnType}</p>
+          <p><strong>📐 Dimensions:</strong> ${data.product.dimensions}</p>
+          <p><strong>🧼 Care:</strong> ${data.product.care}</p>
+          <p><strong>🎨 Palette:</strong> ${data.colors}</p>
+        </div>
+        ` : `
+        <p style="font-size: 0.88rem; color: var(--color-text-muted);">Custom design notes: ${data.notes}</p>
+        `}
+      </div>
+
+      <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="${data.waUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp" style="flex: 1; text-align: center;">
+          <i class="fab fa-whatsapp"></i> Chat on WhatsApp with Artisan
+        </a>
+        <button id="modalDoneBtn" class="btn btn-secondary" style="flex: 1;">
+          Back to Boutique
+        </button>
+      </div>
+    `;
+
+    document.getElementById("modalDoneBtn")?.addEventListener("click", closeModal);
+    quickViewModal.classList.add("active");
+    document.body.style.overflow = "hidden";
   }
 
   // Helper Functions
-  function checkWhatsAppNumber() {
-    if (STORE_CONFIG.whatsappNumber === "1234567890") {
-      const promptNum = prompt("Please enter the client's WhatsApp phone number (with country code, e.g., 923001234567 or 15551234567):", "");
-      if (promptNum && promptNum.trim()) {
-        const clean = promptNum.replace(/\D/g, "");
-        STORE_CONFIG.whatsappNumber = clean;
-        localStorage.setItem("crochet_boutique_whatsapp", clean);
-        applyStoreConfig();
-      }
-    }
-  }
-
   function applyStoreConfig() {
     if (floatingWaBtn) {
-      floatingWaBtn.href = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi! I'm interested in ordering a handcrafted crochet piece from your boutique 🧶")}`;
+      floatingWaBtn.href = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi! 🌸 I'm interested in ordering a handcrafted crochet piece from your boutique 🧶")}`;
     }
 
     const announcementEl = document.getElementById("announcementText");
@@ -236,6 +386,9 @@ Sent via The Crochet Boutique website`;
           <div class="product-bottom-row">
             <span class="product-custom-tag"><i class="fas fa-sparkles"></i> Made to Order</span>
             <div class="product-actions">
+              <button class="btn-card-knowmore" data-id="${p.id}" title="View details and specs">
+                <i class="fas fa-info-circle"></i> Know More
+              </button>
               <button class="btn-card-inquire" data-id="${p.id}">Inquire / Order</button>
               <button class="btn-card-wa" data-id="${p.id}" title="Inquire on WhatsApp">
                 <i class="fab fa-whatsapp"></i>
@@ -245,16 +398,23 @@ Sent via The Crochet Boutique website`;
         </div>
       `;
 
+      // "Know More" button -> opens full spec sheet modal
+      card.querySelector(".btn-card-knowmore").addEventListener("click", () => {
+        openQuickView(p);
+      });
+
+      // "Inquire / Order" button -> pre-selects and scrolls smoothly to form
       card.querySelector(".btn-card-inquire").addEventListener("click", () => {
         selectProductAndScroll(p);
       });
 
+      // WhatsApp icon click
       card.querySelector(".btn-card-wa").addEventListener("click", (e) => {
         e.stopPropagation();
-        checkWhatsAppNumber();
         openWhatsAppForProduct(p);
       });
 
+      // Thumbnail click -> Quick View
       card.querySelector(".product-thumb-wrap").addEventListener("click", () => {
         openQuickView(p);
       });
@@ -291,11 +451,12 @@ Sent via The Crochet Boutique website`;
   function selectProductAndScroll(product) {
     if (itemSelect) {
       for (let opt of itemSelect.options) {
-        if (opt.value.includes(product.name)) {
+        if (opt.value === product.name) {
           itemSelect.value = opt.value;
           break;
         }
       }
+      updateProductSpecsSpotlight(product.name);
     }
     const inquirySection = document.getElementById("inquiry");
     if (inquirySection) {
@@ -305,12 +466,22 @@ Sent via The Crochet Boutique website`;
         colorsField.placeholder = `e.g., Preferred colors (${product.colors.join(", ")})`;
         colorsField.focus();
       }
-      showToast(`Selected "${product.name}" for your inquiry!`);
+      showToast(`Selected "${product.name}"! Fill your details below to receive specs & quote.`);
     }
   }
 
   function openWhatsAppForProduct(product) {
-    const msg = `Hi! 🌸 I would like to inquire about ordering the handcrafted *${product.name}* from @croche_boutiq. Could you please share the pricing, availability, and custom color options?`;
+    const msg = 
+`🌸 *THE CROCHET BOUTIQUE - PRODUCT INQUIRY* 🌸
+--------------------------------------------------
+🧶 *Product:* ${product.name}
+🧵 *Yarn Specs:* ${product.yarnType}
+📐 *Dimensions:* ${product.dimensions}
+🧼 *Care Guide:* ${product.care}
+🎨 *Available Colors:* ${product.colors.join(", ")}
+--------------------------------------------------
+Hi! I would like to know more about this piece, pricing quotes, and current order slots.`;
+
     const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
   }
@@ -332,14 +503,14 @@ Sent via The Crochet Boutique website`;
             ${p.description}
           </p>
           <div style="background: var(--color-surface-tint); padding: 14px 18px; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 20px;">
-            <p><strong>🧶 Yarn:</strong> ${p.yarnType}</p>
-            <p><strong>📐 Dimensions:</strong> ${p.dimensions}</p>
-            <p><strong>🧼 Care:</strong> ${p.care}</p>
-            <p><strong>🎨 Available Colors:</strong> ${p.colors.join(", ")}</p>
+            <p style="margin-bottom: 6px;"><strong>🧶 Yarn Material:</strong> ${p.yarnType}</p>
+            <p style="margin-bottom: 6px;"><strong>📐 Dimensions & Sizing:</strong> ${p.dimensions}</p>
+            <p style="margin-bottom: 6px;"><strong>🧼 Washing & Care:</strong> ${p.care}</p>
+            <p><strong>🎨 Available Color Choices:</strong> ${p.colors.join(", ")}</p>
           </div>
           <div style="display: flex; gap: 12px; flex-wrap: wrap;">
             <button id="modalInquireBtn" class="btn btn-primary" style="flex: 1;">
-              Inquire / Customize
+              Inquire &amp; Order
             </button>
             <button id="modalWaBtn" class="btn btn-whatsapp" style="flex: 1;">
               <i class="fab fa-whatsapp"></i> Chat on WhatsApp
@@ -355,7 +526,6 @@ Sent via The Crochet Boutique website`;
     });
 
     document.getElementById("modalWaBtn").addEventListener("click", () => {
-      checkWhatsAppNumber();
       openWhatsAppForProduct(p);
     });
 

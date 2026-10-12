@@ -1436,3 +1436,162 @@ textarea.form-control {
     grid-template-columns: 1fr;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Product Action Buttons & Know More
+   -------------------------------------------------------------------------- */
+.btn-card-knowmore {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  padding: 8px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-card-knowmore:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Selected Product Spotlight in Form
+   -------------------------------------------------------------------------- */
+.selected-product-specs-box {
+  background: #FCF9F5;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 18px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.selected-product-thumb {
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.selected-product-details {
+  flex-grow: 1;
+}
+
+.selected-product-details h4 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+  color: var(--color-text-main);
+}
+
+.selected-product-specs-list {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.spec-pill {
+  background: white;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-light);
+}
+
+/* --------------------------------------------------------------------------
+   Delivery Channel Selector (WhatsApp vs Email vs Both)
+   -------------------------------------------------------------------------- */
+.channel-selector-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.channel-chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.channel-chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 14px 10px;
+  background: #FCFBF9;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+  height: 100%;
+}
+
+.chip-content i {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+
+.chip-content strong {
+  font-size: 0.88rem;
+  display: block;
+  margin-bottom: 2px;
+  color: var(--color-text-main);
+}
+
+.chip-content small {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  line-height: 1.2;
+}
+
+.channel-chip input:checked + .chip-content {
+  border-color: var(--color-primary);
+  background: #FFF7F8;
+  box-shadow: 0 4px 14px rgba(200, 109, 118, 0.15);
+}
+
+.channel-chip:hover .chip-content {
+  border-color: var(--color-primary);
+}
+
+.btn-submit-unified {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.02rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 20px rgba(200, 109, 118, 0.35);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 580px) {
+  .channel-selector-group {
+    grid-template-columns: 1fr;
+  }
+}
