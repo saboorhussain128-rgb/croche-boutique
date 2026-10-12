@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Crochet Boutique | Handcrafted Crochet, Amigurumi & Yarn Creations</title>
+  <meta name="description" content="Handcrafted crochet boutique featuring custom knitwear, sweet amigurumi plushies, eternal flower bouquets, granny square totes, and bespoke yarn gifts. Order via Instagram @croche_boutiq.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧶</text></svg>">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Announcement Bar -->
+  <aside class="announcement-bar" aria-label="Announcement">
+    <span id="announcementText">🌸 Handcrafted with Love • Custom Color Orders Available • Worldwide Shipping</span>
+    <a href="https://www.instagram.com/croche_boutiq/" target="_blank" rel="noopener">Follow @croche_boutiq <i class="fab fa-instagram"></i></a>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" aria-label="Main Navigation">
+    <div class="container nav-container">
+      <a href="#" class="brand-logo" aria-label="The Crochet Boutique Home">
+        <span class="logo-icon">🧶</span>
+        <span>The Crochet Boutique</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#catalog">Collection</a></li>
+        <li><a href="#inquiry">Custom Orders</a></li>
+        <li><a href="#instagram">Instagram Feed</a></li>
+        <li><a href="#about">Our Story</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#inquiry" class="btn-header-inquiry">
+          <i class="fas fa-heart"></i>
+          <span>Order Inquiry</span>
+        </a>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Navigation Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <i class="fas fa-sparkles"></i> 100% Stitched by Hand with Patience & Care
+        </div>
+        <h1>
+          Soft Stitches, Warm Moments & <span>Bespoke Crochet</span>.
+        </h1>
+        <p>
+          Welcome to <strong>The Crochet Boutique</strong>! From viral amigurumi plushies and heirloom baby sets to chunky granny square totes and forever floral bouquets — every piece is individually handcrafted just for you.
+        </p>
+        <div class="hero-buttons">
+          <a href="#catalog" class="btn btn-primary">
+            <i class="fas fa-search"></i> Explore Catalog
+          </a>
+          <a href="#inquiry" class="btn btn-secondary">
+            <i class="fas fa-paint-brush"></i> Request Custom Piece
+          </a>
+          <a href="https://www.instagram.com/croche_boutiq/" target="_blank" rel="noopener" class="btn btn-instagram-profile" style="padding: 12px 20px;">
+            <i class="fab fa-instagram"></i> @croche_boutiq
+          </a>
+        </div>
+        <div class="hero-badges">
+          <div class="hero-badge-item">
+            <div class="hero-badge-icon"><i class="fas fa-seedling" style="color: var(--color-secondary);"></i></div>
+            <div class="hero-badge-text">
+              <strong>Premium Yarns</strong>
+              <span>Milk Cotton & Chenille</span>
+            </div>
+          </div>
+          <div class="hero-badge-item">
+            <div class="hero-badge-icon"><i class="fas fa-magic" style="color: var(--color-primary);"></i></div>
+            <div class="hero-badge-text">
+              <strong>Custom Colors</strong>
+              <span>Tailored to your aesthetic</span>
+            </div>
+          </div>
+          <div class="hero-badge-item">
+            <div class="hero-badge-icon"><i class="fas fa-truck-fast" style="color: var(--color-accent);"></i></div>
+            <div class="hero-badge-text">
+              <strong>Careful Packaging</strong>
+              <span>Ready for gifting</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-card-main">
+          <img src="https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&w=1000&q=80" alt="Handcrafted crochet granny square bag with soft pastel yarn balls">
+        </div>
+        <div class="hero-floating-card">
+          <div class="icon-round">
+            <i class="fas fa-heart"></i>
+          </div>
+          <div>
+            <strong style="font-size: 0.92rem; display: block;">170+ Unique Designs</strong>
+            <span style="font-size: 0.78rem; color: var(--color-text-muted);">Crafted with love on Instagram</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Product Catalog Section -->
+  <section class="products-section" id="catalog">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Handcrafted Showcase</span>
+        <h2 class="section-title">Our Favorite Creations</h2>
+        <p class="section-subtitle">
+          Browse popular pieces from our collection. Click any item to customize colors, check sizes, or send a direct order inquiry!
+        </p>
+      </div>
+
+      <!-- Controls: Search & Category Filter Pills -->
+      <div class="catalog-controls">
+        <div class="search-bar-wrap">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search plushies, cardigans, bags, flowers...">
+          <button class="search-icon-btn" aria-label="Search"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="category-tabs">
+          <button class="tab-btn active" data-category="all">All Items</button>
+          <button class="tab-btn" data-category="plushies">Amigurumi & Plushies</button>
+          <button class="tab-btn" data-category="bags">Totes & Bags</button>
+          <button class="tab-btn" data-category="wearables">Wearables & Hats</button>
+          <button class="tab-btn" data-category="flowers">Botanical Bouquets</button>
+          <button class="tab-btn" data-category="baby">Baby Outfits</button>
+        </div>
+      </div>
+
+      <!-- Products Grid (Rendered via JS) -->
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+  <!-- Custom Order Inquiry Section (Conversion Funnel) -->
+  <section class="inquiry-section" id="inquiry">
+    <div class="container">
+      <div class="inquiry-wrapper">
+        <!-- Left info pane -->
+        <div class="inquiry-info-pane">
+          <div>
+            <span class="section-tag">Bespoke Commissions</span>
+            <h3>Have a Dream Crochet Idea in Mind?</h3>
+            <p style="color: var(--color-text-muted); font-size: 0.95rem; line-height: 1.6;">
+              Whether you saw a cute pattern on Instagram, Pinterest, or want a customized amigurumi character, we bring your vision to life stitch by stitch.
+            </p>
+
+            <div class="inquiry-steps">
+              <div class="inquiry-step-item">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                  <strong>Submit Your Inquiry</strong>
+                  <p>Choose an item or describe your custom idea and preferred color palette.</p>
+                </div>
+              </div>
+              <div class="inquiry-step-item">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                  <strong>Free Quote & Consultation</strong>
+                  <p>We confirm yarn textures, dimensions, and turnaround time with you.</p>
+                </div>
+              </div>
+              <div class="inquiry-step-item">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                  <strong>Handcrafted & Shipped</strong>
+                  <p>Your piece is meticulously crocheted, steam-finished, and shipped with care.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="free-guarantee-box">
+            <i class="fas fa-shield-heart" style="font-size: 1.4rem;"></i>
+            <span><strong>100% Free Inquiry:</strong> Sending a request has no commitment. We provide color samples and quotes upfront!</span>
+          </div>
+        </div>
+
+        <!-- Right form pane -->
+        <div class="inquiry-form-pane">
+          <form id="inquiryForm">
+            <!-- FormSubmit Anti-Spam & Configuration fields -->
+            <input type="hidden" name="_subject" value="🌸 New Crochet Order Inquiry from Website!">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
+
+            <div class="form-group-grid">
+              <div class="form-group">
+                <label for="custName" class="form-label">Your Name *</label>
+                <input type="text" id="custName" name="name" class="form-control" placeholder="e.g., Sarah Jenkins" required>
+              </div>
+
+              <div class="form-group">
+                <label for="custPhone" class="form-label">WhatsApp or Phone *</label>
+                <input type="tel" id="custPhone" name="phone" class="form-control" placeholder="e.g., +1 234 567 8900" required>
+              </div>
+            </div>
+
+            <div class="form-group-grid">
+              <div class="form-group">
+                <label for="custEmail" class="form-label">Email Address *</label>
+                <input type="email" id="custEmail" name="email" class="form-control" placeholder="e.g., sarah@example.com" required>
+              </div>
+
+              <div class="form-group">
+                <label for="orderItem" class="form-label">Select Item / Category *</label>
+                <select id="orderItem" name="item" class="form-control" required>
+                  <option value="" disabled selected>Select from catalog or custom piece</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="orderColors" class="form-label">Preferred Colors / Yarn Type</label>
+              <input type="text" id="orderColors" name="colors" class="form-control" placeholder="e.g., Pastel pink & cream, Chunky velvet, Organic cotton">
+            </div>
+
+            <div class="form-group">
+              <label for="orderNotes" class="form-label">Special Notes, Sizing or Instagram Reference</label>
+              <textarea id="orderNotes" name="notes" class="form-control" placeholder="Tell us about sizing, custom character details, need-by dates, or paste an Instagram post link..."></textarea>
+            </div>
+
+            <div class="form-submit-actions">
+              <button type="submit" class="btn btn-primary btn-form-email">
+                <i class="fas fa-paper-plane"></i> Send Free Inquiry (Email)
+              </button>
+
+              <button type="button" id="btnSubmitWa" class="btn btn-whatsapp btn-form-whatsapp">
+                <i class="fab fa-whatsapp"></i> Instant Order via WhatsApp
+              </button>
+            </div>
+
+            <p class="form-privacy-note">
+              🔒 We respect your privacy. Inquiries are sent directly to the artisan with zero spam.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instagram Feed Section -->
+  <section class="instagram-section" id="instagram">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Follow our Journey</span>
+        <h2 class="section-title">Fresh from @croche_boutiq</h2>
+        <p class="section-subtitle">
+          Over 170+ posts celebrating slow stitches, behind-the-scenes yarn hauls, and client custom reveals.
+        </p>
+      </div>
+
+      <div class="ig-feed-grid" id="igGrid"></div>
+
+      <div class="ig-follow-cta">
+        <a href="https://www.instagram.com/croche_boutiq/" target="_blank" rel="noopener" class="btn btn-instagram-profile">
+          <i class="fab fa-instagram"></i> Visit @croche_boutiq on Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Artisan Story Section -->
+  <section class="story-section" id="about">
+    <div class="container story-grid">
+      <div class="story-image-wrap">
+        <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=1000&q=80" alt="Crochet artisan hands working with hook and pastel yarn" class="story-img">
+        <div class="story-quote-card">
+          <p>"Every knot holds patience, every piece tells a story."</p>
+          <span style="font-size: 0.8rem; font-weight: 600; color: var(--color-text-muted);">— The Crochet Boutique</span>
+        </div>
+      </div>
+
+      <div class="story-content">
+        <span class="section-tag">Slow Fashion & Handmade Craft</span>
+        <h2>Made with Heart, Hook & Yarn</h2>
+        <p>
+          In a world of mass-produced fast fashion, <strong>The Crochet Boutique</strong> was born out of a deep passion for handmade artistry. Unlike machine knitting, true crochet cannot be replicated by factory machines — every single loop must be guided by human hands.
+        </p>
+        <p>
+          We source high quality milk cotton, velvety chenille, and breathable natural fibers. When you order from us, you're not just buying an accessory; you're supporting slow, mindful craftsmanship that is built to be cherished for years.
+        </p>
+
+        <div class="story-perks">
+          <div class="perk-item">
+            <div class="perk-icon"><i class="fas fa-check"></i></div>
+            <div>
+              <strong style="font-size: 0.92rem;">Zero Fast Fashion</strong>
+              <p style="font-size: 0.82rem; color: var(--color-text-muted);">Ethical & made-to-order reduction of waste.</p>
+            </div>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon"><i class="fas fa-check"></i></div>
+            <div>
+              <strong style="font-size: 0.92rem;">Custom Sizing</strong>
+              <p style="font-size: 0.82rem; color: var(--color-text-muted);">Made to your exact measurements.</p>
+            </div>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon"><i class="fas fa-check"></i></div>
+            <div>
+              <strong style="font-size: 0.92rem;">Direct Communication</strong>
+              <p style="font-size: 0.82rem; color: var(--color-text-muted);">Talk directly with the maker on WhatsApp or IG.</p>
+            </div>
+          </div>
+          <div class="perk-item">
+            <div class="perk-icon"><i class="fas fa-check"></i></div>
+            <div>
+              <strong style="font-size: 0.92rem;">Gift Packaging</strong>
+              <p style="font-size: 0.82rem; color: var(--color-text-muted);">Tied with ribbons & ready to surprise your loved ones.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section class="reviews-section" id="reviews">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Loved by our Community</span>
+        <h2 class="section-title">Kind Words from Happy Clients</h2>
+        <p class="section-subtitle">Real feedback from our lovely customers on Instagram.</p>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="review-text">
+            "I ordered a customized sunflower & tulip bouquet for my best friend’s graduation. She cried happy tears! The quality is unmatched and they will literally last forever."
+          </p>
+          <div class="reviewer-meta">
+            <div class="reviewer-avatar">EM</div>
+            <div class="reviewer-info">
+              <strong>Emily M.</strong>
+              <span>Verified Instagram Buyer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="review-text">
+            "The granny square tote bag is even prettier in person! Sturdy lining, gorgeous earthy color scheme, and I get compliments everywhere I go. Ordering was so easy on WhatsApp."
+          </p>
+          <div class="reviewer-meta">
+            <div class="reviewer-avatar">AL</div>
+            <div class="reviewer-info">
+              <strong>Aaliyah L.</strong>
+              <span>Verified Customer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p class="review-text">
+            "Got the baby bonnet & booties set for my newborn daughter's 1-month shoot. The yarn is cloud-soft, doesn't irritate her skin at all. Highly recommend @croche_boutiq!"
+          </p>
+          <div class="reviewer-meta">
+            <div class="reviewer-avatar">SR</div>
+            <div class="reviewer-info">
+              <strong>Sofia R.</strong>
+              <span>Custom Baby Set</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Got Questions?</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about ordering handcrafted crochet.</p>
+      </div>
+
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary>How long does a custom crochet order take?</summary>
+          <div class="faq-content">
+            Since every piece is stitched individually by hand, custom orders typically take <strong>5 to 10 business days</strong> to craft depending on size and detail. For rush gifts or specific event deadlines, let us know in your inquiry and we'll do our best to accommodate!
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>Can I request colors or designs not shown on Instagram?</summary>
+          <div class="faq-content">
+            Yes, absolutely! We love custom requests. You can describe your dream color palette or send us reference pictures via the inquiry form or directly through WhatsApp.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How do I care for and wash my crochet pieces?</summary>
+          <div class="faq-content">
+            Handmade crochet is gentle. We recommend hand washing in cold water with a mild detergent, gently pressing out excess water (never wring or twist), and reshaping it flat on a clean towel to dry.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary>How does payment and shipping work?</summary>
+          <div class="faq-content">
+            Once you submit an inquiry, we verify details with you and provide payment instructions (bank transfer, online payments, or digital wallets depending on your region). We package each piece securely with tracking provided upon dispatch.
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h4>🧶 The Crochet Boutique</h4>
+        <p>
+          Celebrating handmade slow craft with love, warmth, and cozy stitches. Connect with us on Instagram to see our latest drops and behind-the-scenes work.
+        </p>
+        <div style="display: flex; gap: 14px; font-size: 1.3rem;">
+          <a href="https://www.instagram.com/croche_boutiq/" target="_blank" rel="noopener" style="color: #ECE7E1;"><i class="fab fa-instagram"></i></a>
+          <a href="#" id="footerWaLink" target="_blank" rel="noopener" style="color: #25D366;"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Quick Links</h5>
+        <ul class="footer-links">
+          <li><a href="#catalog">Collection</a></li>
+          <li><a href="#inquiry">Custom Order Inquiry</a></li>
+          <li><a href="#about">Artisan Story</a></li>
+          <li><a href="#reviews">Customer Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Categories</h5>
+        <ul class="footer-links">
+          <li><a href="#catalog">Amigurumi Plushies</a></li>
+          <li><a href="#catalog">Granny Square Bags</a></li>
+          <li><a href="#catalog">Cardigans & Scarves</a></li>
+          <li><a href="#catalog">Everlasting Flowers</a></li>
+          <li><a href="#catalog">Baby Booties & Sets</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Get In Touch</h5>
+        <p style="font-size: 0.88rem; color: #A89F98; margin-bottom: 10px;">
+          <i class="fab fa-instagram" style="margin-right: 8px;"></i> @croche_boutiq
+        </p>
+        <p style="font-size: 0.88rem; color: #A89F98; margin-bottom: 10px;">
+          <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Direct WhatsApp Orders
+        </p>
+        <p style="font-size: 0.88rem; color: #A89F98;">
+          <i class="fas fa-envelope" style="margin-right: 8px;"></i> Free Instant Inquiry Form
+        </p>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div>&copy; 2026 The Crochet Boutique (@croche_boutiq). All rights reserved.</div>
+      <div>Handcrafted with 🧶 &amp; Hosted on GitHub Pages</div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp Action Button -->
+  <a href="#" class="floating-whatsapp" id="floatingWaBtn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+    <span class="floating-whatsapp-tooltip">Order via WhatsApp</span>
+  </a>
+
+  <!-- Quick View Modal -->
+  <div class="modal-backdrop" id="quickViewModal">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

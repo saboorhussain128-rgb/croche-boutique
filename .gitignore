@@ -1,0 +1,7 @@
+# Ignore temporary and credential scripts
+*.ps1
+powershell.cmd
+.env
+*.log
+.DS_Store
+Thumbs.db
