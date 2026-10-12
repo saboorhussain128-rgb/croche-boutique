@@ -181,8 +181,8 @@ Sent via The Crochet Boutique website`;
     itemSelect.innerHTML = `<option value="" disabled selected>Select from catalog or custom piece</option>`;
     PRODUCTS.forEach(p => {
       const opt = document.createElement("option");
-      opt.value = `${p.name} (${STORE_CONFIG.currency}${p.price})`;
-      opt.textContent = `${p.name} - ${STORE_CONFIG.currency}${p.price}`;
+      opt.value = p.name;
+      opt.textContent = p.name;
       itemSelect.appendChild(opt);
     });
     const customOpt = document.createElement("option");
@@ -233,10 +233,10 @@ Sent via The Crochet Boutique website`;
             <span>📐 ${p.dimensions}</span>
           </div>
           <div class="product-bottom-row">
-            <span class="product-price">${STORE_CONFIG.currency}${p.price}</span>
+            <span class="product-custom-tag"><i class="fas fa-sparkles"></i> Made to Order</span>
             <div class="product-actions">
-              <button class="btn-card-inquire" data-id="${p.id}">Order / Inquire</button>
-              <button class="btn-card-wa" data-id="${p.id}" title="Order on WhatsApp">
+              <button class="btn-card-inquire" data-id="${p.id}">Inquire / Order</button>
+              <button class="btn-card-wa" data-id="${p.id}" title="Inquire on WhatsApp">
                 <i class="fab fa-whatsapp"></i>
               </button>
             </div>
@@ -309,7 +309,7 @@ Sent via The Crochet Boutique website`;
   }
 
   function openWhatsAppForProduct(product) {
-    const msg = `Hi! 🌸 I would like to order the *${product.name}* (${STORE_CONFIG.currency}${product.price}) from @croche_boutiq. Could you let me know about current availability and custom color options?`;
+    const msg = `Hi! 🌸 I would like to inquire about ordering the handcrafted *${product.name}* from @croche_boutiq. Could you please share the pricing, availability, and custom color options?`;
     const url = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
   }
@@ -324,8 +324,8 @@ Sent via The Crochet Boutique website`;
         <div>
           <span class="badge-tag badge-${p.badgeType}" style="position: static; display: inline-block; margin-bottom: 10px;">${p.badge}</span>
           <h2 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 10px;">${p.name}</h2>
-          <div style="font-size: 1.6rem; font-weight: 700; color: var(--color-primary); margin-bottom: 16px;">
-            ${STORE_CONFIG.currency}${p.price}
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: var(--color-surface-tint); color: var(--color-secondary); padding: 8px 16px; border-radius: var(--radius-full); font-size: 0.9rem; font-weight: 600; margin-bottom: 16px;">
+            <i class="fas fa-sparkles"></i> Custom Quote • Price on Inquiry
           </div>
           <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.6;">
             ${p.description}
