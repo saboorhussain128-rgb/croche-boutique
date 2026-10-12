@@ -219,14 +219,26 @@ Instagram: @croche_boutiq`;
 
       // Handle delivery based on customer selection
       try {
+        let emailDelivered = false;
         if (channel === "email" || channel === "both") {
           const formData = new FormData(inquiryForm);
           const emailEndpoint = `https://formsubmit.co/ajax/${STORE_CONFIG.inquiryEmail}`;
-          await fetch(emailEndpoint, {
-            method: "POST",
-            headers: { "Accept": "application/json" },
-            body: formData
-          });
+          try {
+            const res = await fetch(emailEndpoint, {
+              method: "POST",
+              headers: { "Accept": "application/json" },
+              body: formData
+            });
+            const resData = await res.json().catch(() => ({}));
+            if (resData.success === "false" && resData.message && resData.message.includes("Activation")) {
+              showToast(`⚠️ Form activation needed: Click 'Activate' in ${STORE_CONFIG.inquiryEmail}`);
+            } else {
+              emailDelivered = true;
+              showToast(`✨ Spec sheet and order details dispatched to ${custEmail}!`);
+            }
+          } catch (e) {
+            console.error(e);
+          }
         }
 
         if (channel === "whatsapp" || channel === "both") {
@@ -243,7 +255,8 @@ Instagram: @croche_boutiq`;
           itemName: itemName,
           colors: colors,
           notes: notes,
-          waUrl: waUrl
+          waUrl: waUrl,
+          emailDelivered: emailDelivered
         });
 
         inquiryForm.reset();
@@ -302,9 +315,13 @@ Instagram: @croche_boutiq`;
 
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
         <a href="${data.waUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp" style="flex: 1; text-align: center;">
-          <i class="fab fa-whatsapp"></i> Chat on WhatsApp with Artisan
+          <i class="fab fa-whatsapp"></i> Chat on WhatsApp
         </a>
-        <button id="modalDoneBtn" class="btn btn-secondary" style="flex: 1;">
+        ${data.email ? `
+        <a href="mailto:${data.email}?subject=${encodeURIComponent('The Crochet Boutique: Details for ' + data.itemName)}&body=${encodeURIComponent('Hi ' + data.name + ',\n\nHere are the handcrafted details for ' + data.itemName + ':\n\n• Yarn: ' + (data.product ? data.product.yarnType : 'Custom') + '\n• Dimensions: ' + (data.product ? data.product.dimensions : 'Custom') + '\n• Care: ' + (data.product ? data.product.care : 'Hand wash cold') + '\n• Color: ' + data.colors + '\n• Notes: ' + data.notes + '\n\nThe Crochet Boutique\nWhatsApp: +91 9391040104\nInstagram: @croche_boutiq')}" class="btn btn-secondary" style="flex: 1; text-align: center;">
+          <i class="fas fa-envelope-open-text"></i> Open Email Copy
+        </a>` : ""}
+        <button id="modalDoneBtn" class="btn btn-secondary" style="width: 100%; margin-top: 6px;">
           Back to Boutique
         </button>
       </div>

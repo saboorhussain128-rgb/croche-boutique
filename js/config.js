@@ -11,8 +11,8 @@ const STORE_CONFIG = {
   whatsappNumber: "919391040104", 
   displayPhone: "+91 9391040104",
   
-  // Email address to receive inquiries (Uses 100% free FormSubmit.co - no sign up needed)
-  inquiryEmail: "thecrochetboutique.orders@gmail.com", // Update with client's active email
+  // Email address to receive inquiries (Uses 100% free FormSubmit.co)
+  inquiryEmail: "saboorhussain128@gmail.com",
   
   // Currency symbol
   currency: "$",
