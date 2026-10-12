@@ -169,21 +169,21 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.innerHTML = `<span>🌸 Processing Your Request...</span>`;
       submitBtn.disabled = true;
 
-      // Build structured WhatsApp message
+      // Build structured WhatsApp message (clean formatting without character corruption)
       const waMessage = 
-`🌸 *THE CROCHET BOUTIQUE - PRODUCT INQUIRY* 🌸
+`*THE CROCHET BOUTIQUE - ORDER INQUIRY*
 --------------------------------------------------
-🧶 *Product Requested:* ${itemName}
-${matchedProduct ? `🧵 *Yarn Specs:* ${matchedProduct.yarnType}
-📐 *Dimensions:* ${matchedProduct.dimensions}
-🧼 *Care Guide:* ${matchedProduct.care}
-🎨 *Palette Options:* ${matchedProduct.colors.join(", ")}` : "✨ *Custom Bespoke Request*"}
+*Product Requested:* ${itemName}
+${matchedProduct ? `*Yarn Specs:* ${matchedProduct.yarnType}
+*Dimensions:* ${matchedProduct.dimensions}
+*Care Guide:* ${matchedProduct.care}
+*Palette Options:* ${matchedProduct.colors.join(", ")}` : "*Custom Bespoke Request*"}
 --------------------------------------------------
-👤 *Customer Name:* ${custName}
-📞 *Phone / WhatsApp:* ${custPhone}
-📧 *Email Address:* ${custEmail}
-🎨 *Preferred Colors:* ${colors}
-📝 *Custom Sizing / Notes:* ${notes}
+*Customer Name:* ${custName}
+*Phone / WhatsApp:* ${custPhone}
+*Email Address:* ${custEmail}
+*Preferred Colors:* ${colors}
+*Custom Sizing / Notes:* ${notes}
 --------------------------------------------------
 Requested via website (${channel.toUpperCase()})`;
 
@@ -279,6 +279,25 @@ Instagram: @croche_boutiq`;
 
     const channelText = data.channel === "whatsapp" ? "WhatsApp" : data.channel === "email" ? "Email" : "WhatsApp & Email";
 
+    const cleanDigits = (data.phone || "").replace(/\D/g, "");
+    const custDirectWaUrl = cleanDigits.length >= 10 ? 
+      `https://wa.me/${cleanDigits.startsWith("91") ? cleanDigits : ("91" + cleanDigits)}?text=${encodeURIComponent(
+`*THE CROCHET BOUTIQUE - ORDER CONFIRMATION*
+--------------------------------------------------
+Hi ${data.name}! Thank you for your inquiry with @croche_boutiq.
+
+Here are the details for your custom piece (${data.itemName}):
+* Yarn: ${data.product ? data.product.yarnType : 'Custom'}
+* Sizing: ${data.product ? data.product.dimensions : 'Custom'}
+* Care: ${data.product ? data.product.care : 'Hand wash cold'}
+* Preferred Colors: ${data.colors}
+* Notes: ${data.notes}
+
+We are checking our yarn stock and will confirm your delivery timeframe!
+--------------------------------------------------
+The Crochet Boutique (+91 9391040104)
+`)}` : "";
+
     modalBody.innerHTML = `
       <div style="text-align: center; margin-bottom: 24px;">
         <div style="width: 58px; height: 58px; background: var(--color-primary-light); color: var(--color-primary); border-radius: var(--radius-full); display: inline-flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 12px;">
@@ -315,8 +334,12 @@ Instagram: @croche_boutiq`;
 
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
         <a href="${data.waUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp" style="flex: 1; text-align: center;">
-          <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+          <i class="fab fa-whatsapp"></i> Chat with Boutique (+91 9391040104)
         </a>
+        ${custDirectWaUrl ? `
+        <a href="${custDirectWaUrl}" target="_blank" rel="noopener" class="btn btn-secondary" style="flex: 1; text-align: center;">
+          <i class="fab fa-whatsapp" style="color: #25D366;"></i> Message Customer (${data.phone})
+        </a>` : ""}
         ${data.email ? `
         <a href="mailto:${data.email}?subject=${encodeURIComponent('The Crochet Boutique: Details for ' + data.itemName)}&body=${encodeURIComponent('Hi ' + data.name + ',\n\nHere are the handcrafted details for ' + data.itemName + ':\n\n• Yarn: ' + (data.product ? data.product.yarnType : 'Custom') + '\n• Dimensions: ' + (data.product ? data.product.dimensions : 'Custom') + '\n• Care: ' + (data.product ? data.product.care : 'Hand wash cold') + '\n• Color: ' + data.colors + '\n• Notes: ' + data.notes + '\n\nThe Crochet Boutique\nWhatsApp: +91 9391040104\nInstagram: @croche_boutiq')}" class="btn btn-secondary" style="flex: 1; text-align: center;">
           <i class="fas fa-envelope-open-text"></i> Open Email Copy
