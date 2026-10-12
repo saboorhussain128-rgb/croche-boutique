@@ -4,130 +4,130 @@
  */
 const PRODUCTS = [
   {
-    id: "prod-1",
-    name: "Sunburst Granny Square Tote",
+    id: "prod-caps",
+    name: "Granny Square Daisy Bucket Hat",
+    category: "caps",
+    price: 32,
+    badge: "Trending",
+    badgeType: "bestseller",
+    image: "images/caps.jpg",
+    description: "Handcrafted pastel sage green and cream bucket hat featuring delicate floral daisy granny squares. Breathable, structured brim, perfect for sunny days and festival styling.",
+    yarnType: "100% Breathable Milk Cotton",
+    dimensions: "One Size Fits Most (55-58cm)",
+    care: "Hand wash cold, air dry on a round bowl",
+    colors: ["Sage Green & Cream", "Vintage Rose & Ivory", "Butter Yellow & White"]
+  },
+  {
+    id: "prod-dresses",
+    name: "Boho Lace Motif Summer Dress",
+    category: "dresses",
+    price: 98,
+    badge: "Custom Fit",
+    badgeType: "custom",
+    image: "images/dresses.jpg",
+    description: "Exquisite hand-crocheted bohemian summer dress with intricate floral lace openwork and scalloped hemline. Lightweight, airy drape, tailored to your custom bust and waist measurements.",
+    yarnType: "Premium Mercerized Bamboo Cotton",
+    dimensions: "Custom Sized (XS, S, M, L, XL, XXL)",
+    care: "Gentle hand wash cold with mild detergent, dry flat",
+    colors: ["Natural Cream / Ecru", "Soft Blush", "Sun-Kissed Sand", "Onyx Black"]
+  },
+  {
+    id: "prod-gloves",
+    name: "Scalloped Lace Fingerless Gloves",
+    category: "gloves",
+    price: 26,
+    badge: "Artisan Pick",
+    badgeType: "featured",
+    image: "images/gloves.jpg",
+    description: "Delicate and warm vintage-inspired fingerless wrist warmers with romantic scalloped edges and textured shell stitches. Free fingertips for easy phone typing and cozy coffee sips.",
+    yarnType: "Ultra-Soft Merino Wool & Cotton Blend",
+    dimensions: "Approx. 18cm length (Stretchy snug fit)",
+    care: "Hand wash cold, reshape and dry flat",
+    colors: ["Pure Cream", "Dusty Rose", "Oatmeal Heather", "Forest Moss"]
+  },
+  {
+    id: "prod-hairbands",
+    name: "Handmade Daisy Floral Headband & Bandana Set",
+    category: "hairbands",
+    price: 24,
+    badge: "Cottagecore Favorite",
+    badgeType: "bestseller",
+    image: "images/hair_bands.jpg",
+    description: "Charming cottagecore headband with 3D raised white daisy flowers and green leaves with adjustable tie straps, accompanied by a matching textured linen-cotton hair bandana.",
+    yarnType: "Soft Anti-Pilling Baby Cotton",
+    dimensions: "Universal Adult & Teen Size (Adjustable ties)",
+    care: "Spot clean or gentle hand wash",
+    colors: ["Classic Daisy (White/Yellow/Green)", "Sunflower Gold", "Lilac Blossom"]
+  },
+  {
+    id: "prod-scarf",
+    name: "Cozy Waffle Stitch Infinity Scarf",
+    category: "scarves",
+    price: 38,
+    badge: "Winter Warmth",
+    badgeType: "featured",
+    image: "images/scarf.jpg",
+    description: "Deep textured waffle-knit crochet scarf offering cloud-like warmth with zero itchiness. Double loop design that holds heat beautifully during chilly autumn and winter evenings.",
+    yarnType: "Extra-Fine Australian Merino Blend",
+    dimensions: "145cm circumference x 26cm width",
+    care: "Hand wash in cool water with wool shampoo, dry flat",
+    colors: ["Warm Terracotta / Mustard", "Oatmeal Beige", "Charcoal Slate", "Emerald Pine"]
+  },
+  {
+    id: "prod-tablerunner",
+    name: "Heirloom Macrame Lace Table Runner",
+    category: "homedecor",
+    price: 58,
+    badge: "Home Decor",
+    badgeType: "custom",
+    image: "images/table_runner.jpg",
+    description: "Stunning dining centerpiece featuring handcrafted geometric lace medallions and elegant fringe tassels. Adds rustic boho charm to coffee tables, dining setups, and festive gatherings.",
+    yarnType: "100% Natural Unbleached Cotton Cord",
+    dimensions: "180cm x 35cm (Custom lengths available)",
+    care: "Gently hand wash, lay flat to dry, steam press lightly",
+    colors: ["Natural Ivory / Off-White", "Warm Oatmeal", "Antique Beige"]
+  },
+  {
+    id: "prod-pouch",
+    name: "Embroidered Strawberry Crochet Cosmetic Pouch",
+    category: "bags",
+    price: 22,
+    badge: "Cute & Practical",
+    badgeType: "bestseller",
+    image: "images/pouch.jpg",
+    description: "Sweet textured crochet zipper clutch with a hand-embroidered strawberry motif and antique brass zipper. Fully lined to securely store cosmetics, coins, keys, or AirPods.",
+    yarnType: "Dense Durable Milk Cotton Yarn",
+    dimensions: "18cm width x 13cm height x 5cm depth",
+    care: "Wipe with damp cloth or gentle hand wash inside out",
+    colors: ["Cream with Strawberry", "Blush Pink with Daisy", "Sage with Peach"]
+  },
+  {
+    id: "prod-tote",
+    name: "Sunburst Granny Square Market Tote",
     category: "bags",
     price: 48,
     badge: "Bestseller",
     badgeType: "bestseller",
     image: "https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&w=800&q=80",
-    description: "Handcrafted 100% organic cotton granny square tote bag. Reinforced sturdy handles, lined interior with sweet floral motifs.",
+    description: "Handcrafted 100% organic cotton granny square tote bag. Reinforced sturdy shoulder straps and generous storage for books, yarn skeins, and daily essentials.",
     yarnType: "Premium Milk Cotton",
     dimensions: "36cm x 34cm",
     care: "Hand wash cold, air dry flat",
     colors: ["Earthy Mustard & Sage", "Pastel Rainbow", "Vintage Rose & Cream"]
   },
   {
-    id: "prod-2",
-    name: "Forever Sunflower & Tulip Bouquet",
-    category: "flowers",
-    price: 36,
-    badge: "Never Fades",
-    badgeType: "featured",
-    image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80",
-    description: "Crocheted botanical bouquet featuring 3 cheerful sunflowers, 2 soft pink tulips, and eucalyptus sprigs wrapped in craft paper and satin ribbon.",
-    yarnType: "Soft Acrylic & Cotton Blend",
-    dimensions: "Approx. 30cm length",
-    care: "Dust gently with soft brush",
-    colors: ["Classic Golden Sunflowers", "Pastel Pink & Cream", "Lilac & Daisy"]
-  },
-  {
-    id: "prod-3",
-    name: "Chunky Cloud Chenille Cardigan",
-    category: "wearables",
-    price: 85,
-    badge: "Made to Order",
-    badgeType: "custom",
-    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80",
-    description: "Ultra-cozy balloon-sleeve cropped cardigan hand-knitted and crocheted with chunky cloud velvet yarn. Tortoiseshell wooden buttons.",
-    yarnType: "Chunky Chenille & Merino Wool",
-    dimensions: "Custom sizing (XS to XXL)",
-    care: "Hand wash cold inside out, dry flat",
-    colors: ["Oatmeal Cream", "Dusty Lavender", "Sage Green", "Soft Rose"]
-  },
-  {
-    id: "prod-4",
-    name: "Honeybee & Strawberry Amigurumi Duo",
+    id: "prod-plushie",
+    name: "Velvet Bumblebee & Berry Plush Duo",
     category: "plushies",
     price: 28,
     badge: "Customer Favorite",
-    badgeType: "bestseller",
+    badgeType: "featured",
     image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80",
     description: "Irresistibly cute handmade plush bee with glitter safety eyes and a matching sweet strawberry companion. Stuffed with hypoallergenic polyfill.",
     yarnType: "Plush Chenille Velvet Yarn",
     dimensions: "12cm height each",
     care: "Spot clean with damp cloth",
     colors: ["Sunny Yellow & Black", "Pastel Pink & White", "Baby Blue"]
-  },
-  {
-    id: "prod-5",
-    name: "Heirloom Baby Bonnet & Booties Set",
-    category: "baby",
-    price: 42,
-    badge: "Gift Box Included",
-    badgeType: "featured",
-    image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=800&q=80",
-    description: "Gentle newborn-safe handcrafted scalloped bonnet and matching snug booties. Soft tie ribbons, packaged in a keepsake eco-gift box.",
-    yarnType: "100% Organic Bamboo Cotton",
-    dimensions: "0-3 Months / 3-6 Months / 6-12 Months",
-    care: "Gentle baby wash, dry flat",
-    colors: ["Pure Ivory", "Blush Peach", "Sage Mint", "Warm Camel"]
-  },
-  {
-    id: "prod-6",
-    name: "Cozy Ribbed Waffle Infinity Scarf",
-    category: "wearables",
-    price: 34,
-    badge: "Winter Essential",
-    badgeType: "featured",
-    image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=800&q=80",
-    description: "Thick textured waffle-stitch scarf offering double loop warmth without feeling heavy. Soft against sensitive skin with no scratchiness.",
-    yarnType: "Extra-Fine Merino Wool Blend",
-    dimensions: "150cm circumference x 25cm width",
-    care: "Hand wash cold, reshape and dry flat",
-    colors: ["Oatmeal Beige", "Terracotta Clay", "Charcoal Gray", "Forest Pine"]
-  },
-  {
-    id: "prod-7",
-    name: "Little Lavender Bunny Plushie",
-    category: "plushies",
-    price: 32,
-    badge: "Made with Love",
-    badgeType: "custom",
-    image: "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=800&q=80",
-    description: "Sweet sleepy bunny with long floppy ears, hand-embroidered sleepy eyelids, and a mini crochet ribbon bow. Child-safe and cuddle-ready.",
-    yarnType: "Super Soft Baby Velvet",
-    dimensions: "24cm ear-to-toe",
-    care: "Gentle surface wash",
-    colors: ["Lavender Purple", "Powder Cream", "Soft Butterscotch"]
-  },
-  {
-    id: "prod-8",
-    name: "Retro Checkered Bucket Hat",
-    category: "wearables",
-    price: 30,
-    badge: "Trending",
-    badgeType: "bestseller",
-    image: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?auto=format&fit=crop&w=800&q=80",
-    description: "Trendy 90s inspired checkered crochet bucket hat with a structured floppy brim. Breathable, durable, and festival-ready.",
-    yarnType: "100% Breathable Cotton Yarn",
-    dimensions: "One size fits most (56-58cm)",
-    care: "Hand wash cold, air dry on round bowl",
-    colors: ["Matcha & Ivory", "Chocolate & Cream", "Lilac & Butter Yellow"]
-  },
-  {
-    id: "prod-9",
-    name: "Boho Daisy Floral Coaster Set (Set of 4)",
-    category: "flowers",
-    price: 22,
-    badge: "Home Accent",
-    badgeType: "featured",
-    image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&w=800&q=80",
-    description: "Set of 4 absorbent handmade daisy crochet mug rugs. Protects wooden surfaces while adding cozy cafe vibes to your morning coffee routine.",
-    yarnType: "100% Cotton Mercerized Thread",
-    dimensions: "12cm diameter each",
-    care: "Machine wash delicate in mesh bag",
-    colors: ["White Petals / Yellow Center", "Mixed Pastel Petals", "Muted Terracotta"]
   }
 ];
 
@@ -136,36 +136,36 @@ const INSTAGRAM_POSTS = [
     caption: "A fresh batch of sunflower bouquets ready to brighten someone's day! 🌻 Which color combo is your favorite?",
     likes: "142",
     comments: "18",
-    image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80"
+    image: "images/hair_bands.jpg"
   },
   {
-    caption: "Baby booties & bonnet set heading off to a sweet newborn photoshoot 🤍 Custom orders open for next month!",
+    caption: "Baby booties & lace dress set heading off to a sweet newborn photoshoot 🤍 Custom orders open for next month!",
     likes: "215",
     comments: "31",
-    image: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=600&q=80"
+    image: "images/dresses.jpg"
   },
   {
-    caption: "Crochet tote bag in progress. Granny squares take patience, but the final texture is everything ✨",
+    caption: "Crochet bucket hat in progress. Granny squares take patience, but the final texture is everything ✨",
     likes: "189",
     comments: "24",
-    image: "https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&w=600&q=80"
+    image: "images/caps.jpg"
   },
   {
-    caption: "Meet the newest little bumblebee buddy 🐝 Crocheted with super plush chenille yarn. DM to adopt!",
+    caption: "Meet the newest little pouch buddy 🍓 Crocheted with super plush yarn and brass zipper. DM to adopt!",
     likes: "320",
     comments: "47",
-    image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80"
+    image: "images/pouch.jpg"
   },
   {
     caption: "Warm winter layers made by hand. Our ribbed waffle scarf in earthy terracotta 🍂 #crochetlove",
     likes: "167",
     comments: "15",
-    image: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?auto=format&fit=crop&w=600&q=80"
+    image: "images/scarf.jpg"
   },
   {
-    caption: "Close up of our cloud cardigan sleeves. Handcrafted slow fashion that lasts for years 🧶",
+    caption: "Close up of our table runner lace stitches. Handcrafted slow fashion that lasts for years 🧶",
     likes: "298",
     comments: "40",
-    image: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=600&q=80"
+    image: "images/table_runner.jpg"
   }
 ];

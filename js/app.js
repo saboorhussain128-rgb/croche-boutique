@@ -19,6 +19,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
   const navLinks = document.querySelector(".nav-links");
 
+  // Load custom WhatsApp number if saved in localStorage
+  const savedWhatsApp = localStorage.getItem("crochet_boutique_whatsapp");
+  if (savedWhatsApp) {
+    STORE_CONFIG.whatsappNumber = savedWhatsApp;
+  }
+
   let activeCategory = "all";
   let searchQuery = "";
 
@@ -108,8 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
           showToast("✨ Inquiry sent! We will review your request and get back to you shortly.");
           inquiryForm.reset();
         } else {
-          // Fallback if network blocked: open WhatsApp directly
-          showToast("Note: Email sent! You can also reach us directly via WhatsApp.");
+          showToast("🌸 Inquiry received! You can also reach us directly via WhatsApp.");
         }
       } catch (err) {
         showToast("🌸 Thank you! Your request was received. We'll be in touch soon!");
@@ -123,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 9. Instant WhatsApp Submit Handler
   if (btnSubmitWa) {
     btnSubmitWa.addEventListener("click", () => {
+      checkWhatsAppNumber();
       const name = document.getElementById("custName")?.value || "Customer";
       const item = document.getElementById("orderItem")?.value || "Custom Piece";
       const colors = document.getElementById("orderColors")?.value || "Open to suggestions";
@@ -147,13 +153,23 @@ Sent via The Crochet Boutique website`;
   }
 
   // Helper Functions
+  function checkWhatsAppNumber() {
+    if (STORE_CONFIG.whatsappNumber === "1234567890") {
+      const promptNum = prompt("Please enter the client's WhatsApp phone number (with country code, e.g., 923001234567 or 15551234567):", "");
+      if (promptNum && promptNum.trim()) {
+        const clean = promptNum.replace(/\D/g, "");
+        STORE_CONFIG.whatsappNumber = clean;
+        localStorage.setItem("crochet_boutique_whatsapp", clean);
+        applyStoreConfig();
+      }
+    }
+  }
+
   function applyStoreConfig() {
-    // Set WhatsApp links
     if (floatingWaBtn) {
       floatingWaBtn.href = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi! I'm interested in ordering a handcrafted crochet piece from your boutique 🧶")}`;
     }
 
-    // Set announcement
     const announcementEl = document.getElementById("announcementText");
     if (announcementEl) {
       announcementEl.textContent = STORE_CONFIG.announcement;
@@ -162,6 +178,7 @@ Sent via The Crochet Boutique website`;
 
   function populateProductSelect() {
     if (!itemSelect) return;
+    itemSelect.innerHTML = `<option value="" disabled selected>Select from catalog or custom piece</option>`;
     PRODUCTS.forEach(p => {
       const opt = document.createElement("option");
       opt.value = `${p.name} (${STORE_CONFIG.currency}${p.price})`;
@@ -227,18 +244,16 @@ Sent via The Crochet Boutique website`;
         </div>
       `;
 
-      // Quick Order click -> Smooth scroll to form & pre-select product
       card.querySelector(".btn-card-inquire").addEventListener("click", () => {
         selectProductAndScroll(p);
       });
 
-      // Quick WhatsApp click -> Open WhatsApp with this product
       card.querySelector(".btn-card-wa").addEventListener("click", (e) => {
         e.stopPropagation();
+        checkWhatsAppNumber();
         openWhatsAppForProduct(p);
       });
 
-      // Thumbnail click -> Quick View Modal
       card.querySelector(".product-thumb-wrap").addEventListener("click", () => {
         openQuickView(p);
       });
@@ -339,6 +354,7 @@ Sent via The Crochet Boutique website`;
     });
 
     document.getElementById("modalWaBtn").addEventListener("click", () => {
+      checkWhatsAppNumber();
       openWhatsAppForProduct(p);
     });
 
@@ -355,11 +371,14 @@ Sent via The Crochet Boutique website`;
 
   function formatCategory(cat) {
     const map = {
-      wearables: "Wearables & Tops",
-      plushies: "Amigurumi & Plushies",
-      bags: "Totes & Bags",
-      flowers: "Floral & Botanicals",
-      baby: "Baby & Keepsakes"
+      caps: "Caps & Hats",
+      dresses: "Dresses & Apparel",
+      gloves: "Gloves & Mitts",
+      hairbands: "Hair Bands & Accessories",
+      scarves: "Scarves & Shawls",
+      homedecor: "Table Runners & Decor",
+      bags: "Pouches & Bags",
+      plushies: "Amigurumi & Plushies"
     };
     return map[cat] || cat;
   }
