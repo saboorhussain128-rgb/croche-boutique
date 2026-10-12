@@ -601,6 +601,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   function formatCategory(cat) {
     const map = {
+      tops: "Tops & Shrugs",
       caps: "Caps & Hats",
       dresses: "Dresses",
       baby: "Romper & Cap Sets",
