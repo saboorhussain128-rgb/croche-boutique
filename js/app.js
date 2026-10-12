@@ -101,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData(inquiryForm);
       const emailEndpoint = `https://formsubmit.co/ajax/${STORE_CONFIG.inquiryEmail}`;
 
+      const custEmail = document.getElementById("custEmail")?.value || "";
       try {
         const response = await fetch(emailEndpoint, {
           method: "POST",
@@ -111,13 +112,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (response.ok) {
-          showToast("✨ Inquiry sent! We will review your request and get back to you shortly.");
+          showToast(`✨ Inquiry sent! A confirmation email will arrive at ${custEmail}.`);
           inquiryForm.reset();
         } else {
-          showToast("🌸 Inquiry received! You can also reach us directly via WhatsApp.");
+          showToast(`🌸 Thank you! We received your inquiry and will email you at ${custEmail}.`);
         }
       } catch (err) {
-        showToast("🌸 Thank you! Your request was received. We'll be in touch soon!");
+        showToast(`🌸 Thank you! Your inquiry was received. We'll be in touch soon!`);
       } finally {
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
@@ -372,13 +373,13 @@ Sent via The Crochet Boutique website`;
   function formatCategory(cat) {
     const map = {
       caps: "Caps & Hats",
-      dresses: "Dresses & Apparel",
-      gloves: "Gloves & Mitts",
-      hairbands: "Hair Bands & Accessories",
-      scarves: "Scarves & Shawls",
-      homedecor: "Table Runners & Decor",
-      bags: "Pouches & Bags",
-      plushies: "Amigurumi & Plushies"
+      dresses: "Dresses",
+      baby: "Romper & Cap Sets",
+      gloves: "Hand Gloves",
+      hairbands: "Hair Bands",
+      scarves: "Scarves",
+      homedecor: "Table Runners",
+      bags: "Pouches"
     };
     return map[cat] || cat;
   }

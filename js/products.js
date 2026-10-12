@@ -30,13 +30,26 @@ const PRODUCTS = [
     colors: ["Natural Cream / Ecru", "Soft Blush", "Sun-Kissed Sand", "Onyx Black"]
   },
   {
+    id: "prod-rompercap",
+    name: "Crochet Baby Romper & Matching Cap Set",
+    category: "baby",
+    badge: "Newborn Keepsake",
+    badgeType: "featured",
+    image: "images/romper_and_cap.jpg",
+    description: "Adorable handcrafted peach and cream striped baby romper with natural wooden buttons paired with a matching scalloped lace bonnet cap. Ultra-gentle on delicate newborn skin.",
+    yarnType: "100% Hypoallergenic Bamboo Baby Yarn",
+    dimensions: "Available in 0-3M, 3-6M, 6-12M & Custom",
+    care: "Delicate baby hand wash, reshape and lay flat to dry",
+    colors: ["Peach & Cream", "Sage & Ivory", "Soft Butterscotch", "Pure White"]
+  },
+  {
     id: "prod-gloves",
-    name: "Scalloped Lace Fingerless Gloves",
+    name: "Handcrafted Crochet Hand Gloves (Fingerless Mitts)",
     category: "gloves",
     badge: "Artisan Pick",
     badgeType: "featured",
     image: "images/gloves.jpg",
-    description: "Delicate and warm vintage-inspired fingerless wrist warmers with romantic scalloped edges and textured shell stitches. Free fingertips for easy phone typing and cozy coffee sips.",
+    description: "Delicate and warm vintage-inspired fingerless crochet hand gloves with romantic scalloped edges and textured shell stitches. Free fingertips for easy phone typing and cozy coffee sips.",
     yarnType: "Ultra-Soft Merino Wool & Cotton Blend",
     dimensions: "Approx. 18cm length (Stretchy snug fit)",
     care: "Hand wash cold, reshape and dry flat",
@@ -93,47 +106,21 @@ const PRODUCTS = [
     dimensions: "18cm width x 13cm height x 5cm depth",
     care: "Wipe with damp cloth or gentle hand wash inside out",
     colors: ["Cream with Strawberry", "Blush Pink with Daisy", "Sage with Peach"]
-  },
-  {
-    id: "prod-tote",
-    name: "Sunburst Granny Square Market Tote",
-    category: "bags",
-    badge: "Bestseller",
-    badgeType: "bestseller",
-    image: "https://images.unsplash.com/photo-1590736969955-71cc94801759?auto=format&fit=crop&w=800&q=80",
-    description: "Handcrafted 100% organic cotton granny square tote bag. Reinforced sturdy shoulder straps and generous storage for books, yarn skeins, and daily essentials.",
-    yarnType: "Premium Milk Cotton",
-    dimensions: "36cm x 34cm",
-    care: "Hand wash cold, air dry flat",
-    colors: ["Earthy Mustard & Sage", "Pastel Rainbow", "Vintage Rose & Cream"]
-  },
-  {
-    id: "prod-plushie",
-    name: "Velvet Bumblebee & Berry Plush Duo",
-    category: "plushies",
-    badge: "Customer Favorite",
-    badgeType: "featured",
-    image: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=800&q=80",
-    description: "Irresistibly cute handmade plush bee with glitter safety eyes and a matching sweet strawberry companion. Stuffed with hypoallergenic polyfill.",
-    yarnType: "Plush Chenille Velvet Yarn",
-    dimensions: "12cm height each",
-    care: "Spot clean with damp cloth",
-    colors: ["Sunny Yellow & Black", "Pastel Pink & White", "Baby Blue"]
   }
 ];
 
 const INSTAGRAM_POSTS = [
   {
-    caption: "A fresh batch of sunflower bouquets ready to brighten someone's day! 🌻 Which color combo is your favorite?",
+    caption: "A fresh batch of floral headbands ready to brighten someone's day! 🌻 Which color combo is your favorite?",
     likes: "142",
     comments: "18",
     image: "images/hair_bands.jpg"
   },
   {
-    caption: "Baby booties & lace dress set heading off to a sweet newborn photoshoot 🤍 Custom orders open for next month!",
+    caption: "Baby romper & scalloped cap set heading off to a sweet newborn photoshoot 🤍 Custom orders open for next month!",
     likes: "215",
     comments: "31",
-    image: "images/dresses.jpg"
+    image: "images/romper_and_cap.jpg"
   },
   {
     caption: "Crochet bucket hat in progress. Granny squares take patience, but the final texture is everything ✨",
