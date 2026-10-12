@@ -169,25 +169,36 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.innerHTML = `<span>🌸 Processing Your Request...</span>`;
       submitBtn.disabled = true;
 
-      // Build structured WhatsApp message (clean formatting without character corruption)
+      // Clean and format entered phone number so message targets the entered number
+      const targetPhone = formatWhatsAppTarget(custPhone);
+
+      // Build structured notification message addressed to customer with boutique owner contact
       const waMessage = 
-`*THE CROCHET BOUTIQUE - ORDER INQUIRY*
+`*THE CROCHET BOUTIQUE - PRODUCT DETAILS & ORDER NOTIFICATION*
 --------------------------------------------------
-*Product Requested:* ${itemName}
+Hello ${custName}! 
+
+Thank you for choosing The Crochet Boutique (@croche_boutiq). Here are the handcrafted specifications for your selected piece:
+
+*Product:* ${itemName}
 ${matchedProduct ? `*Yarn Specs:* ${matchedProduct.yarnType}
 *Dimensions:* ${matchedProduct.dimensions}
 *Care Guide:* ${matchedProduct.care}
-*Palette Options:* ${matchedProduct.colors.join(", ")}` : "*Custom Bespoke Request*"}
+*Available Colors:* ${matchedProduct.colors.join(", ")}` : "*Custom Bespoke Request*"}
 --------------------------------------------------
-*Customer Name:* ${custName}
-*Phone / WhatsApp:* ${custPhone}
-*Email Address:* ${custEmail}
-*Preferred Colors:* ${colors}
-*Custom Sizing / Notes:* ${notes}
+*Your Preferred Palette:* ${colors}
+*Your Sizing & Notes:* ${notes}
 --------------------------------------------------
-Requested via website (${channel.toUpperCase()})`;
+*HOW TO COMPLETE YOUR ORDER:*
+Our artisan is ready to craft your piece! You can chat directly with the boutique owner to finalize custom measurements, delivery slot, or color swatches:
 
-      const waUrl = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent(waMessage)}`;
+Boutique Owner WhatsApp: +91 9391040104
+Direct Chat Link: https://wa.me/919391040104
+Instagram: https://instagram.com/croche_boutiq
+--------------------------------------------------
+The Crochet Boutique - Handcrafted with Love`;
+
+      const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(waMessage)}`;
 
       // Prepare custom autoresponse content for FormSubmit
       const autoresponseInput = inquiryForm.querySelector('input[name="_autoresponse"]');
@@ -334,12 +345,11 @@ The Crochet Boutique (+91 9391040104)
 
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
         <a href="${data.waUrl}" target="_blank" rel="noopener" class="btn btn-whatsapp" style="flex: 1; text-align: center;">
-          <i class="fab fa-whatsapp"></i> Chat with Boutique (+91 9391040104)
+          <i class="fab fa-whatsapp"></i> Send Notification to (${data.phone})
         </a>
-        ${custDirectWaUrl ? `
-        <a href="${custDirectWaUrl}" target="_blank" rel="noopener" class="btn btn-secondary" style="flex: 1; text-align: center;">
-          <i class="fab fa-whatsapp" style="color: #25D366;"></i> Message Customer (${data.phone})
-        </a>` : ""}
+        <a href="https://wa.me/919391040104?text=${encodeURIComponent('Hi! I am following up on my crochet inquiry for ' + data.itemName + ' (Customer: ' + data.name + ', Phone: ' + data.phone + ')')}" target="_blank" rel="noopener" class="btn btn-secondary" style="flex: 1; text-align: center;">
+          <i class="fab fa-whatsapp" style="color: #25D366;"></i> Chat with Owner (+91 9391040104)
+        </a>
         ${data.email ? `
         <a href="mailto:${data.email}?subject=${encodeURIComponent('The Crochet Boutique: Details for ' + data.itemName)}&body=${encodeURIComponent('Hi ' + data.name + ',\n\nHere are the handcrafted details for ' + data.itemName + ':\n\n• Yarn: ' + (data.product ? data.product.yarnType : 'Custom') + '\n• Dimensions: ' + (data.product ? data.product.dimensions : 'Custom') + '\n• Care: ' + (data.product ? data.product.care : 'Hand wash cold') + '\n• Color: ' + data.colors + '\n• Notes: ' + data.notes + '\n\nThe Crochet Boutique\nWhatsApp: +91 9391040104\nInstagram: @croche_boutiq')}" class="btn btn-secondary" style="flex: 1; text-align: center;">
           <i class="fas fa-envelope-open-text"></i> Open Email Copy
@@ -356,6 +366,15 @@ The Crochet Boutique (+91 9391040104)
   }
 
   // Helper Functions
+  function formatWhatsAppTarget(phoneInput) {
+    if (!phoneInput) return STORE_CONFIG.whatsappNumber;
+    let digits = phoneInput.replace(/\D/g, "");
+    if (digits.length === 10) {
+      digits = "91" + digits; // Standard 10-digit Indian phone number
+    }
+    return digits.length >= 10 ? digits : STORE_CONFIG.whatsappNumber;
+  }
+
   function applyStoreConfig() {
     if (floatingWaBtn) {
       floatingWaBtn.href = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodeURIComponent("Hi! 🌸 I'm interested in ordering a handcrafted crochet piece from your boutique 🧶")}`;
