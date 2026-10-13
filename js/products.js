@@ -1,66 +1,79 @@
 /**
  * Catalog of Handcrafted Products for The Crochet Boutique
- * Based on @croche_boutiq Instagram showcase
+ * Based on @croche_boutiq Instagram showcase & genuine handcrafted inventory
  */
 const PRODUCTS = [
   {
-    id: "prod-bolero",
-    name: "Floral Granny Square Bolero Shrug",
+    id: "prod-sweater-xxl",
+    name: "Custom Chunky Braid Winter Sweater",
     category: "tops",
-    badge: "Viral Favorite",
+    badge: "Client Favorite",
     badgeType: "bestseller",
-    image: "images/bolero_shrug.jpg",
-    description: "Trendsetting open-front cropped bolero with dramatic flare bell sleeves, crafted from vintage pastel floral granny squares with delicate scalloped edging.",
-    yarnType: "100% Breathable Milk Cotton",
-    dimensions: "Custom Tailored (XS, S, M, L, XL)",
-    care: "Hand wash cold inside out, lay flat to dry",
-    colors: ["Pastel Blossom Mix", "Earthy Sage & Mustard", "Monochrome Cream & Ivory"]
+    image: "images/ig_CHupfP7BRvI.jpg",
+    description: "Custom-made chunky winter sweater featuring intricate 3D braided cable stitches, crafted with approx. 700g premium yarn and 5mm hook. Commissioned for @m.a.k.foods in XXL (custom sizes available on inquiry).",
+    yarnType: "Premium Chunky 3D Wool & Acrylic (700g)",
+    dimensions: "Custom Tailored (S, M, L, XL, XXL)",
+    care: "Hand wash cold inside out, reshape and lay flat to dry",
+    colors: ["Heather Gray", "Classic Charcoal", "Warm Cream", "Custom Tone"]
   },
   {
-    id: "prod-halter",
-    name: "Scalloped Lace Halter Crop Top",
-    category: "tops",
-    badge: "Festival Essential",
+    id: "prod-shawl",
+    name: "Triangular Winter Wrap Shawl",
+    category: "scarves",
+    badge: "Boutique Signature",
     badgeType: "featured",
-    image: "images/halter_top.jpg",
-    description: "Romantic summer festival halter top with intricate shell lace stitches, sweetheart scalloped border, and adjustable criss-cross lace-up back with boho tassel beads.",
-    yarnType: "Soft Mercerized Bamboo Cotton",
-    dimensions: "Custom Cup & Underbust Sizing (A, B, C, D+)",
-    care: "Gentle hand wash cold, reshape and dry flat",
-    colors: ["Cream & Sage Dual-Tone", "Sun-Kissed Sand", "Terracotta Clay", "Pure Ecru"]
+    image: "images/ig_CJBs-DlBzGs.jpg",
+    description: "Signature chunky triangular winter shawl featuring textured openwork stitches, cozy drape, and fringe edging with the official @croche_boutiq seal. Keeps you warm and stylish all season.",
+    yarnType: "Ultra-Soft Chunky Winter Yarn",
+    dimensions: "Approx. 165cm wingspan x 75cm depth",
+    care: "Gentle hand wash cold, lay flat to dry",
+    colors: ["Vintage Mustard", "Burgundy Wine", "Oatmeal Beige", "Charcoal Slate"]
   },
   {
-    id: "prod-sweater",
-    name: "Chunky Mesh Flare Sleeve Sweater",
+    id: "prod-summer-shell-top",
+    name: "Crochet Summer Shell Crop Top",
     category: "tops",
-    badge: "Cozy Boho",
-    badgeType: "custom",
-    image: "images/flare_sweater.jpg",
-    description: "Airy, oversized open-mesh crochet pullover sweater featuring exaggerated bell sleeves and ribbed scalloped boat neckline. Effortlessly chic over bralettes or slip dresses.",
-    yarnType: "Extra-Soft Chenille Velvet & Cotton Blend",
-    dimensions: "Relaxed Oversized Fit (S/M, L/XL)",
-    care: "Hand wash cold, squeeze gently in towel, dry flat",
-    colors: ["Warm Oatmeal Cream", "Dusty Rose", "Sage Green", "Charcoal Mist"]
+    badge: "Summer Essential",
+    badgeType: "featured",
+    image: "images/ig_CxJM5tFIL-H.jpg",
+    description: "Handmade lightweight summer shell stitch crop top styled on wooden hanger. Features intricate scalloped edges and breathable lace design, perfect for festival and warm weather layering.",
+    yarnType: "100% Breathable Milk Cotton",
+    dimensions: "Small / Custom Bust Sizing (XS, S, M, L)",
+    care: "Hand wash cold, air dry flat",
+    colors: ["Magenta Rose", "Olive Green", "Royal Purple", "Sun-Kissed Sand"]
   },
   {
-    id: "prod-dresses",
-    name: "Boho Lace Motif Summer Dress",
-    category: "dresses",
-    badge: "Custom Fit",
-    badgeType: "custom",
-    image: "images/dresses.jpg",
-    description: "Exquisite hand-crocheted bohemian summer dress with intricate floral lace openwork and scalloped hemline. Lightweight, airy drape, tailored to your custom bust and waist measurements.",
-    yarnType: "Premium Mercerized Bamboo Cotton",
-    dimensions: "Custom Sized (XS, S, M, L, XL, XXL)",
-    care: "Gentle hand wash cold with mild detergent, dry flat",
-    colors: ["Natural Cream / Ecru", "Soft Blush", "Sun-Kissed Sand", "Onyx Black"]
+    id: "prod-sling-bag",
+    name: "Handmade Dual-Tone Crochet Sling Bag",
+    category: "bags",
+    badge: "Everyday Chic",
+    badgeType: "bestseller",
+    image: "images/ig_CH-fP3kBb8_.jpg",
+    description: "Charming handcrafted crochet sling bag in pastel pink and white featuring a sturdy braided shoulder strap, dense weave body, and secure closure. Lightweight for outings and daily essentials.",
+    yarnType: "Reinforced Multi-Ply Cotton Cord",
+    dimensions: "20cm width x 16cm height (110cm strap)",
+    care: "Spot clean with damp cloth or gentle hand wash",
+    colors: ["Pastel Pink & White", "Sage Green & Cream", "Lilac & Ivory"]
   },
   {
-    id: "prod-rompercap",
-    name: "Crochet Baby Romper & Matching Cap Set",
+    id: "prod-baby-blanket",
+    name: "Cloud-Soft Baby Wrap & Blanket",
+    category: "baby",
+    badge: "Baby Keepsake",
+    badgeType: "featured",
+    image: "images/ig_C20K7HEhjVy.jpg",
+    description: "Cloud-soft baby swaddle wrap and receiving blanket handcrafted in sky blue and pure white. Hypoallergenic, featherlight, and non-irritating for delicate newborn skin.",
+    yarnType: "100% Hypoallergenic Baby Milk Cotton",
+    dimensions: "85cm x 85cm (Custom cot sizes available)",
+    care: "Delicate baby wash cold, lay flat to dry",
+    colors: ["Sky Blue & White", "Blush Pink & Ivory", "Buttercup Yellow", "Mint Green"]
+  },
+  {
+    id: "prod-romper-set",
+    name: "Baby Romper & Matching Bonnet Cap Set",
     category: "baby",
     badge: "Newborn Keepsake",
-    badgeType: "featured",
+    badgeType: "bestseller",
     image: "images/romper_and_cap.jpg",
     description: "Adorable handcrafted peach and cream striped baby romper with natural wooden buttons paired with a matching scalloped lace bonnet cap. Ultra-gentle on delicate newborn skin.",
     yarnType: "100% Hypoallergenic Bamboo Baby Yarn",
@@ -69,7 +82,20 @@ const PRODUCTS = [
     colors: ["Peach & Cream", "Sage & Ivory", "Soft Butterscotch", "Pure White"]
   },
   {
-    id: "prod-caps",
+    id: "prod-bobble-headband",
+    name: "Textured Bobble Ear-Warmer Headband",
+    category: "caps",
+    badge: "Winter Warmth",
+    badgeType: "featured",
+    image: "images/ig_CxAuDhSBjWJ.jpg",
+    description: "Handcrafted royal blue textured bobble-stitch ear-warmer headband. Elastic stretch ensures snug comfort while keeping ears toasty during breezy outings.",
+    yarnType: "Premium Anti-Pilling Acrylic Wool",
+    dimensions: "Universal Stretch Fit (52-58cm)",
+    care: "Hand wash cold, dry flat",
+    colors: ["Royal Blue", "Forest Green", "Dusty Mauve", "Warm Cream"]
+  },
+  {
+    id: "prod-daisy-hat",
     name: "Granny Square Daisy Bucket Hat",
     category: "caps",
     badge: "Trending",
@@ -82,8 +108,8 @@ const PRODUCTS = [
     colors: ["Sage Green & Cream", "Vintage Rose & Ivory", "Butter Yellow & White"]
   },
   {
-    id: "prod-gloves",
-    name: "Handcrafted Crochet Hand Gloves (Fingerless Mitts)",
+    id: "prod-fingerless-gloves",
+    name: "Handcrafted Crochet Hand Gloves (Fingerless)",
     category: "gloves",
     badge: "Artisan Pick",
     badgeType: "featured",
@@ -95,94 +121,109 @@ const PRODUCTS = [
     colors: ["Pure Cream", "Dusty Rose", "Oatmeal Heather", "Forest Moss"]
   },
   {
-    id: "prod-hairbands",
-    name: "Handmade Daisy Floral Headband & Bandana Set",
-    category: "hairbands",
-    badge: "Cottagecore Favorite",
+    id: "prod-lipbalm-holder",
+    name: "Everyday Lip Balm & Perfume Holder Keychain",
+    category: "accessories",
+    badge: "Handy Cutie",
     badgeType: "bestseller",
-    image: "images/hair_bands.jpg",
-    description: "Charming cottagecore headband with 3D raised white daisy flowers and green leaves with adjustable tie straps, accompanied by a matching textured linen-cotton hair bandana.",
-    yarnType: "Soft Anti-Pilling Baby Cotton",
-    dimensions: "Universal Adult & Teen Size (Adjustable ties)",
-    care: "Spot clean or gentle hand wash",
-    colors: ["Classic Daisy (White/Yellow/Green)", "Sunflower Gold", "Lilac Blossom"]
+    image: "images/ig_CKnLjpoBtpL.jpg",
+    description: "Clever and adorable handcrafted crochet sleeve pouch keychain made to securely hold your everyday lip balm, lipstick, or travel perfume spray. Clips right onto keys or handbags.",
+    yarnType: "Durable Double-Twist Cotton",
+    dimensions: "9cm height x 3cm diameter (Keyring included)",
+    care: "Hand wash cold, air dry",
+    colors: ["Pastel Lavender", "Bubblegum Pink", "Mint Green", "Sunny Yellow"]
   },
   {
-    id: "prod-scarf",
-    name: "Cozy Waffle Stitch Infinity Scarf",
-    category: "scarves",
-    badge: "Winter Warmth",
+    id: "prod-bow-dress-trio",
+    name: "Miniature Bow Dress Keychains Trio",
+    category: "accessories",
+    badge: "Gift Set",
     badgeType: "featured",
-    image: "images/scarf.jpg",
-    description: "Deep textured waffle-knit crochet scarf offering cloud-like warmth with zero itchiness. Double loop design that holds heat beautifully during chilly autumn and winter evenings.",
-    yarnType: "Extra-Fine Australian Merino Blend",
-    dimensions: "145cm circumference x 26cm width",
-    care: "Hand wash in cool water with wool shampoo, dry flat",
-    colors: ["Warm Terracotta / Mustard", "Oatmeal Beige", "Charcoal Slate", "Emerald Pine"]
+    image: "images/ig_CN8CV0Oho8v.jpg",
+    description: "Set of three miniature crochet dress keychains adorned with cute bow accents in teal, peach-orange, and pastel pink. Wonderful as bag charms, return gifts, or friendship keepsakes.",
+    yarnType: "Fine Mercerized Cotton Thread",
+    dimensions: "Set of 3 (Each approx. 6cm x 5cm)",
+    care: "Spot clean only",
+    colors: ["Teal / Orange / Pink Trio", "Custom Color Set"]
   },
   {
-    id: "prod-tablerunner",
-    name: "Heirloom Macrame Lace Table Runner",
-    category: "homedecor",
-    badge: "Home Decor",
+    id: "prod-dress-charm",
+    name: "Signature Miniature Dress Charm Keychain",
+    category: "accessories",
+    badge: "Artisan Charm",
     badgeType: "custom",
-    image: "images/table_runner.jpg",
-    description: "Stunning dining centerpiece featuring handcrafted geometric lace medallions and elegant fringe tassels. Adds rustic boho charm to coffee tables, dining setups, and festive gatherings.",
-    yarnType: "100% Natural Unbleached Cotton Cord",
-    dimensions: "180cm x 35cm (Custom lengths available)",
-    care: "Gently hand wash, lay flat to dry, steam press lightly",
-    colors: ["Natural Ivory / Off-White", "Warm Oatmeal", "Antique Beige"]
-  },
-  {
-    id: "prod-pouch",
-    name: "Embroidered Strawberry Crochet Cosmetic Pouch",
-    category: "bags",
-    badge: "Cute & Practical",
-    badgeType: "bestseller",
-    image: "images/pouch.jpg",
-    description: "Sweet textured crochet zipper clutch with a hand-embroidered strawberry motif and antique brass zipper. Fully lined to securely store cosmetics, coins, keys, or AirPods.",
-    yarnType: "Dense Durable Milk Cotton Yarn",
-    dimensions: "18cm width x 13cm height x 5cm depth",
-    care: "Wipe with damp cloth or gentle hand wash inside out",
-    colors: ["Cream with Strawberry", "Blush Pink with Daisy", "Sage with Peach"]
+    image: "images/ig_CMkJJW7BC0u.jpg",
+    description: "Official @croche_boutiq signature miniature dress charm with gold keyring and lobster clasp. Hand-stitched with tiny ruffled sleeves and flared skirt detail.",
+    yarnType: "Soft Combed Cotton",
+    dimensions: "Approx. 7cm height",
+    care: "Spot clean gently",
+    colors: ["Candy Pink & White", "Lilac Blossom", "Teal Breeze", "Crimson"]
   }
 ];
 
 const INSTAGRAM_POSTS = [
   {
-    caption: "Our new floral granny square bolero shrug is here! 🌸 Perfect bell sleeves and cozy stitches. DM to order!",
-    likes: "264",
-    comments: "38",
-    image: "images/bolero_shrug.jpg"
+    shortcode: "CHupfP7BRvI",
+    url: "https://www.instagram.com/p/CHupfP7BRvI/",
+    caption: "It took about 30 days (40 hrs) to make this beautiful custom XXL sweater for @m.a.k.foods with 700g yarn & 5mm hook 🧶 A handmade happiness!",
+    likes: "40",
+    comments: "8",
+    image: "images/ig_CHupfP7BRvI.jpg"
   },
   {
-    caption: "Summer festival ready in our scalloped halter crop top 🌾 Custom measurements open for next week!",
-    likes: "318",
-    comments: "42",
-    image: "images/halter_top.jpg"
+    shortcode: "CJBs-DlBzGs",
+    url: "https://www.instagram.com/p/CJBs-DlBzGs/",
+    caption: "Chunky triangular winter wrap shawl with custom textured edging. Handcrafted with love at @croche_boutiq ❄️",
+    likes: "40",
+    comments: "11",
+    image: "images/ig_CJBs-DlBzGs.jpg"
   },
   {
-    caption: "The coziest airy mesh knit sweater 🧶 Oversized bell sleeves for chilly morning coffee.",
-    likes: "285",
-    comments: "29",
-    image: "images/flare_sweater.jpg"
+    shortcode: "CxJM5tFIL-H",
+    url: "https://www.instagram.com/p/CxJM5tFIL-H/",
+    caption: "Crochet summer shell crop top 🌸 Small Size. Vibrant tones in shell stitch. DM or WhatsApp for custom sizing!",
+    likes: "19",
+    comments: "0",
+    image: "images/ig_CxJM5tFIL-H.jpg"
   },
   {
-    caption: "Baby romper & scalloped cap set heading off to a sweet newborn photoshoot 🤍 Custom orders open!",
-    likes: "215",
-    comments: "31",
-    image: "images/romper_and_cap.jpg"
+    shortcode: "CH-fP3kBb8_",
+    url: "https://www.instagram.com/p/CH-fP3kBb8_/",
+    caption: "Pastel pink & white handcrafted crochet sling bag with braided handle. Compact and lightweight for everyday outings 💖",
+    likes: "29",
+    comments: "4",
+    image: "images/ig_CH-fP3kBb8_.jpg"
   },
   {
-    caption: "Warm winter layers made by hand. Our ribbed waffle scarf in earthy terracotta 🍂 #crochetlove",
-    likes: "167",
-    comments: "15",
-    image: "images/scarf.jpg"
+    shortcode: "C20K7HEhjVy",
+    url: "https://www.instagram.com/p/C20K7HEhjVy/",
+    caption: "Cloud-soft baby blanket & swaddle wrap in pastel sky blue and ivory. Hypoallergenic yarn for the sweetest dreams 👶",
+    likes: "12",
+    comments: "3",
+    image: "images/ig_C20K7HEhjVy.jpg"
   },
   {
-    caption: "Close up of our table runner lace stitches. Handcrafted slow fashion that lasts for years 🧶",
-    likes: "298",
-    comments: "40",
-    image: "images/table_runner.jpg"
+    shortcode: "CKnLjpoBtpL",
+    url: "https://www.instagram.com/p/CKnLjpoBtpL/",
+    caption: "Everyday lip balm & travel perfume holder keychain. Never lose your lip balm in your bag again! 💄✨",
+    likes: "36",
+    comments: "2",
+    image: "images/ig_CKnLjpoBtpL.jpg"
+  },
+  {
+    shortcode: "CN8CV0Oho8v",
+    url: "https://www.instagram.com/p/CN8CV0Oho8v/",
+    caption: "Miniature bow dress keychains trio in teal, orange, and pink! Cute favors and bag charms 👗🎀",
+    likes: "29",
+    comments: "4",
+    image: "images/ig_CN8CV0Oho8v.jpg"
+  },
+  {
+    shortcode: "CMkJJW7BC0u",
+    url: "https://www.instagram.com/p/CMkJJW7BC0u/",
+    caption: "Miniature crochet dress keychain with gold hardware. Handcrafted happiness in every tiny stitch! 🧶",
+    likes: "19",
+    comments: "2",
+    image: "images/ig_CMkJJW7BC0u.jpg"
   }
 ];

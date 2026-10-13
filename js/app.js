@@ -488,7 +488,7 @@ The Crochet Boutique (+91 9391040104)
 
     INSTAGRAM_POSTS.forEach(post => {
       const card = document.createElement("a");
-      card.href = STORE_CONFIG.instagramUrl;
+      card.href = post.url || STORE_CONFIG.instagramUrl;
       card.target = "_blank";
       card.rel = "noopener noreferrer";
       card.className = "ig-card";
@@ -601,15 +601,13 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   function formatCategory(cat) {
     const map = {
-      tops: "Tops & Shrugs",
-      caps: "Caps & Hats",
-      dresses: "Dresses",
-      baby: "Romper & Cap Sets",
+      tops: "Sweaters & Tops",
+      scarves: "Shawls & Scarves",
+      bags: "Sling Bags & Pouches",
+      baby: "Baby Wear & Sets",
+      caps: "Caps & Headwear",
       gloves: "Hand Gloves",
-      hairbands: "Hair Bands",
-      scarves: "Scarves",
-      homedecor: "Table Runners",
-      bags: "Pouches"
+      accessories: "Charms & Accessories"
     };
     return map[cat] || cat;
   }
