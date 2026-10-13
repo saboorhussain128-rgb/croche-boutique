@@ -1595,3 +1595,415 @@ textarea.form-control {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   6 High-Impact Customer Features Styling
+   ========================================================================== */
+
+/* 1. Interactive Yarn Swatch Picker */
+.yarn-swatches-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.yarn-swatch-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: white;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.yarn-swatch-color {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+  display: inline-block;
+  border: 1px solid rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+
+.yarn-swatch-item:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.yarn-swatch-item.active {
+  background: #FFF2F4;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 2px 8px rgba(200, 109, 118, 0.2);
+}
+
+.yarn-swatch-item.active::after {
+  content: '✓';
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+/* 2. Visual Sizing Guide & Link */
+.btn-sizing-guide-link {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: underline;
+  padding: 0;
+  transition: var(--transition);
+}
+
+.btn-sizing-guide-link:hover {
+  color: var(--color-primary-hover);
+}
+
+.sizing-modal-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-border-light);
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.sizing-tab-btn {
+  background: none;
+  border: none;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.sizing-tab-btn.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.sizing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  margin-bottom: 20px;
+}
+
+.sizing-table th {
+  background: var(--color-surface-tint);
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 700;
+  color: var(--color-text-main);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sizing-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text-muted);
+}
+
+.sizing-table tr:hover td {
+  background: #FCFAF6;
+}
+
+.custom-measure-box {
+  background: var(--color-surface-tint);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-top: 18px;
+  border: 1px dashed var(--color-secondary);
+}
+
+.custom-measure-box h4 {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-secondary);
+}
+
+/* 3. Gift Packaging Option */
+.gift-option-card {
+  background: #FCF8F2;
+  border: 1.5px dashed var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.gift-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.gift-checkbox-label input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+.gift-label-text strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+}
+
+.gift-label-text small {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.gift-details-collapse {
+  animation: fadeIn 0.3s ease;
+}
+
+/* 4. Bring Your Own Reference Photo */
+.custom-reference-box {
+  background: #FAF7F2;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.reference-toggle-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: 10px;
+}
+
+.reference-inputs-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-upload-photo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 11px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+}
+
+.btn-upload-photo:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.photo-preview-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 12px;
+  padding: 10px;
+  background: white;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-light);
+  animation: fadeIn 0.3s ease;
+}
+
+.photo-preview-container img {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-remove-photo {
+  background: #FEE7EB;
+  color: #C24559;
+  border: none;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* 5. Live Turnaround Time & Event Date */
+.live-turnaround-badge {
+  background: linear-gradient(135deg, #E6F3EE, #D8EAE3);
+  border: 1px solid #C2DEC5;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.turnaround-pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: #25D366;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.25);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(37, 211, 102, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+.rush-order-notice {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: #B55227;
+  background: #FFF2EB;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  animation: fadeIn 0.3s ease;
+}
+
+/* 6. Dedicated Care Guide Section */
+.care-section {
+  padding: 80px 0;
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border-light);
+}
+
+.care-tabs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.care-card {
+  background: #FCFBF9;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  transition: var(--transition);
+}
+
+.care-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary-light);
+}
+
+.care-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 14px;
+}
+
+.care-card h4 {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.care-card p {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.dos-donts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.dos-card {
+  background: #F2F8F5;
+  border: 1px solid #D1E7DC;
+  border-radius: var(--radius-md);
+  padding: 22px;
+}
+
+.donts-card {
+  background: #FDF3F3;
+  border: 1px solid #F9D6D6;
+  border-radius: var(--radius-md);
+  padding: 22px;
+}
+
+.dos-card h4 {
+  color: #2F6955;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.donts-card h4 {
+  color: #C24559;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dos-card ul, .donts-card ul {
+  list-style: none;
+  font-size: 0.86rem;
+  color: var(--color-text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .dos-donts-grid {
+    grid-template-columns: 1fr;
+  }
+  .reference-inputs-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

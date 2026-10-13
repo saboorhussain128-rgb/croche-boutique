@@ -25,6 +25,41 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileMenuToggle = document.getElementById("mobileMenuToggle");
   const navLinks = document.querySelector(".nav-links");
 
+  // Elements for 6 High-Impact Features
+  const yarnSwatchesGrid = document.getElementById("yarnSwatchesGrid");
+  const sizingGuideModal = document.getElementById("sizingGuideModal");
+  const sizingModalCloseBtn = document.getElementById("sizingModalCloseBtn");
+  const btnOpenSizingModal = document.getElementById("btnOpenSizingModal");
+  const navSizingBtn = document.getElementById("navSizingBtn");
+  const footerSizingBtns = document.querySelectorAll(".footer-sizing-btn");
+  const btnApplyMeasurements = document.getElementById("btnApplyMeasurements");
+  const isGiftOrder = document.getElementById("isGiftOrder");
+  const giftDetailsCollapse = document.getElementById("giftDetailsCollapse");
+  const referencePhotoInput = document.getElementById("referencePhotoInput");
+  const photoPreviewContainer = document.getElementById("photoPreviewContainer");
+  const photoPreviewImg = document.getElementById("photoPreviewImg");
+  const photoPreviewName = document.getElementById("photoPreviewName");
+  const btnRemovePhoto = document.getElementById("btnRemovePhoto");
+  const needByDateInput = document.getElementById("needByDate");
+  const rushOrderNotice = document.getElementById("rushOrderNotice");
+  const liveTurnaroundDates = document.getElementById("liveTurnaroundDates");
+
+  let uploadedReferencePhotoName = "";
+
+  // Boutique Yarn Swatches Palette Data
+  const BOUTIQUE_SWATCHES = [
+    { name: "Sage Green", color: "#9CAF88" },
+    { name: "Dusty Rose", color: "#DCAE96" },
+    { name: "Oatmeal Cream", color: "#F5EBE1" },
+    { name: "Buttercup Yellow", color: "#FDE68A" },
+    { name: "Terracotta Pink", color: "#C86D76" },
+    { name: "Lilac Lavender", color: "#C7B8E2" },
+    { name: "Soft Ivory", color: "#FFFFF0" },
+    { name: "Forest Pine", color: "#3D5A47" },
+    { name: "Ocean Sky", color: "#93C5FD" },
+    { name: "Warm Mocha", color: "#8D6E63" }
+  ];
+
   // Load custom WhatsApp number if saved in localStorage
   const savedWhatsApp = localStorage.getItem("crochet_boutique_whatsapp");
   if (savedWhatsApp) {
@@ -44,7 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   renderInstagramFeed();
 
-  // 4. Category Filter Tabs
+  // 4. Initialize 6 High-Impact Features
+  initYarnSwatches();
+  initSizingGuide();
+  initGiftOption();
+  initReferencePhoto();
+  initTurnaroundAndNeedBy();
+
+  // 5. Category Filter Tabs
   categoryTabs.forEach(tab => {
     tab.addEventListener("click", () => {
       categoryTabs.forEach(t => t.classList.remove("active"));
@@ -90,8 +132,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.target === quickViewModal) closeModal();
     });
   }
+  if (sizingModalCloseBtn) {
+    sizingModalCloseBtn.addEventListener("click", closeSizingModal);
+  }
+  if (sizingGuideModal) {
+    sizingGuideModal.addEventListener("click", (e) => {
+      if (e.target === sizingGuideModal) closeSizingModal();
+    });
+  }
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeModal();
+    if (e.key === "Escape") {
+      closeModal();
+      closeSizingModal();
+    }
   });
 
   // 8. Dynamic Channel Preference Selector
@@ -162,6 +215,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const notes = document.getElementById("orderNotes")?.value || "None";
       const channel = document.querySelector('input[name="deliveryChannel"]:checked')?.value || "whatsapp";
 
+      const refUrl = document.getElementById("referenceUrl")?.value?.trim() || "";
+      const needByDate = document.getElementById("needByDate")?.value || "";
+      const isGift = document.getElementById("isGiftOrder")?.checked || false;
+      const giftRecipient = document.getElementById("giftRecipient")?.value?.trim() || "";
+      const giftOccasion = document.getElementById("giftOccasion")?.value?.trim() || "";
+      const giftMessage = document.getElementById("giftMessage")?.value?.trim() || "";
+
+      let isRush = false;
+      if (needByDate) {
+        const diffDays = Math.ceil((new Date(needByDate) - new Date()) / (1000 * 60 * 60 * 24));
+        if (diffDays >= 0 && diffDays <= 7) isRush = true;
+      }
+
       const matchedProduct = PRODUCTS.find(p => p.name === itemName);
 
       const submitBtn = btnMainSubmit;
@@ -173,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const targetPhone = formatWhatsAppTarget(custPhone);
 
       // Build structured notification message addressed to customer with boutique owner contact
-      const waMessage = 
+      let waMessage = 
 `*THE CROCHET BOUTIQUE - PRODUCT DETAILS & ORDER NOTIFICATION*
 --------------------------------------------------
 Hello ${custName}! 
@@ -187,8 +253,25 @@ ${matchedProduct ? `*Yarn Specs:* ${matchedProduct.yarnType}
 *Available Colors:* ${matchedProduct.colors.join(", ")}` : "*Custom Bespoke Request*"}
 --------------------------------------------------
 *Your Preferred Palette:* ${colors}
-*Your Sizing & Notes:* ${notes}
---------------------------------------------------
+*Your Sizing & Notes:* ${notes}`;
+
+      if (refUrl || uploadedReferencePhotoName) {
+        waMessage += `\n*Reference:* ${refUrl ? refUrl : ""}${uploadedReferencePhotoName ? ` (Photo: ${uploadedReferencePhotoName})` : ""}`;
+      }
+
+      if (needByDate) {
+        waMessage += `\n*Need-By Date:* ${needByDate}${isRush ? " [⚡ Priority Rush Slot]" : ""}`;
+      }
+
+      if (isGift) {
+        waMessage += `\n--------------------------------------------------
+*Complimentary Gift Packaging:* Included (Kraft Box & Satin Ribbon)
+*Gift Recipient:* ${giftRecipient || "Special someone"}
+*Occasion:* ${giftOccasion || "Special occasion"}
+*Handwritten Card Note:* "${giftMessage || "Crafted with love"}"`;
+      }
+
+      waMessage += `\n--------------------------------------------------
 *HOW TO COMPLETE YOUR ORDER:*
 Our artisan is ready to craft your piece! You can chat directly with the boutique owner to finalize custom measurements, delivery slot, or color swatches:
 
@@ -203,7 +286,7 @@ The Crochet Boutique - Handcrafted with Love`;
       // Prepare custom autoresponse content for FormSubmit
       const autoresponseInput = inquiryForm.querySelector('input[name="_autoresponse"]');
       if (autoresponseInput) {
-        autoresponseInput.value = 
+        let autoresponseContent = 
 `Hello ${custName},
 
 Thank you for your inquiry with The Crochet Boutique (@croche_boutiq)!
@@ -216,8 +299,22 @@ ${matchedProduct ? `• Yarn Material: ${matchedProduct.yarnType}
 • Care Instructions: ${matchedProduct.care}
 • Available Colors: ${matchedProduct.colors.join(", ")}` : "• Custom Handcrafted Commission"}
 • Your Preferred Color Palette: ${colors}
-• Your Notes & Sizing: ${notes}
---------------------------------------------------
+• Your Notes & Sizing: ${notes}`;
+
+        if (refUrl || uploadedReferencePhotoName) {
+          autoresponseContent += `\n• Reference: ${refUrl || ""} ${uploadedReferencePhotoName ? `(Photo: ${uploadedReferencePhotoName})` : ""}`;
+        }
+        if (needByDate) {
+          autoresponseContent += `\n• Event Need-By Date: ${needByDate} ${isRush ? "(Priority Rush Queue Requested)" : ""}`;
+        }
+        if (isGift) {
+          autoresponseContent += `\n• Complimentary Gift Packaging: Yes (Kraft box, ribbon & handwritten note)
+• Gift Recipient: ${giftRecipient || "Special someone"}
+• Occasion: ${giftOccasion || "Celebration"}
+• Card Message: "${giftMessage || "Warm wishes"}"`;
+        }
+
+        autoresponseContent += `\n--------------------------------------------------
 
 Our artisan is reviewing your request and will reach out with final yarn availability, custom measurements, and timeline.
 
@@ -226,6 +323,8 @@ You can also chat directly with us on WhatsApp at +91 9391040104 anytime.
 With love & cozy stitches,
 The Crochet Boutique
 Instagram: @croche_boutiq`;
+
+        autoresponseInput.value = autoresponseContent;
       }
 
       // Handle delivery based on customer selection
@@ -266,12 +365,24 @@ Instagram: @croche_boutiq`;
           itemName: itemName,
           colors: colors,
           notes: notes,
+          refUrl: refUrl,
+          refPhoto: uploadedReferencePhotoName,
+          needByDate: needByDate,
+          isGift: isGift,
+          giftRecipient: giftRecipient,
+          giftOccasion: giftOccasion,
+          giftMessage: giftMessage,
           waUrl: waUrl,
           emailDelivered: emailDelivered
         });
 
         inquiryForm.reset();
         if (specsBox) specsBox.style.display = "none";
+        if (giftDetailsCollapse) giftDetailsCollapse.style.display = "none";
+        if (photoPreviewContainer) photoPreviewContainer.style.display = "none";
+        if (rushOrderNotice) rushOrderNotice.style.display = "none";
+        uploadedReferencePhotoName = "";
+        document.querySelectorAll(".yarn-swatch-item.active").forEach(el => el.classList.remove("active"));
       } catch (err) {
         if (channel === "whatsapp" || channel === "both") {
           window.open(waUrl, "_blank");
@@ -289,25 +400,6 @@ Instagram: @croche_boutiq`;
     if (!quickViewModal || !modalBody) return;
 
     const channelText = data.channel === "whatsapp" ? "WhatsApp" : data.channel === "email" ? "Email" : "WhatsApp & Email";
-
-    const cleanDigits = (data.phone || "").replace(/\D/g, "");
-    const custDirectWaUrl = cleanDigits.length >= 10 ? 
-      `https://wa.me/${cleanDigits.startsWith("91") ? cleanDigits : ("91" + cleanDigits)}?text=${encodeURIComponent(
-`*THE CROCHET BOUTIQUE - ORDER CONFIRMATION*
---------------------------------------------------
-Hi ${data.name}! Thank you for your inquiry with @croche_boutiq.
-
-Here are the details for your custom piece (${data.itemName}):
-* Yarn: ${data.product ? data.product.yarnType : 'Custom'}
-* Sizing: ${data.product ? data.product.dimensions : 'Custom'}
-* Care: ${data.product ? data.product.care : 'Hand wash cold'}
-* Preferred Colors: ${data.colors}
-* Notes: ${data.notes}
-
-We are checking our yarn stock and will confirm your delivery timeframe!
---------------------------------------------------
-The Crochet Boutique (+91 9391040104)
-`)}` : "";
 
     modalBody.innerHTML = `
       <div style="text-align: center; margin-bottom: 24px;">
@@ -331,16 +423,15 @@ The Crochet Boutique (+91 9391040104)
           </div>
         </div>
 
-        ${data.product ? `
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.86rem; border-top: 1px solid var(--color-border-light); padding-top: 14px;">
-          <p><strong>🧶 Yarn:</strong> ${data.product.yarnType}</p>
-          <p><strong>📐 Dimensions:</strong> ${data.product.dimensions}</p>
-          <p><strong>🧼 Care:</strong> ${data.product.care}</p>
+          <p><strong>🧶 Yarn:</strong> ${data.product ? data.product.yarnType : 'Bespoke'}</p>
+          <p><strong>📐 Dimensions:</strong> ${data.product ? data.product.dimensions : 'Custom Fit'}</p>
+          <p><strong>🧼 Care:</strong> ${data.product ? data.product.care : 'Hand wash cold'}</p>
           <p><strong>🎨 Palette:</strong> ${data.colors}</p>
+          ${data.needByDate ? `<p><strong>📅 Need-By:</strong> ${data.needByDate}</p>` : ""}
+          ${data.refPhoto ? `<p><strong>📷 Reference:</strong> Photo Attached</p>` : ""}
+          ${data.isGift ? `<p style="grid-column: 1/-1; color: var(--color-accent); font-weight: 600;">🎁 Gift Packaging: Handwritten card for ${data.giftRecipient || 'recipient'}</p>` : ""}
         </div>
-        ` : `
-        <p style="font-size: 0.88rem; color: var(--color-text-muted);">Custom design notes: ${data.notes}</p>
-        `}
       </div>
 
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
@@ -363,6 +454,168 @@ The Crochet Boutique (+91 9391040104)
     document.getElementById("modalDoneBtn")?.addEventListener("click", closeModal);
     quickViewModal.classList.add("active");
     document.body.style.overflow = "hidden";
+  }
+
+  // 12. Feature 1: Interactive Yarn Swatches Logic
+  function initYarnSwatches() {
+    if (!yarnSwatchesGrid) return;
+    yarnSwatchesGrid.innerHTML = "";
+
+    BOUTIQUE_SWATCHES.forEach(swatch => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "yarn-swatch-item";
+      item.dataset.color = swatch.name;
+      item.innerHTML = `<span class="yarn-swatch-color" style="background-color: ${swatch.color};"></span>${swatch.name}`;
+      
+      item.addEventListener("click", () => {
+        item.classList.toggle("active");
+        updateColorsInputFromSwatches();
+      });
+
+      yarnSwatchesGrid.appendChild(item);
+    });
+  }
+
+  function updateColorsInputFromSwatches() {
+    const colorsInput = document.getElementById("orderColors");
+    if (!colorsInput) return;
+    const activeItems = Array.from(document.querySelectorAll(".yarn-swatch-item.active")).map(el => el.dataset.color);
+    if (activeItems.length > 0) {
+      colorsInput.value = activeItems.join(", ");
+    }
+  }
+
+  // 13. Feature 2: Visual Sizing Guide & Fit Calculator
+  function initSizingGuide() {
+    if (btnOpenSizingModal) {
+      btnOpenSizingModal.addEventListener("click", openSizingModal);
+    }
+    if (navSizingBtn) {
+      navSizingBtn.addEventListener("click", openSizingModal);
+    }
+    if (footerSizingBtns) {
+      footerSizingBtns.forEach(btn => btn.addEventListener("click", openSizingModal));
+    }
+
+    // Tab buttons switching inside modal
+    const sizingTabs = document.querySelectorAll(".sizing-tab-btn");
+    const sizingPanels = document.querySelectorAll(".sizing-panel");
+    sizingTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        sizingTabs.forEach(t => t.classList.remove("active"));
+        sizingPanels.forEach(p => p.style.display = "none");
+        tab.classList.add("active");
+        const targetId = tab.dataset.target;
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) targetPanel.style.display = "block";
+      });
+    });
+
+    // Apply Measurements Button
+    if (btnApplyMeasurements) {
+      btnApplyMeasurements.addEventListener("click", () => {
+        const garment = document.getElementById("calcGarment")?.value || "Custom Piece";
+        const bust = document.getElementById("calcBust")?.value?.trim() || "";
+        const length = document.getElementById("calcLength")?.value?.trim() || "";
+        const fit = document.getElementById("calcFit")?.value || "Standard";
+
+        const sizeSnippet = `[Custom Fit: ${garment} | Bust/Chest: ${bust || "Standard"} | Length: ${length || "Standard"} | Style: ${fit}]`;
+        const notesField = document.getElementById("orderNotes");
+        if (notesField) {
+          notesField.value = notesField.value ? `${notesField.value}\n${sizeSnippet}` : sizeSnippet;
+        }
+
+        closeSizingModal();
+        const inquirySection = document.getElementById("inquiry");
+        if (inquirySection) inquirySection.scrollIntoView({ behavior: "smooth" });
+        showToast(`✨ Sizing for "${garment}" applied to your order form!`);
+      });
+    }
+  }
+
+  function openSizingModal() {
+    if (sizingGuideModal) {
+      sizingGuideModal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function closeSizingModal() {
+    if (sizingGuideModal) {
+      sizingGuideModal.classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+  }
+
+  // 14. Feature 3: Complimentary Gift Packaging Option
+  function initGiftOption() {
+    if (isGiftOrder && giftDetailsCollapse) {
+      isGiftOrder.addEventListener("change", (e) => {
+        giftDetailsCollapse.style.display = e.target.checked ? "block" : "none";
+      });
+    }
+  }
+
+  // 15. Feature 4: Bring Your Own Reference Photo Preview
+  function initReferencePhoto() {
+    if (referencePhotoInput) {
+      referencePhotoInput.addEventListener("change", (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          uploadedReferencePhotoName = file.name;
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            if (photoPreviewImg) photoPreviewImg.src = event.target.result;
+            if (photoPreviewName) photoPreviewName.textContent = file.name;
+            if (photoPreviewContainer) photoPreviewContainer.style.display = "flex";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
+
+    if (btnRemovePhoto) {
+      btnRemovePhoto.addEventListener("click", () => {
+        if (referencePhotoInput) referencePhotoInput.value = "";
+        uploadedReferencePhotoName = "";
+        if (photoPreviewContainer) photoPreviewContainer.style.display = "none";
+      });
+    }
+  }
+
+  // 16. Feature 5: Dynamic Turnaround Time & Need-By Date Picker
+  function initTurnaroundAndNeedBy() {
+    if (liveTurnaroundDates) {
+      const today = new Date();
+      const minDate = new Date(today);
+      minDate.setDate(today.getDate() + 7);
+      const maxDate = new Date(today);
+      maxDate.setDate(today.getDate() + 10);
+      const opts = { month: "short", day: "numeric" };
+      liveTurnaroundDates.textContent = `Estimated dispatch by ${minDate.toLocaleDateString("en-US", opts)} – ${maxDate.toLocaleDateString("en-US", opts)}`;
+    }
+
+    if (needByDateInput) {
+      // Set min attribute to today's date
+      const todayIso = new Date().toISOString().split("T")[0];
+      needByDateInput.min = todayIso;
+
+      needByDateInput.addEventListener("change", (e) => {
+        if (!e.target.value) {
+          if (rushOrderNotice) rushOrderNotice.style.display = "none";
+          return;
+        }
+        const selected = new Date(e.target.value);
+        const diffTime = selected.getTime() - new Date().getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if (diffDays >= 0 && diffDays <= 7) {
+          if (rushOrderNotice) rushOrderNotice.style.display = "block";
+        } else {
+          if (rushOrderNotice) rushOrderNotice.style.display = "none";
+        }
+      });
+    }
   }
 
   // Helper Functions
@@ -516,6 +769,16 @@ The Crochet Boutique (+91 9391040104)
         }
       }
       updateProductSpecsSpotlight(product.name);
+
+      // Pre-select matching garment category in Sizing Calculator
+      const calcGarmentSelect = document.getElementById("calcGarment");
+      if (calcGarmentSelect && product.category) {
+        if (product.category === "tops") calcGarmentSelect.value = "Crop Top / Halter";
+        else if (product.category === "dresses") calcGarmentSelect.value = "Summer Dress";
+        else if (product.category === "baby") calcGarmentSelect.value = "Baby Romper & Cap";
+        else if (product.category === "caps") calcGarmentSelect.value = "Bucket Hat";
+        else if (product.category === "gloves") calcGarmentSelect.value = "Hand Gloves";
+      }
     }
     const inquirySection = document.getElementById("inquiry");
     if (inquirySection) {

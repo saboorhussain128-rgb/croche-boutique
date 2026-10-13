@@ -34,6 +34,8 @@
       <ul class="nav-links">
         <li><a href="#catalog">Collection</a></li>
         <li><a href="#inquiry">Custom Orders</a></li>
+        <li><a href="javascript:void(0)" id="navSizingBtn"><i class="fas fa-ruler-combined"></i> Sizing Guide</a></li>
+        <li><a href="#care">Care Guide</a></li>
         <li><a href="#instagram">Instagram Feed</a></li>
         <li><a href="#about">Our Story</a></li>
         <li><a href="#reviews">Reviews</a></li>
@@ -197,6 +199,14 @@
             <i class="fas fa-shield-heart" style="font-size: 1.4rem;"></i>
             <span><strong>100% Free Inquiry:</strong> Sending a request has no commitment. We provide color samples and quotes upfront!</span>
           </div>
+
+          <div class="live-turnaround-badge">
+            <div class="turnaround-pulse-dot"></div>
+            <div>
+              <strong style="font-size: 0.9rem; color: #23543F; display: block;">Current Queue: Ready in 7–10 Days</strong>
+              <span id="liveTurnaroundDates" style="font-size: 0.78rem; color: #3E6B56;">Estimated dispatch in 7–10 business days</span>
+            </div>
+          </div>
         </div>
 
         <!-- Right form pane -->
@@ -239,12 +249,83 @@
 
             <div class="form-group">
               <label for="orderColors" class="form-label">Preferred Colors / Yarn Type</label>
-              <input type="text" id="orderColors" name="colors" class="form-control" placeholder="e.g., Pastel pink & cream, Chunky velvet, Organic cotton">
+              <input type="text" id="orderColors" name="colors" class="form-control" placeholder="e.g., Pastel pink & cream, Sage green, Oatmeal cream">
+              <div style="margin-top: 8px;">
+                <span style="font-size: 0.76rem; color: var(--color-text-muted); display: block; margin-bottom: 4px;">🎨 Click popular boutique swatches to add colors:</span>
+                <div class="yarn-swatches-grid" id="yarnSwatchesGrid"></div>
+              </div>
+            </div>
+
+            <!-- Bring Your Own Reference (Instagram/Pinterest/Photo) -->
+            <div class="custom-reference-box">
+              <div class="reference-toggle-header">
+                <i class="fas fa-camera-retro" style="color: var(--color-primary);"></i>
+                <span>Have a Pinterest, Instagram post, or custom photo reference?</span>
+              </div>
+              <div class="reference-inputs-row">
+                <input type="url" id="referenceUrl" name="referenceUrl" class="form-control" placeholder="Paste Instagram / Pinterest URL...">
+                <label class="btn-upload-photo" for="referencePhotoInput">
+                  <i class="fas fa-image"></i>
+                  <span>Upload Photo</span>
+                </label>
+                <input type="file" id="referencePhotoInput" accept="image/*" style="display: none;">
+              </div>
+              <div class="photo-preview-container" id="photoPreviewContainer" style="display: none;">
+                <img id="photoPreviewImg" src="" alt="Reference Preview">
+                <div style="flex-grow: 1;">
+                  <strong id="photoPreviewName" style="display: block; font-size: 0.82rem; color: var(--color-text-main);"></strong>
+                  <span style="font-size: 0.74rem; color: var(--color-text-muted);">Attached reference for artisan</span>
+                </div>
+                <button type="button" class="btn-remove-photo" id="btnRemovePhoto">Remove</button>
+              </div>
             </div>
 
             <div class="form-group">
-              <label for="orderNotes" class="form-label">Special Notes, Sizing or Instagram Reference</label>
-              <textarea id="orderNotes" name="notes" class="form-control" placeholder="Tell us about sizing, custom character details, need-by dates, or paste an Instagram post link..."></textarea>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+                <label for="orderNotes" class="form-label" style="margin-bottom: 0;">Special Notes &amp; Custom Sizing</label>
+                <button type="button" class="btn-sizing-guide-link" id="btnOpenSizingModal">
+                  <i class="fas fa-ruler-combined"></i> Sizing Guide &amp; Fit Calculator
+                </button>
+              </div>
+              <textarea id="orderNotes" name="notes" class="form-control" placeholder="Tell us your measurements, fit preference (oversized/fitted), custom character details..."></textarea>
+            </div>
+
+            <!-- Complimentary Gift Packaging Option -->
+            <div class="gift-option-card">
+              <label class="gift-checkbox-label">
+                <input type="checkbox" id="isGiftOrder" name="isGiftOrder" value="yes">
+                <div class="gift-label-text">
+                  <strong><i class="fas fa-gift" style="color: var(--color-accent); margin-right: 6px;"></i> Complimentary Gift Packaging &amp; Handwritten Note</strong>
+                  <small>Includes keepsake kraft gift box, satin ribbon, and a customized calligraphy note card!</small>
+                </div>
+              </label>
+              <div class="gift-details-collapse" id="giftDetailsCollapse" style="display: none; margin-top: 14px; border-top: 1px dashed var(--color-border); padding-top: 14px;">
+                <div class="form-group-grid" style="margin-bottom: 12px;">
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label for="giftRecipient" class="form-label">Recipient's Name</label>
+                    <input type="text" id="giftRecipient" name="giftRecipient" class="form-control" placeholder="e.g., Emily &amp; Baby Liam">
+                  </div>
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label for="giftOccasion" class="form-label">Occasion</label>
+                    <input type="text" id="giftOccasion" name="giftOccasion" class="form-control" placeholder="e.g., Birthday, Baby Shower, Graduation">
+                  </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="giftMessage" class="form-label">Handwritten Message for Note Card</label>
+                  <textarea id="giftMessage" name="giftMessage" class="form-control" style="min-height: 60px;" placeholder="Write your heartfelt message here..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Need-By / Event Date Picker -->
+            <div class="form-group">
+              <label for="needByDate" class="form-label">
+                <i class="fas fa-calendar-alt" style="color: var(--color-secondary); margin-right: 4px;"></i> Event Date / Need-By Date (Optional)
+              </label>
+              <input type="date" id="needByDate" name="needByDate" class="form-control">
+              <div id="rushOrderNotice" class="rush-order-notice" style="display: none;">
+                <i class="fas fa-bolt"></i> <strong>Rush Delivery Slot:</strong> This date is within 7 days. Our artisan will prioritize your piece in the work queue!
+              </div>
             </div>
 
             <!-- Customer Delivery Channel Preference -->
@@ -431,6 +512,83 @@
     </div>
   </section>
 
+  <!-- Care Guide & Craftsmanship Section -->
+  <section class="care-section" id="care">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Cherish Your Knits</span>
+        <h2 class="section-title">Yarn Care &amp; Longevity Guide</h2>
+        <p class="section-subtitle">
+          Every crochet creation is made with mindful stitches. With proper gentle care, your handmade pieces will remain as soft, colorful, and perfectly shaped as day one.
+        </p>
+      </div>
+
+      <div class="care-tabs-grid">
+        <div class="care-card">
+          <div class="care-card-icon">
+            <i class="fas fa-tshirt" style="color: var(--color-primary);"></i>
+          </div>
+          <h4>Wearables &amp; Tops</h4>
+          <p>
+            For shrugs, crop tops, sweaters, and dresses crafted with milk cotton: Hand wash in cold water using a drop of gentle wool detergent. Gently press out excess water—never wring or twist.
+          </p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-card-icon">
+            <i class="fas fa-paw" style="color: var(--color-accent);"></i>
+          </div>
+          <h4>Velvet &amp; Plushies</h4>
+          <p>
+            For velvet chenille amigurumi and pouches: Spot clean outer fabric with a damp microfiber cloth and mild soap. Avoid submerging in water to protect inner polyfill fluffiness.
+          </p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-card-icon">
+            <i class="fas fa-baby" style="color: var(--color-secondary);"></i>
+          </div>
+          <h4>Baby Rompers &amp; Caps</h4>
+          <p>
+            Woven with ultra-gentle, hypoallergenic milk cotton: Hand wash with baby-safe detergent. Smooth flat to reshape the cap brim and dry away from direct heat or harsh sun.
+          </p>
+        </div>
+
+        <div class="care-card">
+          <div class="care-card-icon">
+            <i class="fas fa-couch" style="color: #6C5B7B;"></i>
+          </div>
+          <h4>Table Runners &amp; Decor</h4>
+          <p>
+            For macrame lace runners and coasters: Soak in lukewarm water with mild soap. Lay flat on blocking mats or a towel and gently pin/steam block on lowest setting with a pressing cloth.
+          </p>
+        </div>
+      </div>
+
+      <div class="dos-donts-grid">
+        <div class="dos-card">
+          <h4><i class="fas fa-check-circle"></i> Artisan Best Practices (Do's)</h4>
+          <ul>
+            <li><i class="fas fa-check" style="color: #2F6955; margin-right: 6px;"></i> Hand wash in cold or lukewarm water (under 30°C / 86°F).</li>
+            <li><i class="fas fa-check" style="color: #2F6955; margin-right: 6px;"></i> Roll in a clean, dry towel like a sushi roll to absorb moisture.</li>
+            <li><i class="fas fa-check" style="color: #2F6955; margin-right: 6px;"></i> Reshape garments while damp and dry flat in shaded breeze.</li>
+            <li><i class="fas fa-check" style="color: #2F6955; margin-right: 6px;"></i> Fold wearables loosely—never hang on wire hangers.</li>
+          </ul>
+        </div>
+
+        <div class="donts-card">
+          <h4><i class="fas fa-times-circle"></i> Pitfalls to Avoid (Don'ts)</h4>
+          <ul>
+            <li><i class="fas fa-times" style="color: #C24559; margin-right: 6px;"></i> Never twist, wring, or pull wet crochet fibers.</li>
+            <li><i class="fas fa-times" style="color: #C24559; margin-right: 6px;"></i> Do not use bleach, optical brighteners, or harsh enzymes.</li>
+            <li><i class="fas fa-times" style="color: #C24559; margin-right: 6px;"></i> Avoid high-heat tumble dryers (causes fiber shrinkage).</li>
+            <li><i class="fas fa-times" style="color: #C24559; margin-right: 6px;"></i> Do not iron directly on acrylic or chenille without pressing cloth.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FAQ Section -->
   <section class="faq-section" id="faq">
     <div class="container">
@@ -491,6 +649,8 @@
         <ul class="footer-links">
           <li><a href="#catalog">Collection</a></li>
           <li><a href="#inquiry">Custom Order Inquiry</a></li>
+          <li><a href="javascript:void(0)" class="footer-sizing-btn">Sizing &amp; Measurement Guide</a></li>
+          <li><a href="#care">Yarn Care Guide</a></li>
           <li><a href="#about">Artisan Story</a></li>
           <li><a href="#reviews">Customer Reviews</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -542,6 +702,222 @@
     <div class="modal-dialog">
       <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
       <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Sizing & Measurement Guide Modal -->
+  <div class="modal-backdrop" id="sizingGuideModal">
+    <div class="modal-dialog" style="max-width: 720px;">
+      <button class="modal-close-btn" id="sizingModalCloseBtn" aria-label="Close modal">&times;</button>
+      <div style="margin-bottom: 18px;">
+        <span class="section-tag" style="display: inline-block; margin-bottom: 6px;">📐 Bespoke Fit Guarantee</span>
+        <h3 style="font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 4px;">Handcrafted Sizing &amp; Measurement Guide</h3>
+        <p style="color: var(--color-text-muted); font-size: 0.88rem;">
+          Every stitch can be customized! Compare our standard benchmarks below or calculate your bespoke dimensions.
+        </p>
+      </div>
+
+      <!-- Sizing Navigation Tabs -->
+      <div class="sizing-modal-tabs">
+        <button class="sizing-tab-btn active" data-target="sizingTops">Tops &amp; Shrugs</button>
+        <button class="sizing-tab-btn" data-target="sizingBaby">Baby Sets &amp; Rompers</button>
+        <button class="sizing-tab-btn" data-target="sizingHats">Caps &amp; Hats</button>
+        <button class="sizing-tab-btn" data-target="sizingDresses">Dresses &amp; Sweaters</button>
+      </div>
+
+      <!-- Tab Content Panels -->
+      <div id="sizingTabContent">
+        <!-- Tops Panel -->
+        <div class="sizing-panel" id="sizingTops">
+          <table class="sizing-table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Bust / Chest</th>
+                <th>Length</th>
+                <th>Arm Sleeve</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>XS / S</strong></td>
+                <td>30" – 34" (76–86 cm)</td>
+                <td>15" – 16" (Crop / Shrug)</td>
+                <td>19" (48 cm)</td>
+              </tr>
+              <tr>
+                <td><strong>Medium (M)</strong></td>
+                <td>35" – 38" (89–96 cm)</td>
+                <td>16" – 18" (Standard)</td>
+                <td>20" (51 cm)</td>
+              </tr>
+              <tr>
+                <td><strong>Large (L)</strong></td>
+                <td>39" – 42" (99–107 cm)</td>
+                <td>18" – 20" (Relaxed)</td>
+                <td>21" (53 cm)</td>
+              </tr>
+              <tr>
+                <td><strong>XL / Custom</strong></td>
+                <td>43"+ (Made to measure)</td>
+                <td>Customized</td>
+                <td>Customized</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Baby Sets Panel -->
+        <div class="sizing-panel" id="sizingBaby" style="display: none;">
+          <table class="sizing-table">
+            <thead>
+              <tr>
+                <th>Age Bracket</th>
+                <th>Chest Width</th>
+                <th>Romper Length</th>
+                <th>Bonnet / Cap Fit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Newborn (0–1M)</strong></td>
+                <td>15" – 16" (38–41 cm)</td>
+                <td>13" (33 cm)</td>
+                <td>13" – 14" Head Circumference</td>
+              </tr>
+              <tr>
+                <td><strong>0 – 3 Months</strong></td>
+                <td>17" – 18" (43–46 cm)</td>
+                <td>14.5" (37 cm)</td>
+                <td>14" – 15" Head Circumference</td>
+              </tr>
+              <tr>
+                <td><strong>3 – 6 Months</strong></td>
+                <td>19" – 20" (48–51 cm)</td>
+                <td>16" (41 cm)</td>
+                <td>15" – 16" Head Circumference</td>
+              </tr>
+              <tr>
+                <td><strong>6 – 12 Months</strong></td>
+                <td>20" – 21" (51–53 cm)</td>
+                <td>17.5" (44 cm)</td>
+                <td>16" – 17.5" Head Circumference</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Caps Panel -->
+        <div class="sizing-panel" id="sizingHats" style="display: none;">
+          <table class="sizing-table">
+            <thead>
+              <tr>
+                <th>Hat Size</th>
+                <th>Head Circumference</th>
+                <th>Hat Crown Depth</th>
+                <th>Recommended For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Toddler / Kids</strong></td>
+                <td>18" – 19.5" (46–50 cm)</td>
+                <td>6.5" (16 cm)</td>
+                <td>Ages 2 – 7</td>
+              </tr>
+              <tr>
+                <td><strong>Adult Small (S/M)</strong></td>
+                <td>21" – 22" (53–56 cm)</td>
+                <td>7.5" (19 cm)</td>
+                <td>Standard Women / Teens</td>
+              </tr>
+              <tr>
+                <td><strong>Adult Large (L/XL)</strong></td>
+                <td>22.5" – 24" (57–61 cm)</td>
+                <td>8.5" (21 cm)</td>
+                <td>Slouchy / Unisex fit</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Dresses Panel -->
+        <div class="sizing-panel" id="sizingDresses" style="display: none;">
+          <table class="sizing-table">
+            <thead>
+              <tr>
+                <th>Dress Size</th>
+                <th>Bust</th>
+                <th>Waist</th>
+                <th>Hips</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Small (US 2–4)</strong></td>
+                <td>32" – 34"</td>
+                <td>24" – 26"</td>
+                <td>34" – 36"</td>
+              </tr>
+              <tr>
+                <td><strong>Medium (US 6–8)</strong></td>
+                <td>35" – 37"</td>
+                <td>27" – 29"</td>
+                <td>37" – 39"</td>
+              </tr>
+              <tr>
+                <td><strong>Large (US 10–12)</strong></td>
+                <td>38" – 41"</td>
+                <td>30" – 33"</td>
+                <td>40" – 43"</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Interactive Fit & Measurement Assistor -->
+      <div class="custom-measure-box">
+        <h4><i class="fas fa-calculator"></i> Quick Fit Calculator &amp; Note Generator</h4>
+        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 12px;">
+          Enter your numbers to automatically apply them to your order inquiry form:
+        </p>
+        <div class="form-group-grid" style="margin-bottom: 10px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size: 0.78rem;">Garment Type</label>
+            <select id="calcGarment" class="form-control" style="padding: 8px 12px; font-size: 0.85rem;">
+              <option value="Bolero / Shrug">Bolero / Shrug</option>
+              <option value="Crop Top / Halter">Crop Top / Halter</option>
+              <option value="Flare Sleeve Sweater">Flare Sleeve Sweater</option>
+              <option value="Summer Dress">Summer Dress</option>
+              <option value="Baby Romper & Cap">Baby Romper &amp; Cap</option>
+              <option value="Bucket Hat">Daisy Bucket Hat</option>
+              <option value="Hand Gloves">Hand Gloves</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size: 0.78rem;">Bust / Chest / Circumference (inches)</label>
+            <input type="text" id="calcBust" class="form-control" placeholder="e.g. 34 inches" style="padding: 8px 12px; font-size: 0.85rem;">
+          </div>
+        </div>
+        <div class="form-group-grid" style="margin-bottom: 12px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size: 0.78rem;">Preferred Length / Height</label>
+            <input type="text" id="calcLength" class="form-control" placeholder="e.g. 17 inches crop / 5'4'' tall" style="padding: 8px 12px; font-size: 0.85rem;">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" style="font-size: 0.78rem;">Fit Style</label>
+            <select id="calcFit" class="form-control" style="padding: 8px 12px; font-size: 0.85rem;">
+              <option value="Relaxed / Oversized">Relaxed / Oversized (Cozy drape)</option>
+              <option value="Form-Fitting">Form-Fitting / Snug</option>
+              <option value="Standard True-to-Size">Standard True-to-Size</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" id="btnApplyMeasurements" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 0.9rem;">
+          <i class="fas fa-check"></i> Apply Measurements to Order Form
+        </button>
+      </div>
     </div>
   </div>
 
