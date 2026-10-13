@@ -17,10 +17,46 @@
 </head>
 <body>
 
-  <!-- Announcement Bar -->
+  <!-- Announcement Bar with Top-Left Staff Portal -->
   <aside class="announcement-bar" aria-label="Announcement">
-    <span id="announcementText">🌸 Handcrafted with Love • Custom Color Orders Available • Worldwide Shipping</span>
-    <a href="https://www.instagram.com/croche_boutiq/" target="_blank" rel="noopener">Follow @croche_boutiq <i class="fab fa-instagram"></i></a>
+    <div class="announcement-inner">
+      <div class="announcement-left">
+        <button class="staff-portal-btn" id="staffPortalBtn" aria-label="Staff and Owner Login">
+          <i class="fas fa-user-shield"></i>
+          <span id="staffBtnLabel">Staff</span>
+        </button>
+      </div>
+      <div class="announcement-center">
+        <span id="announcementText">🌸 Handcrafted with Love • Custom Color Orders Available • Worldwide Shipping</span>
+      </div>
+      <div class="announcement-right">
+        <a href="https://www.instagram.com/croche_boutiq/" target="_blank" rel="noopener">Follow @croche_boutiq <i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Owner Administration Bar (Visible in Owner Mode) -->
+  <aside class="owner-admin-bar" id="ownerAdminBar" style="display: none;" aria-label="Owner Admin Controls">
+    <div class="container owner-bar-container">
+      <div class="owner-bar-info">
+        <span class="owner-status-pill"><i class="fas fa-crown"></i> OWNER EDIT MODE</span>
+        <span class="owner-status-desc">Click any pencil icon (<i class="fas fa-pencil-alt"></i>) on products to change pictures or details. Changes update live!</span>
+      </div>
+      <div class="owner-bar-actions">
+        <button class="btn-owner-action btn-owner-primary" id="btnAdminAddProduct">
+          <i class="fas fa-plus-circle"></i> Add Product
+        </button>
+        <button class="btn-owner-action btn-owner-secondary" id="btnAdminExportData" title="Export catalog JSON">
+          <i class="fas fa-download"></i> Export Data
+        </button>
+        <button class="btn-owner-action btn-owner-danger" id="btnAdminResetDefaults" title="Restore default catalog">
+          <i class="fas fa-rotate-left"></i> Reset
+        </button>
+        <button class="btn-owner-action btn-owner-logout" id="btnAdminLogout" title="Exit Staff Mode">
+          <i class="fas fa-sign-out-alt"></i> Exit Staff Mode
+        </button>
+      </div>
+    </div>
   </aside>
 
   <!-- Navigation Bar -->
@@ -106,7 +142,10 @@
 
       <div class="hero-visual">
         <div class="hero-card-main">
-          <img src="images/ig_CJBs-DlBzGs.jpg" alt="Handcrafted crochet winter wrap shawl with The Crochet Boutique handmade happiness watermark">
+          <img id="heroMainImage" src="images/ig_CJBs-DlBzGs.jpg" alt="Handcrafted crochet winter wrap shawl with The Crochet Boutique handmade happiness watermark">
+          <button class="section-pencil-btn" id="btnEditHeroImage" title="Change Hero Image" style="display: none;">
+            <i class="fas fa-pencil-alt"></i> Change Picture
+          </button>
         </div>
         <div class="hero-floating-card">
           <img src="images/instagram_logo.jpg" alt="@croche_boutiq logo badge" class="hero-floating-avatar">
@@ -318,7 +357,10 @@
   <section class="story-section" id="about">
     <div class="container story-grid">
       <div class="story-image-wrap">
-        <img src="images/ig_CHupfP7BRvI.jpg" alt="Artisan handcrafting XXL winter sweater with brand card and yarn skeins" class="story-img">
+        <img id="storyMainImage" src="images/ig_CHupfP7BRvI.jpg" alt="Artisan handcrafting XXL winter sweater with brand card and yarn skeins" class="story-img">
+        <button class="section-pencil-btn" id="btnEditStoryImage" title="Change Story Picture" style="display: none;">
+          <i class="fas fa-pencil-alt"></i> Change Picture
+        </button>
         <div class="story-quote-card">
           <p>"A handmade happiness in every single stitch."</p>
           <span style="font-size: 0.8rem; font-weight: 600; color: var(--color-text-muted);">— @croche_boutiq (Hyderabad, India)</span>
@@ -547,6 +589,215 @@
     <div class="modal-dialog">
       <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close modal">&times;</button>
       <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Staff & Owner Login Modal -->
+  <div class="modal-backdrop" id="staffLoginModal">
+    <div class="modal-dialog modal-dialog-sm">
+      <button class="modal-close-btn" id="staffModalCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="staff-modal-content">
+        <div class="staff-modal-header">
+          <div class="staff-modal-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h3>Owner &amp; Staff Login</h3>
+          <p>Sign in to unlock full editing rights: change product pictures, edit details, or add new creations directly to the live website.</p>
+        </div>
+
+        <form id="staffLoginForm" class="staff-login-form">
+          <div class="form-group">
+            <label for="staffUsername" class="form-label">Username *</label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" id="staffUsername" class="form-control" placeholder="Enter username (owner)" required autocomplete="username">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="staffPassword" class="form-label">Password *</label>
+            <div class="input-icon-wrap">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="staffPassword" class="form-control" placeholder="Enter password (admin123)" required autocomplete="current-password">
+            </div>
+          </div>
+
+          <div class="staff-credentials-hint">
+            <i class="fas fa-info-circle"></i>
+            <span><strong>Owner Credentials:</strong> Username: <code>owner</code> &bull; Password: <code>admin123</code></span>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 14px; justify-content: center;">
+            <i class="fas fa-unlock-alt"></i> Login to Edit Website
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Editor Modal (For changing picture, details, or adding new items) -->
+  <div class="modal-backdrop" id="productEditorModal">
+    <div class="modal-dialog modal-dialog-lg">
+      <button class="modal-close-btn" id="productEditorCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="editor-modal-content">
+        <div class="editor-modal-header">
+          <span class="section-tag" id="editorModalTag">Owner Catalog Manager</span>
+          <h2 id="editorModalTitle">Edit Product &amp; Change Picture</h2>
+          <p id="editorModalSubtitle">Any updates saved here will automatically update on the live website immediately.</p>
+        </div>
+
+        <form id="productEditorForm">
+          <input type="hidden" id="editProductId" value="">
+
+          <!-- Image Selection & Live Preview -->
+          <div class="editor-image-section">
+            <label class="form-label" style="font-weight: 700; margin-bottom: 8px;">Product Picture *</label>
+            <div class="image-picker-layout">
+              <div class="image-preview-card">
+                <img id="editorImagePreview" src="images/instagram_logo.jpg" alt="Preview">
+                <span class="preview-badge">Live Preview</span>
+              </div>
+              <div class="image-picker-controls">
+                <div class="upload-control-group">
+                  <label class="btn-file-upload">
+                    <i class="fas fa-cloud-arrow-up"></i> Upload Picture from Device
+                    <input type="file" id="editorFileInput" accept="image/*" style="display: none;">
+                  </label>
+                  <span class="upload-hint">Upload any image file (JPG, PNG, WEBP) from your phone or computer</span>
+                </div>
+
+                <div class="form-group" style="margin-top: 10px; margin-bottom: 8px;">
+                  <label for="editorImageUrl" class="form-label" style="font-size: 0.8rem;">Or Enter Image Path / URL:</label>
+                  <input type="text" id="editorImageUrl" class="form-control" placeholder="e.g. images/ig_CHupfP7BRvI.jpg">
+                </div>
+
+                <div class="ig-library-toggle-wrap">
+                  <button type="button" class="btn-link-sm" id="btnToggleIgLibrary">
+                    <i class="fab fa-instagram"></i> Pick from @croche_boutiq Instagram Library (18 Photos) <i class="fas fa-chevron-down" id="igToggleArrow"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Collapsible Instagram Gallery -->
+            <div class="ig-media-picker-grid" id="igMediaPickerGrid" style="display: none;"></div>
+          </div>
+
+          <!-- Product Details Form Grid -->
+          <div class="form-group-grid" style="margin-top: 16px;">
+            <div class="form-group">
+              <label for="editorName" class="form-label">Product Name *</label>
+              <input type="text" id="editorName" class="form-control" required placeholder="e.g. Custom Chunky Braid Winter Sweater">
+            </div>
+
+            <div class="form-group">
+              <label for="editorCategory" class="form-label">Category *</label>
+              <select id="editorCategory" class="form-control" required>
+                <option value="tops">Sweaters &amp; Tops</option>
+                <option value="scarves">Shawls &amp; Scarves</option>
+                <option value="bags">Sling Bags &amp; Pouches</option>
+                <option value="baby">Baby Wear &amp; Sets</option>
+                <option value="caps">Caps &amp; Headwear</option>
+                <option value="gloves">Hand Gloves</option>
+                <option value="accessories">Charms &amp; Accessories</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group-grid">
+            <div class="form-group">
+              <label for="editorBadge" class="form-label">Badge Tag (Optional)</label>
+              <input type="text" id="editorBadge" class="form-control" placeholder="e.g. Bestseller, Client Favorite, Viral...">
+            </div>
+
+            <div class="form-group">
+              <label for="editorBadgeType" class="form-label">Badge Color Accent</label>
+              <select id="editorBadgeType" class="form-control">
+                <option value="bestseller">Rose Gold (Bestseller)</option>
+                <option value="featured">Sage Green (Featured)</option>
+                <option value="custom">Gold Mustard (Custom)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="editorDescription" class="form-label">Product Description *</label>
+            <textarea id="editorDescription" class="form-control" rows="3" required placeholder="Describe the stitches, fit, and artisan details..."></textarea>
+          </div>
+
+          <div class="form-group-grid">
+            <div class="form-group">
+              <label for="editorYarn" class="form-label">Yarn Material Specs</label>
+              <input type="text" id="editorYarn" class="form-control" placeholder="e.g. 100% Breathable Milk Cotton">
+            </div>
+
+            <div class="form-group">
+              <label for="editorDimensions" class="form-label">Dimensions &amp; Sizing</label>
+              <input type="text" id="editorDimensions" class="form-control" placeholder="e.g. Custom Tailored (S, M, L, XL, XXL)">
+            </div>
+          </div>
+
+          <div class="form-group-grid">
+            <div class="form-group">
+              <label for="editorCare" class="form-label">Washing &amp; Care</label>
+              <input type="text" id="editorCare" class="form-control" placeholder="e.g. Hand wash cold, lay flat to dry">
+            </div>
+
+            <div class="form-group">
+              <label for="editorColors" class="form-label">Available Colors (Comma-separated)</label>
+              <input type="text" id="editorColors" class="form-control" placeholder="e.g. Heather Gray, Cream, Charcoal">
+            </div>
+          </div>
+
+          <div class="editor-form-actions">
+            <button type="submit" class="btn btn-primary btn-save-product">
+              <i class="fas fa-check-circle"></i> Save to Live Website
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnCancelEditor">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Photo Editor Modal (For changing Hero or Story Pictures) -->
+  <div class="modal-backdrop" id="sectionPhotoModal">
+    <div class="modal-dialog modal-dialog-sm">
+      <button class="modal-close-btn" id="sectionPhotoCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="editor-modal-content">
+        <h3 id="sectionPhotoTitle" style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 6px;">Change Picture</h3>
+        <p style="color: var(--color-text-muted); font-size: 0.88rem; margin-bottom: 16px;">Upload a photo from your device or choose from the Instagram gallery.</p>
+        
+        <div style="margin-bottom: 16px; text-align: center;">
+          <img id="sectionPhotoPreview" src="images/instagram_logo.jpg" alt="Preview" style="max-height: 170px; border-radius: var(--radius-sm); object-fit: cover; box-shadow: var(--shadow-sm); display: inline-block;">
+        </div>
+
+        <div class="form-group">
+          <label class="btn-file-upload" style="width: 100%; justify-content: center;">
+            <i class="fas fa-cloud-arrow-up"></i> Upload from Device
+            <input type="file" id="sectionFileInput" accept="image/*" style="display: none;">
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="sectionPhotoUrl" class="form-label" style="font-size: 0.82rem;">Or Image URL / Path:</label>
+          <input type="text" id="sectionPhotoUrl" class="form-control" placeholder="e.g. images/ig_CJBs-DlBzGs.jpg">
+        </div>
+
+        <div class="ig-library-toggle-wrap">
+          <button type="button" class="btn-link-sm" id="btnToggleSectionIg">
+            <i class="fab fa-instagram"></i> Pick from Instagram Library <i class="fas fa-chevron-down"></i>
+          </button>
+        </div>
+        <div class="ig-media-picker-grid" id="sectionIgPickerGrid" style="display: none; max-height: 180px; overflow-y: auto;"></div>
+
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button type="button" class="btn btn-primary" id="btnSaveSectionPhoto" style="flex: 1;">Save Picture</button>
+          <button type="button" class="btn btn-secondary" id="btnCancelSectionPhoto">Cancel</button>
+        </div>
+      </div>
     </div>
   </div>
 

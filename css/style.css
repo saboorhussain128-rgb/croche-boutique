@@ -99,22 +99,72 @@ button, input, select, textarea {
    -------------------------------------------------------------------------- */
 .announcement-bar {
   background: linear-gradient(90deg, #F5D3D7, #FDEFE5, #E2EEE7);
-  padding: 8px 16px;
-  text-align: center;
+  padding: 6px 16px;
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--color-text-main);
   border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.announcement-inner {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  max-width: var(--max-width);
+  margin: 0 auto;
   gap: 12px;
 }
 
-.announcement-bar a {
+.announcement-left {
+  display: flex;
+  align-items: center;
+}
+
+.staff-portal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.staff-portal-btn:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.staff-portal-btn.logged-in {
+  background: #25D366;
+  color: white;
+  border-color: #25D366;
+}
+
+.announcement-center {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.announcement-right a {
   text-decoration: underline;
   font-weight: 600;
   color: var(--color-primary);
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .announcement-center {
+    display: none;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1648,5 +1698,451 @@ textarea.form-control {
 @media (max-width: 580px) {
   .channel-selector-group {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Owner Administration & Staff Portal Styles
+   ========================================================================== */
+.owner-admin-bar {
+  background: #251B20;
+  color: #F8EDE9;
+  border-bottom: 2px solid var(--color-primary);
+  padding: 10px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  animation: fadeIn 0.3s ease;
+}
+
+.owner-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.owner-bar-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.owner-status-pill {
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(200, 109, 118, 0.4);
+}
+
+.owner-status-desc {
+  font-size: 0.82rem;
+  color: #D6CBC4;
+}
+
+.owner-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-owner-action {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.btn-owner-primary {
+  background: #25D366;
+  color: white;
+}
+
+.btn-owner-primary:hover {
+  background: #1EBE5D;
+  transform: translateY(-1px);
+}
+
+.btn-owner-secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFDF9;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-owner-secondary:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.btn-owner-danger {
+  background: rgba(217, 83, 79, 0.2);
+  color: #FFB3B0;
+  border-color: rgba(217, 83, 79, 0.4);
+}
+
+.btn-owner-danger:hover {
+  background: #D9534F;
+  color: white;
+}
+
+.btn-owner-logout {
+  background: transparent;
+  color: #C0B5AD;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.btn-owner-logout:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Product Card Pencil Edit Overlay */
+.product-admin-overlay {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+  animation: fadeIn 0.2s ease;
+}
+
+.product-pencil-btn {
+  background: var(--color-primary);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  transition: var(--transition);
+}
+
+.product-pencil-btn:hover {
+  background: var(--color-primary-hover);
+  transform: scale(1.05);
+}
+
+.product-delete-btn {
+  background: #D9534F;
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  width: 30px;
+  height: 30px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  transition: var(--transition);
+}
+
+.product-delete-btn:hover {
+  background: #C9302C;
+  transform: scale(1.1);
+}
+
+/* Section Photo Edit Pencil Button */
+.section-pencil-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: rgba(37, 27, 32, 0.88);
+  color: white;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.section-pencil-btn:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: scale(1.04);
+}
+
+/* Staff Login Modal */
+.modal-dialog-sm {
+  max-width: 440px;
+}
+
+.modal-dialog-lg {
+  max-width: 760px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.staff-modal-content {
+  text-align: center;
+  padding: 10px 6px;
+}
+
+.staff-modal-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.staff-modal-header h3 {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  margin-bottom: 8px;
+}
+
+.staff-modal-header p {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.input-icon-wrap {
+  position: relative;
+}
+
+.input-icon-wrap i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+}
+
+.input-icon-wrap input {
+  padding-left: 40px !important;
+}
+
+.staff-credentials-hint {
+  background: var(--color-surface-tint);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  color: var(--color-text-main);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.staff-credentials-hint code {
+  background: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Product Editor Modal */
+.editor-modal-header {
+  margin-bottom: 20px;
+}
+
+.editor-modal-header h2 {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+
+.editor-modal-header p {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+}
+
+.editor-image-section {
+  background: #FCF9F5;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.image-picker-layout {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.image-preview-card {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 2px solid var(--color-border);
+  background: white;
+}
+
+.image-preview-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
+  background: rgba(44, 38, 35, 0.75);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 2px 4px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.btn-file-upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1.5px dashed var(--color-primary);
+  color: var(--color-primary);
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.btn-file-upload:hover {
+  background: var(--color-primary-light);
+}
+
+.upload-hint {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.ig-library-toggle-wrap {
+  margin-top: 10px;
+}
+
+.btn-link-sm {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: underline;
+}
+
+.ig-media-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px;
+  background: white;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-light);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.ig-picker-thumb {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: var(--transition);
+}
+
+.ig-picker-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ig-picker-thumb:hover {
+  transform: scale(1.06);
+  border-color: var(--color-primary);
+}
+
+.ig-picker-thumb.active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.editor-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.btn-save-product {
+  flex: 1;
+  padding: 13px;
+  font-size: 0.95rem;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .image-picker-layout {
+    grid-template-columns: 1fr;
+  }
+  .image-preview-card {
+    margin: 0 auto;
   }
 }

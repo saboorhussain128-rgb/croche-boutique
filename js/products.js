@@ -1,8 +1,8 @@
 /**
  * Catalog of Handcrafted Products for The Crochet Boutique
- * Based on @croche_boutiq Instagram showcase & genuine handcrafted inventory
+ * 100% authentic photography sourced directly from @croche_boutiq Instagram profile.
  */
-const PRODUCTS = [
+const DEFAULT_PRODUCTS = [
   {
     id: "prod-sweater-xxl",
     name: "Custom Chunky Braid Winter Sweater",
@@ -56,6 +56,19 @@ const PRODUCTS = [
     colors: ["Pastel Pink & White", "Sage Green & Cream", "Lilac & Ivory"]
   },
   {
+    id: "prod-baby-romper",
+    name: "Crochet Baby Romper & Matching Bonnet Set",
+    category: "baby",
+    badge: "Newborn Keepsake",
+    badgeType: "bestseller",
+    image: "images/ig_DJt-WgyBRhE.jpg",
+    description: "Authentic @croche_boutiq baby romper and matching bonnet set tailored for toddlers and newborns. Hand-stitched with ultra-soft baby yarn and natural buttons.",
+    yarnType: "100% Hypoallergenic Baby Bamboo Cotton",
+    dimensions: "Available for Newborn, 6-12M, 2-Year-Old & Custom",
+    care: "Delicate baby wash cold, lay flat to dry",
+    colors: ["Pastel Lilac & Cream", "Sky Blue", "Blush Pink", "Pure White"]
+  },
+  {
     id: "prod-baby-blanket",
     name: "Cloud-Soft Baby Wrap & Blanket",
     category: "baby",
@@ -69,17 +82,17 @@ const PRODUCTS = [
     colors: ["Sky Blue & White", "Blush Pink & Ivory", "Buttercup Yellow", "Mint Green"]
   },
   {
-    id: "prod-romper-set",
-    name: "Baby Romper & Matching Bonnet Cap Set",
-    category: "baby",
-    badge: "Newborn Keepsake",
-    badgeType: "bestseller",
-    image: "images/romper_and_cap.jpg",
-    description: "Adorable handcrafted peach and cream striped baby romper with natural wooden buttons paired with a matching scalloped lace bonnet cap. Ultra-gentle on delicate newborn skin.",
-    yarnType: "100% Hypoallergenic Bamboo Baby Yarn",
-    dimensions: "Available in 0-3M, 3-6M, 6-12M & Custom",
-    care: "Delicate baby hand wash, reshape and lay flat to dry",
-    colors: ["Peach & Cream", "Sage & Ivory", "Soft Butterscotch", "Pure White"]
+    id: "prod-scarf-drop",
+    name: "Handmade Striping Cozy Winter Scarf",
+    category: "scarves",
+    badge: "Winter Drop",
+    badgeType: "featured",
+    image: "images/ig_DS4u-38D8WW.jpg",
+    description: "Fresh winter scarf drop from @croche_boutiq. Meticulously handcrafted with striping yarn for vibrant, cozy winter repeats. Dense textured stitches provide lasting warmth.",
+    yarnType: "Ultra-Soft Striping Acrylic & Wool Blend",
+    dimensions: "170cm length x 22cm width",
+    care: "Gentle hand wash cold, lay flat to dry",
+    colors: ["Sunset Gradient", "Autumn Forest", "Ocean Blue", "Monochrome"]
   },
   {
     id: "prod-bobble-headband",
@@ -93,32 +106,6 @@ const PRODUCTS = [
     dimensions: "Universal Stretch Fit (52-58cm)",
     care: "Hand wash cold, dry flat",
     colors: ["Royal Blue", "Forest Green", "Dusty Mauve", "Warm Cream"]
-  },
-  {
-    id: "prod-daisy-hat",
-    name: "Granny Square Daisy Bucket Hat",
-    category: "caps",
-    badge: "Trending",
-    badgeType: "bestseller",
-    image: "images/caps.jpg",
-    description: "Handcrafted pastel sage green and cream bucket hat featuring delicate floral daisy granny squares. Breathable, structured brim, perfect for sunny days and festival styling.",
-    yarnType: "100% Breathable Milk Cotton",
-    dimensions: "One Size Fits Most (55-58cm)",
-    care: "Hand wash cold, air dry on a round bowl",
-    colors: ["Sage Green & Cream", "Vintage Rose & Ivory", "Butter Yellow & White"]
-  },
-  {
-    id: "prod-fingerless-gloves",
-    name: "Handcrafted Crochet Hand Gloves (Fingerless)",
-    category: "gloves",
-    badge: "Artisan Pick",
-    badgeType: "featured",
-    image: "images/gloves.jpg",
-    description: "Delicate and warm vintage-inspired fingerless crochet hand gloves with romantic scalloped edges and textured shell stitches. Free fingertips for easy phone typing and cozy coffee sips.",
-    yarnType: "Ultra-Soft Merino Wool & Cotton Blend",
-    dimensions: "Approx. 18cm length (Stretchy snug fit)",
-    care: "Hand wash cold, reshape and dry flat",
-    colors: ["Pure Cream", "Dusty Rose", "Oatmeal Heather", "Forest Moss"]
   },
   {
     id: "prod-lipbalm-holder",
@@ -158,8 +145,24 @@ const PRODUCTS = [
     dimensions: "Approx. 7cm height",
     care: "Spot clean gently",
     colors: ["Candy Pink & White", "Lilac Blossom", "Teal Breeze", "Crimson"]
+  },
+  {
+    id: "prod-motif-creation",
+    name: "Handcrafted Floral Crochet Motif Piece",
+    category: "accessories",
+    badge: "Artisan Drop",
+    badgeType: "featured",
+    image: "images/ig_DAeOAb_BWR1.jpg",
+    description: "Intricately worked crochet motif piece showcasing the signature artisanal stitching of @croche_boutiq. Perfect as a bespoke accent or custom accessory.",
+    yarnType: "100% Mercerized Combed Cotton",
+    dimensions: "Custom Specifications on Request",
+    care: "Hand wash cold, dry flat",
+    colors: ["Artisanal Multi-Tone", "Vintage Cream", "Earthy Sage"]
   }
 ];
+
+// Active products array (initialized from localStorage or default)
+let PRODUCTS = [...DEFAULT_PRODUCTS];
 
 const INSTAGRAM_POSTS = [
   {
@@ -185,6 +188,22 @@ const INSTAGRAM_POSTS = [
     likes: "19",
     comments: "0",
     image: "images/ig_CxJM5tFIL-H.jpg"
+  },
+  {
+    shortcode: "DJt-WgyBRhE",
+    url: "https://www.instagram.com/p/DJt-WgyBRhE/",
+    caption: "Romper and cap for 2-year-old 🤍 Soft stitches for little ones. DM to order your custom baby set!",
+    likes: "16",
+    comments: "1",
+    image: "images/ig_DJt-WgyBRhE.jpg"
+  },
+  {
+    shortcode: "DS4u-38D8WW",
+    url: "https://www.instagram.com/p/DS4u-38D8WW/",
+    caption: "Another scarf drop 🧶✨ Handmade • Cozy • On repeat. Striping yarn blends for chilly days!",
+    likes: "5",
+    comments: "0",
+    image: "images/ig_DS4u-38D8WW.jpg"
   },
   {
     shortcode: "CH-fP3kBb8_",
@@ -226,4 +245,27 @@ const INSTAGRAM_POSTS = [
     comments: "2",
     image: "images/ig_CMkJJW7BC0u.jpg"
   }
+];
+
+// Available authentic Instagram images library for the owner to pick from
+const INSTAGRAM_MEDIA_LIBRARY = [
+  { path: "images/ig_CHupfP7BRvI.jpg", label: "Chunky Winter Sweater (XXL)" },
+  { path: "images/ig_CJBs-DlBzGs.jpg", label: "Triangular Winter Shawl" },
+  { path: "images/ig_CxJM5tFIL-H.jpg", label: "Summer Shell Crop Top" },
+  { path: "images/ig_CH-fP3kBb8_.jpg", label: "Pink & White Sling Bag" },
+  { path: "images/ig_DJt-WgyBRhE.jpg", label: "Baby Romper & Cap Set" },
+  { path: "images/ig_C20K7HEhjVy.jpg", label: "Baby Wrap Blanket" },
+  { path: "images/ig_DS4u-38D8WW.jpg", label: "Striping Winter Scarf" },
+  { path: "images/ig_CxAuDhSBjWJ.jpg", label: "Bobble Ear-Warmer Headband" },
+  { path: "images/ig_CKnLjpoBtpL.jpg", label: "Lip Balm / Perfume Holder" },
+  { path: "images/ig_CN8CV0Oho8v.jpg", label: "Bow Dress Keychains Trio" },
+  { path: "images/ig_CMkJJW7BC0u.jpg", label: "Miniature Dress Charm" },
+  { path: "images/ig_DAeOAb_BWR1.jpg", label: "Crochet Motif Piece" },
+  { path: "images/ig_DAePie2BVDh.jpg", label: "Textured Floral Showcase" },
+  { path: "images/ig_C-rtiUdyMfY.jpg", label: "Boutique Creation" },
+  { path: "images/ig_C3lWoevhF3x.jpg", label: "Slow Stitch Piece" },
+  { path: "images/ig_C3CtZOKhNjY.jpg", label: "Cozy Winter Accent" },
+  { path: "images/ig_C3CsWiXBJy_.jpg", label: "Lace Design Piece" },
+  { path: "images/ig_DSw1FkSjy_a.jpg", label: "Winter Cozy Warmth" },
+  { path: "images/instagram_logo.jpg", label: "Official Boutique Logo" }
 ];
