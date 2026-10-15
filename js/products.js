@@ -161,7 +161,18 @@ const DEFAULT_PRODUCTS = [
   }
 ];
 
-// Active products array (initialized from localStorage or default)
+const DEFAULT_CATEGORIES = [
+  { id: "tops", name: "Sweaters & Tops" },
+  { id: "scarves", name: "Shawls & Scarves" },
+  { id: "bags", name: "Sling Bags & Pouches" },
+  { id: "baby", name: "Baby Wear & Sets" },
+  { id: "caps", name: "Caps & Headwear" },
+  { id: "gloves", name: "Hand Gloves" },
+  { id: "accessories", name: "Charms & Accessories" }
+];
+
+// Active categories & products arrays (initialized from localStorage or default)
+let CATEGORIES = [...DEFAULT_CATEGORIES];
 let PRODUCTS = [...DEFAULT_PRODUCTS];
 
 const INSTAGRAM_POSTS = [

@@ -1,14 +1,14 @@
 /**
  * The Crochet Boutique - Client Application Logic
  * Featuring dynamic product specs, customer preferences (WhatsApp / Email / Both),
- * Staff & Owner Portal, Live Product Picture & Details Editing, and Instant Catalog Management.
+ * Staff & Owner Portal beside FAQ, Category Management & Live Editing, and Instant Catalog Updates.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
   // Core Customer Elements
   const productsGrid = document.getElementById("productsGrid");
   const igGrid = document.getElementById("igGrid");
-  const categoryTabs = document.querySelectorAll(".tab-btn");
+  const categoryTabsContainer = document.getElementById("categoryTabs");
   const searchInput = document.getElementById("searchInput");
   const quickViewModal = document.getElementById("quickViewModal");
   const modalCloseBtn = document.getElementById("modalCloseBtn");
@@ -31,7 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnEditHeroImage = document.getElementById("btnEditHeroImage");
   const btnEditStoryImage = document.getElementById("btnEditStoryImage");
 
-  // Staff & Owner Elements
+  // Staff & Owner Elements (Both Navbar and Announcement buttons)
+  const navStaffBtn = document.getElementById("navStaffBtn");
+  const navStaffBtnLabel = document.getElementById("navStaffBtnLabel");
   const staffPortalBtn = document.getElementById("staffPortalBtn");
   const staffBtnLabel = document.getElementById("staffBtnLabel");
   const staffLoginModal = document.getElementById("staffLoginModal");
@@ -39,9 +41,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const staffLoginForm = document.getElementById("staffLoginForm");
   const ownerAdminBar = document.getElementById("ownerAdminBar");
   const btnAdminAddProduct = document.getElementById("btnAdminAddProduct");
+  const btnAdminEditCategories = document.getElementById("btnAdminEditCategories");
+  const btnEditCategories = document.getElementById("btnEditCategories");
   const btnAdminExportData = document.getElementById("btnAdminExportData");
   const btnAdminResetDefaults = document.getElementById("btnAdminResetDefaults");
   const btnAdminLogout = document.getElementById("btnAdminLogout");
+
+  // Category Manager Modal Elements
+  const categoryManagerModal = document.getElementById("categoryManagerModal");
+  const categoryManagerCloseBtn = document.getElementById("categoryManagerCloseBtn");
+  const categoryManagerList = document.getElementById("categoryManagerList");
+  const newCategoryName = document.getElementById("newCategoryName");
+  const btnAddNewCategory = document.getElementById("btnAddNewCategory");
+  const btnSaveCategories = document.getElementById("btnSaveCategories");
+  const btnCancelCategories = document.getElementById("btnCancelCategories");
 
   // Product Editor Elements
   const productEditorModal = document.getElementById("productEditorModal");
@@ -50,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const editProductId = document.getElementById("editProductId");
   const editorModalTitle = document.getElementById("editorModalTitle");
   const editorModalTag = document.getElementById("editorModalTag");
+  const editorCategorySelect = document.getElementById("editorCategory");
   const editorImagePreview = document.getElementById("editorImagePreview");
   const editorFileInput = document.getElementById("editorFileInput");
   const editorImageUrl = document.getElementById("editorImageUrl");
@@ -75,31 +89,23 @@ document.addEventListener("DOMContentLoaded", () => {
   let activeCategory = "all";
   let searchQuery = "";
 
-  // 1. Initialize Saved Products & Overrides from LocalStorage
+  // 1. Initialize Saved Products, Categories & Overrides from LocalStorage
   loadCustomizedData();
 
-  // 2. Initialize Store Configuration & UI
+  // 2. Initialize Store Configuration & Dynamic UI
   applyStoreConfig();
+  renderCategoryTabs();
+  populateCategoryDropdowns();
   populateProductSelect();
   renderProducts();
   renderInstagramFeed();
 
-  // 3. Setup Owner Mode UI if logged in
+  // 3. Setup Owner Mode UI if already logged in
   if (isOwnerMode) {
     enableOwnerModeUI();
   }
 
-  // 4. Category Filter Tabs
-  categoryTabs.forEach(tab => {
-    tab.addEventListener("click", () => {
-      categoryTabs.forEach(t => t.classList.remove("active"));
-      tab.classList.add("active");
-      activeCategory = tab.dataset.category;
-      renderProducts();
-    });
-  });
-
-  // 5. Search Filter
+  // 4. Search Filter
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       searchQuery = e.target.value.toLowerCase().trim();
@@ -107,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 6. Mobile Nav Toggle
+  // 5. Mobile Nav Toggle
   if (mobileMenuToggle && navLinks) {
     mobileMenuToggle.addEventListener("click", () => {
       const isVisible = navLinks.style.display === "flex";
@@ -126,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 7. Modals Universal Close handlers
+  // 6. Modals Universal Close Handlers
   if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeModal);
   if (quickViewModal) {
     quickViewModal.addEventListener("click", (e) => {
@@ -138,6 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (staffLoginModal) {
     staffLoginModal.addEventListener("click", (e) => {
       if (e.target === staffLoginModal) closeStaffModal();
+    });
+  }
+
+  if (categoryManagerCloseBtn) categoryManagerCloseBtn.addEventListener("click", closeCategoryManager);
+  if (btnCancelCategories) btnCancelCategories.addEventListener("click", closeCategoryManager);
+  if (categoryManagerModal) {
+    categoryManagerModal.addEventListener("click", (e) => {
+      if (e.target === categoryManagerModal) closeCategoryManager();
     });
   }
 
@@ -161,40 +175,43 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.key === "Escape") {
       closeModal();
       closeStaffModal();
+      closeCategoryManager();
       closeProductEditor();
       closeSectionPhotoModal();
     }
   });
 
-  // 8. Staff Portal Login Handlers
-  if (staffPortalBtn) {
-    staffPortalBtn.addEventListener("click", () => {
-      if (isOwnerMode) {
-        // Already logged in: Scroll to owner toolbar or inform owner
-        if (ownerAdminBar) ownerAdminBar.scrollIntoView({ behavior: "smooth" });
-        showToast("👑 Owner Edit Mode is currently active! Click Exit in the top bar to log out.");
-      } else {
-        openStaffModal();
-      }
-    });
+  // 7. Staff Portal Buttons (Beside FAQ in Navbar & Top-Left in Announcement Bar)
+  function handleStaffClick(e) {
+    if (e) e.preventDefault();
+    if (isOwnerMode) {
+      if (ownerAdminBar) ownerAdminBar.scrollIntoView({ behavior: "smooth" });
+      showToast("👑 Owner Edit Mode is currently active! Click Exit in the top bar to log out.");
+    } else {
+      openStaffModal();
+    }
   }
 
+  if (navStaffBtn) navStaffBtn.addEventListener("click", handleStaffClick);
+  if (staffPortalBtn) staffPortalBtn.addEventListener("click", handleStaffClick);
+
+  // 8. Staff Login Form Submission
   if (staffLoginForm) {
     staffLoginForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const u = (document.getElementById("staffUsername")?.value || "").trim().toLowerCase();
       const p = (document.getElementById("staffPassword")?.value || "").trim();
 
-      // Owner credentials check
+      // Owner credentials
       if ((u === "owner" || u === "admin") && (p === "admin123" || p === "croche2026" || p === "admin")) {
         isOwnerMode = true;
         localStorage.setItem("crochet_owner_mode", "true");
         closeStaffModal();
         enableOwnerModeUI();
         renderProducts();
-        showToast("👑 Welcome back, Owner! Edit Mode is now ACTIVE. Click any pencil icon (✏️) to edit!");
+        showToast("👑 Welcome Owner! Edit mode is now ACTIVE. You can edit all categories, products, and images live!");
       } else {
-        showToast("❌ Incorrect credentials. (Default: username: owner / password: admin123)");
+        showToast("❌ Incorrect credentials. (Demo login: username: owner / password: admin123)");
       }
     });
   }
@@ -206,46 +223,202 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.removeItem("crochet_owner_mode");
       disableOwnerModeUI();
       renderProducts();
-      showToast("👋 Logged out of Staff Mode. Returned to customer view.");
+      showToast("👋 Logged out of Staff Mode. Returned to normal customer view.");
     });
   }
 
   if (btnAdminAddProduct) {
     btnAdminAddProduct.addEventListener("click", () => {
-      openProductEditor(null); // Add new product mode
+      openProductEditor(null); // Add new product
+    });
+  }
+
+  if (btnAdminEditCategories) {
+    btnAdminEditCategories.addEventListener("click", () => {
+      openCategoryManager();
+    });
+  }
+
+  if (btnEditCategories) {
+    btnEditCategories.addEventListener("click", () => {
+      openCategoryManager();
     });
   }
 
   if (btnAdminResetDefaults) {
     btnAdminResetDefaults.addEventListener("click", () => {
-      if (confirm("Restore the boutique catalog and pictures back to original defaults? Any custom items will be reset.")) {
+      if (confirm("Restore all categories, products, and pictures back to default? Any custom items will be cleared.")) {
+        localStorage.removeItem("crochet_custom_categories");
         localStorage.removeItem("crochet_custom_products");
         localStorage.removeItem("crochet_hero_image");
         localStorage.removeItem("crochet_story_image");
+        CATEGORIES = [...DEFAULT_CATEGORIES];
         PRODUCTS = [...DEFAULT_PRODUCTS];
         if (heroMainImage) heroMainImage.src = "images/ig_CJBs-DlBzGs.jpg";
         if (storyMainImage) storyMainImage.src = "images/ig_CHupfP7BRvI.jpg";
-        renderProducts();
+        renderCategoryTabs();
+        populateCategoryDropdowns();
         populateProductSelect();
-        showToast("🔄 Catalog and images restored to default Instagram photography.");
+        renderProducts();
+        showToast("🔄 Catalog, categories, and images restored to authentic defaults.");
       }
     });
   }
 
   if (btnAdminExportData) {
     btnAdminExportData.addEventListener("click", () => {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(PRODUCTS, null, 2));
+      const exportObj = { categories: CATEGORIES, products: PRODUCTS };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
       const dlAnchor = document.createElement("a");
       dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "crochet_products_catalog.json");
+      dlAnchor.setAttribute("download", "crochet_boutique_data.json");
       document.body.appendChild(dlAnchor);
       dlAnchor.click();
       dlAnchor.remove();
-      showToast("📥 Exported catalog data successfully!");
+      showToast("📥 Exported boutique data successfully!");
     });
   }
 
-  // 10. Hero & Story Photo Editing Buttons
+  // 10. Category Manager Modal Handlers
+  function openCategoryManager() {
+    if (!categoryManagerModal || !categoryManagerList) return;
+    renderCategoryManagerItems();
+    if (newCategoryName) newCategoryName.value = "";
+    categoryManagerModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeCategoryManager() {
+    if (categoryManagerModal) categoryManagerModal.classList.remove("active");
+    document.body.style.overflow = "auto";
+  }
+
+  function renderCategoryManagerItems() {
+    if (!categoryManagerList) return;
+    categoryManagerList.innerHTML = "";
+
+    CATEGORIES.forEach((cat, index) => {
+      const prodCount = PRODUCTS.filter(p => p.category === cat.id).length;
+      const row = document.createElement("div");
+      row.className = "category-row-item";
+      row.innerHTML = `
+        <span style="font-size: 0.82rem; font-weight: 700; color: var(--color-text-muted); min-width: 20px;">#${index + 1}</span>
+        <input type="text" class="category-name-input" data-id="${cat.id}" value="${cat.name}">
+        <span class="category-badge-count">${prodCount} items</span>
+        <button type="button" class="btn-delete-cat" data-id="${cat.id}" title="Delete Category">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      `;
+
+      // Delete category handler
+      row.querySelector(".btn-delete-cat").addEventListener("click", () => {
+        if (CATEGORIES.length <= 1) {
+          showToast("At least one category must remain in the catalog.");
+          return;
+        }
+        if (confirm(`Remove category "${cat.name}"? Products in this category can be assigned to another category.`)) {
+          CATEGORIES = CATEGORIES.filter(c => c.id !== cat.id);
+          renderCategoryManagerItems();
+        }
+      });
+
+      categoryManagerList.appendChild(row);
+    });
+  }
+
+  if (btnAddNewCategory) {
+    btnAddNewCategory.addEventListener("click", () => {
+      const name = (newCategoryName ? newCategoryName.value : "").trim();
+      if (!name) {
+        showToast("Please enter a category name.");
+        return;
+      }
+      const slug = name.toLowerCase().replace(/[^a-z0-9]/g, "_") + "_" + Date.now().toString().slice(-4);
+      CATEGORIES.push({ id: slug, name: name });
+      if (newCategoryName) newCategoryName.value = "";
+      renderCategoryManagerItems();
+      showToast(`Added category "${name}". Click Save below to apply to the website.`);
+    });
+  }
+
+  if (btnSaveCategories) {
+    btnSaveCategories.addEventListener("click", () => {
+      // Read all updated names from input fields
+      const inputs = categoryManagerList ? categoryManagerList.querySelectorAll(".category-name-input") : [];
+      inputs.forEach(input => {
+        const catId = input.dataset.id;
+        const updatedName = input.value.trim();
+        const found = CATEGORIES.find(c => c.id === catId);
+        if (found && updatedName) {
+          found.name = updatedName;
+        }
+      });
+
+      // Save to localStorage
+      localStorage.setItem("crochet_custom_categories", JSON.stringify(CATEGORIES));
+
+      // Update live website immediately
+      renderCategoryTabs();
+      populateCategoryDropdowns();
+      renderProducts();
+      closeCategoryManager();
+      showToast("✨ Categories updated and saved live on website!");
+    });
+  }
+
+  // 11. Dynamic Category Tabs Rendering
+  function renderCategoryTabs() {
+    if (!categoryTabsContainer) return;
+    categoryTabsContainer.innerHTML = "";
+
+    // "All Items" tab
+    const allBtn = document.createElement("button");
+    allBtn.className = `tab-btn ${activeCategory === "all" ? "active" : ""}`;
+    allBtn.dataset.category = "all";
+    allBtn.textContent = "All Items";
+    allBtn.addEventListener("click", () => {
+      activeCategory = "all";
+      updateActiveCategoryTab();
+      renderProducts();
+    });
+    categoryTabsContainer.appendChild(allBtn);
+
+    // Each dynamic category
+    CATEGORIES.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.className = `tab-btn ${activeCategory === cat.id ? "active" : ""}`;
+      btn.dataset.category = cat.id;
+      btn.textContent = cat.name;
+      btn.addEventListener("click", () => {
+        activeCategory = cat.id;
+        updateActiveCategoryTab();
+        renderProducts();
+      });
+      categoryTabsContainer.appendChild(btn);
+    });
+  }
+
+  function updateActiveCategoryTab() {
+    if (!categoryTabsContainer) return;
+    const tabs = categoryTabsContainer.querySelectorAll(".tab-btn");
+    tabs.forEach(tab => {
+      tab.classList.toggle("active", tab.dataset.category === activeCategory);
+    });
+  }
+
+  function populateCategoryDropdowns() {
+    if (editorCategorySelect) {
+      editorCategorySelect.innerHTML = "";
+      CATEGORIES.forEach(cat => {
+        const opt = document.createElement("option");
+        opt.value = cat.id;
+        opt.textContent = cat.name;
+        editorCategorySelect.appendChild(opt);
+      });
+    }
+  }
+
+  // 12. Hero & Story Photo Editing Buttons
   if (btnEditHeroImage) {
     btnEditHeroImage.addEventListener("click", () => {
       openSectionPhotoModal("hero");
@@ -258,7 +431,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 11. Product Editor Form & Image Controls
+  // 13. Product Editor Form & Image Controls
   if (editorFileInput) {
     editorFileInput.addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
@@ -296,7 +469,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 12. Section Photo Form & Image Controls
+  // 14. Section Photo Form & Image Controls
   if (sectionFileInput) {
     sectionFileInput.addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
@@ -349,7 +522,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 13. Dynamic Channel Preference Selector (WhatsApp / Email / Both)
+  // 15. Dynamic Channel Preference Selector
   if (channelRadios) {
     channelRadios.forEach(radio => {
       radio.addEventListener("change", (e) => {
@@ -375,7 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // 14. Customer Inquiry Form Submission
+  // 16. Customer Inquiry Form Submission
   if (inquiryForm) {
     inquiryForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -471,7 +644,7 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
     });
   }
 
-  // 15. Render Products with Owner Mode Pencil Icons
+  // 17. Render Products with Owner Mode Pencil Icons
   function renderProducts() {
     if (!productsGrid) return;
     productsGrid.innerHTML = "";
@@ -488,11 +661,26 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
       productsGrid.innerHTML = `
         <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
           <div style="font-size: 3rem; margin-bottom: 12px;">🧶</div>
-          <h3 style="font-family: var(--font-heading); margin-bottom: 8px;">No matching crochet pieces found</h3>
+          <h3 style="font-family: var(--font-heading); margin-bottom: 8px;">No matching crochet pieces in this category</h3>
           <p style="color: var(--color-text-muted);">Looking for a custom design? Bring your photo to our Custom Order form below!</p>
-          <a href="#inquiry" class="btn btn-primary" style="margin-top: 18px;">Request Custom Piece</a>
+          ${isOwnerMode ? `
+            <button class="btn btn-primary" id="btnEmptyAddProduct" style="margin-top: 18px;">
+              <i class="fas fa-plus"></i> Add Product to "${formatCategory(activeCategory)}"
+            </button>
+          ` : `
+            <a href="#inquiry" class="btn btn-primary" style="margin-top: 18px;">Request Custom Piece</a>
+          `}
         </div>
       `;
+
+      if (isOwnerMode) {
+        const btnEmpty = document.getElementById("btnEmptyAddProduct");
+        if (btnEmpty) {
+          btnEmpty.addEventListener("click", () => {
+            openProductEditor(null, activeCategory === "all" ? "tops" : activeCategory);
+          });
+        }
+      }
       return;
     }
 
@@ -580,7 +768,7 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
     });
   }
 
-  // 16. Render Instagram Feed
+  // 18. Render Instagram Feed
   function renderInstagramFeed() {
     if (!igGrid) return;
     igGrid.innerHTML = "";
@@ -606,7 +794,7 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
     });
   }
 
-  // 17. Product Selection & Dynamic Form Updates
+  // 19. Product Selection & Dynamic Form Updates
   function selectProductAndScroll(product) {
     if (itemSelect) {
       for (let opt of itemSelect.options) {
@@ -657,7 +845,7 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
     });
   }
 
-  // 18. WhatsApp Product Inquiry
+  // 20. WhatsApp Product Inquiry
   function openWhatsAppForProduct(product) {
     const msg = 
 `🌸 *THE CROCHET BOUTIQUE - PRODUCT INQUIRY* 🌸
@@ -674,7 +862,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     window.open(url, "_blank");
   }
 
-  // 19. Quick View Customer Modal
+  // 21. Quick View Customer Modal
   function openQuickView(p) {
     if (!quickViewModal || !modalBody) return;
     modalBody.innerHTML = `
@@ -722,7 +910,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     document.body.style.overflow = "hidden";
   }
 
-  // 20. Specs Delivery Confirmation Modal
+  // 22. Specs Delivery Confirmation Modal
   function showSpecsConfirmationModal(data) {
     if (!quickViewModal || !modalBody) return;
 
@@ -780,30 +968,44 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     document.body.style.overflow = "hidden";
   }
 
-  // 21. Owner Mode UI Activation / Deactivation
+  // 23. Owner Mode UI Activation / Deactivation
   function enableOwnerModeUI() {
     if (ownerAdminBar) ownerAdminBar.style.display = "block";
+    if (btnEditCategories) btnEditCategories.style.display = "inline-flex";
+
+    if (navStaffBtnLabel) navStaffBtnLabel.textContent = "Owner (Active)";
+    if (navStaffBtn) navStaffBtn.classList.add("logged-in");
+
     if (staffBtnLabel) staffBtnLabel.textContent = "Owner (Active)";
     if (staffPortalBtn) staffPortalBtn.classList.add("logged-in");
+
     if (btnEditHeroImage) btnEditHeroImage.style.display = "inline-flex";
     if (btnEditStoryImage) btnEditStoryImage.style.display = "inline-flex";
   }
 
   function disableOwnerModeUI() {
     if (ownerAdminBar) ownerAdminBar.style.display = "none";
+    if (btnEditCategories) btnEditCategories.style.display = "none";
+
+    if (navStaffBtnLabel) navStaffBtnLabel.textContent = "Staff";
+    if (navStaffBtn) navStaffBtn.classList.remove("logged-in");
+
     if (staffBtnLabel) staffBtnLabel.textContent = "Staff";
     if (staffPortalBtn) staffPortalBtn.classList.remove("logged-in");
+
     if (btnEditHeroImage) btnEditHeroImage.style.display = "none";
     if (btnEditStoryImage) btnEditStoryImage.style.display = "none";
   }
 
-  // 22. Product Editor Modal Handlers
-  function openProductEditor(product) {
+  // 24. Product Editor Modal Handlers
+  function openProductEditor(product, defaultCat) {
     if (!productEditorModal) return;
 
     // Reset inputs
     if (editorFileInput) editorFileInput.value = "";
     if (igMediaPickerGrid) igMediaPickerGrid.style.display = "none";
+
+    populateCategoryDropdowns();
 
     // Populate Instagram media picker grid
     populateIgPicker(igMediaPickerGrid, (selectedPath) => {
@@ -817,7 +1019,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       if (editorModalTitle) editorModalTitle.textContent = "Edit Product & Change Picture";
       if (editorModalTag) editorModalTag.textContent = "Editing: " + product.name;
       document.getElementById("editorName").value = product.name;
-      document.getElementById("editorCategory").value = product.category;
+      if (editorCategorySelect) editorCategorySelect.value = product.category;
       document.getElementById("editorBadge").value = product.badge || "";
       document.getElementById("editorBadgeType").value = product.badgeType || "bestseller";
       document.getElementById("editorDescription").value = product.description || "";
@@ -833,7 +1035,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       if (editorModalTitle) editorModalTitle.textContent = "Add New Product to Boutique";
       if (editorModalTag) editorModalTag.textContent = "New Creation";
       document.getElementById("editorName").value = "";
-      document.getElementById("editorCategory").value = "tops";
+      if (editorCategorySelect) editorCategorySelect.value = defaultCat || (CATEGORIES[0] ? CATEGORIES[0].id : "tops");
       document.getElementById("editorBadge").value = "New Drop";
       document.getElementById("editorBadgeType").value = "featured";
       document.getElementById("editorDescription").value = "";
@@ -853,7 +1055,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
   function saveProductFromEditor() {
     const prodId = editProductId ? editProductId.value : "";
     const name = document.getElementById("editorName").value.trim();
-    const category = document.getElementById("editorCategory").value;
+    const category = editorCategorySelect ? editorCategorySelect.value : "tops";
     const badge = document.getElementById("editorBadge").value.trim() || "Artisan Pick";
     const badgeType = document.getElementById("editorBadgeType").value;
     const desc = document.getElementById("editorDescription").value.trim();
@@ -928,7 +1130,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     }
   }
 
-  // 23. Section Photo Editor Modal Handlers (Hero & Story)
+  // 25. Section Photo Editor Modal Handlers (Hero & Story)
   function openSectionPhotoModal(section) {
     if (!sectionPhotoModal) return;
     currentSectionEditing = section;
@@ -956,7 +1158,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     document.body.style.overflow = "hidden";
   }
 
-  // 24. Instagram Media Picker Helper
+  // 26. Instagram Media Picker Helper
   function populateIgPicker(gridEl, onSelect) {
     if (!gridEl || !Array.isArray(INSTAGRAM_MEDIA_LIBRARY)) return;
     gridEl.innerHTML = "";
@@ -975,18 +1177,31 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     });
   }
 
-  // 25. Storage & Defaults Loader
+  // 27. Storage & Defaults Loader
   function loadCustomizedData() {
-    // Products
+    // Categories override
+    const savedCategories = localStorage.getItem("crochet_custom_categories");
+    if (savedCategories) {
+      try {
+        const parsedCats = JSON.parse(savedCategories);
+        if (Array.isArray(parsedCats) && parsedCats.length > 0) {
+          CATEGORIES = parsedCats;
+        }
+      } catch (e) {
+        console.error("Failed to load custom categories:", e);
+      }
+    }
+
+    // Products override
     const savedProducts = localStorage.getItem("crochet_custom_products");
     if (savedProducts) {
       try {
-        const parsed = JSON.parse(savedProducts);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          PRODUCTS = parsed;
+        const parsedProds = JSON.parse(savedProducts);
+        if (Array.isArray(parsedProds) && parsedProds.length > 0) {
+          PRODUCTS = parsedProds;
         }
       } catch (e) {
-        console.error("Failed to load custom products from localStorage:", e);
+        console.error("Failed to load custom products:", e);
       }
     }
 
@@ -1003,7 +1218,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     }
   }
 
-  // 26. Helper & Modal Closing Routines
+  // 28. Helper & Modal Closing Routines
   function closeModal() {
     if (quickViewModal) quickViewModal.classList.remove("active");
     document.body.style.overflow = "auto";
@@ -1067,8 +1282,10 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     }
   }
 
-  function formatCategory(cat) {
-    const map = {
+  function formatCategory(catId) {
+    const found = CATEGORIES.find(c => c.id === catId);
+    if (found) return found.name;
+    const defaultMap = {
       tops: "Sweaters & Tops",
       scarves: "Shawls & Scarves",
       bags: "Sling Bags & Pouches",
@@ -1077,7 +1294,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       gloves: "Hand Gloves",
       accessories: "Charms & Accessories"
     };
-    return map[cat] || cat;
+    return defaultMap[catId] || catId;
   }
 
   function showToast(message) {

@@ -43,6 +43,9 @@
         <span class="owner-status-desc">Click any pencil icon (<i class="fas fa-pencil-alt"></i>) on products to change pictures or details. Changes update live!</span>
       </div>
       <div class="owner-bar-actions">
+        <button class="btn-owner-action btn-owner-accent" id="btnAdminEditCategories">
+          <i class="fas fa-tags"></i> Edit Categories
+        </button>
         <button class="btn-owner-action btn-owner-primary" id="btnAdminAddProduct">
           <i class="fas fa-plus-circle"></i> Add Product
         </button>
@@ -77,6 +80,12 @@
         <li><a href="#about">Our Story</a></li>
         <li><a href="#reviews">Reviews</a></li>
         <li><a href="#faq">FAQ</a></li>
+        <li class="nav-item-staff">
+          <button class="nav-staff-btn" id="navStaffBtn" aria-label="Staff and Owner Portal">
+            <i class="fas fa-user-shield"></i>
+            <span id="navStaffBtnLabel">Staff</span>
+          </button>
+        </li>
       </ul>
 
       <div class="nav-actions">
@@ -176,15 +185,14 @@
           <button class="search-icon-btn" aria-label="Search"><i class="fas fa-search"></i></button>
         </div>
 
-        <div class="category-tabs">
-          <button class="tab-btn active" data-category="all">All Items</button>
-          <button class="tab-btn" data-category="tops">Sweaters &amp; Tops</button>
-          <button class="tab-btn" data-category="scarves">Shawls &amp; Scarves</button>
-          <button class="tab-btn" data-category="bags">Sling Bags &amp; Pouches</button>
-          <button class="tab-btn" data-category="baby">Baby Wear &amp; Sets</button>
-          <button class="tab-btn" data-category="caps">Caps &amp; Headwear</button>
-          <button class="tab-btn" data-category="gloves">Hand Gloves</button>
-          <button class="tab-btn" data-category="accessories">Charms &amp; Accessories</button>
+        <div class="category-tabs-wrap">
+          <div class="category-tabs" id="categoryTabs">
+            <!-- Rendered dynamically via JS so custom/edited categories appear immediately! -->
+            <button class="tab-btn active" data-category="all">All Items</button>
+          </div>
+          <button class="btn-edit-categories-pill" id="btnEditCategories" style="display: none;" title="Edit or Add Categories">
+            <i class="fas fa-tags"></i> Edit Categories
+          </button>
         </div>
       </div>
 
@@ -796,6 +804,45 @@
         <div style="display: flex; gap: 10px; margin-top: 20px;">
           <button type="button" class="btn btn-primary" id="btnSaveSectionPhoto" style="flex: 1;">Save Picture</button>
           <button type="button" class="btn btn-secondary" id="btnCancelSectionPhoto">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Manager Modal (Owner can rename, add, or delete categories) -->
+  <div class="modal-backdrop" id="categoryManagerModal">
+    <div class="modal-dialog modal-dialog-md">
+      <button class="modal-close-btn" id="categoryManagerCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="editor-modal-content">
+        <div class="editor-modal-header">
+          <span class="section-tag">Category Management</span>
+          <h2 style="font-family: var(--font-heading); font-size: 1.6rem; margin-top: 4px; margin-bottom: 6px;">Manage Boutique Categories</h2>
+          <p style="color: var(--color-text-muted); font-size: 0.88rem;">Rename existing categories, add new categories, or remove unused ones. Updates save live immediately!</p>
+        </div>
+
+        <div class="category-manager-list" id="categoryManagerList" style="margin-bottom: 20px;">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <div class="add-category-box">
+          <h4 style="font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-plus-circle" style="color: var(--color-primary);"></i> Add New Category
+          </h4>
+          <div class="add-category-row">
+            <input type="text" id="newCategoryName" class="form-control" placeholder="e.g. Hair Bands, Amigurumi, Home Decor...">
+            <button type="button" class="btn btn-primary" id="btnAddNewCategory">
+              <i class="fas fa-plus"></i> Add
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-form-actions">
+          <button type="button" class="btn btn-primary" id="btnSaveCategories">
+            <i class="fas fa-check-circle"></i> Save Categories to Live Website
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnCancelCategories">
+            Close
+          </button>
         </div>
       </div>
     </div>
