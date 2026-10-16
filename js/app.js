@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 5. Mobile Nav Toggle
+  // 5. Mobile Nav Toggle & Header Inquiry Click Feedback
   if (mobileMenuToggle && navLinks) {
     mobileMenuToggle.addEventListener("click", () => {
       const isVisible = navLinks.style.display === "flex";
@@ -130,6 +130,16 @@ document.addEventListener("DOMContentLoaded", () => {
         navLinks.style.boxShadow = "0 8px 16px rgba(0,0,0,0.1)";
         navLinks.style.borderBottom = "1px solid #EADBCE";
       }
+    });
+  }
+
+  const btnHeaderInquiry = document.querySelector(".btn-header-inquiry");
+  if (btnHeaderInquiry) {
+    btnHeaderInquiry.addEventListener("click", () => {
+      btnHeaderInquiry.classList.add("active");
+      setTimeout(() => {
+        btnHeaderInquiry.classList.remove("active");
+      }, 1800);
     });
   }
 
