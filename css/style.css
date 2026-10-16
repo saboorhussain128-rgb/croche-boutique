@@ -115,40 +115,6 @@ button, input, select, textarea {
   gap: 12px;
 }
 
-.announcement-left {
-  display: flex;
-  align-items: center;
-}
-
-.staff-portal-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-main);
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-
-.staff-portal-btn:hover {
-  background: var(--color-primary);
-  color: white;
-  border-color: var(--color-primary);
-  transform: translateY(-1px);
-}
-
-.staff-portal-btn.logged-in {
-  background: #25D366;
-  color: white;
-  border-color: #25D366;
-}
-
 .announcement-center {
   flex-grow: 1;
   text-align: center;
@@ -1850,115 +1816,49 @@ textarea.form-control {
 }
 
 /* ==========================================================================
-   Owner Administration & Staff Portal Styles
+   Owner Catalog Controls (Inline next to Category Filter Pills)
    ========================================================================== */
-.owner-admin-bar {
-  background: #251B20;
-  color: #F8EDE9;
-  border-bottom: 2px solid var(--color-primary);
-  padding: 10px 16px;
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-  animation: fadeIn 0.3s ease;
-}
-
-.owner-bar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.owner-bar-info {
+.owner-catalog-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
-.owner-status-pill {
-  background: var(--color-primary);
-  color: white;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.6px;
-  padding: 4px 12px;
-  border-radius: var(--radius-full);
+.btn-owner-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 2px 8px rgba(200, 109, 118, 0.4);
-}
-
-.owner-status-desc {
-  font-size: 0.82rem;
-  color: #D6CBC4;
-}
-
-.owner-bar-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.btn-owner-action {
-  font-family: inherit;
-  font-size: 0.8rem;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
   font-weight: 700;
-  padding: 7px 14px;
-  border-radius: var(--radius-full);
-  border: 1px solid transparent;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  border: none;
   transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.btn-owner-primary {
+.btn-owner-pill-primary {
   background: #25D366;
   color: white;
 }
 
-.btn-owner-primary:hover {
+.btn-owner-pill-primary:hover {
   background: #1EBE5D;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
 }
 
-.btn-owner-secondary {
-  background: rgba(255, 255, 255, 0.12);
-  color: #FFFDF9;
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-.btn-owner-secondary:hover {
-  background: rgba(255, 255, 255, 0.22);
-}
-
-.btn-owner-danger {
-  background: rgba(217, 83, 79, 0.2);
-  color: #FFB3B0;
-  border-color: rgba(217, 83, 79, 0.4);
-}
-
-.btn-owner-danger:hover {
-  background: #D9534F;
+.btn-owner-pill-secondary {
+  background: var(--color-accent);
   color: white;
 }
 
-.btn-owner-logout {
-  background: transparent;
-  color: #C0B5AD;
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.btn-owner-logout:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
+.btn-owner-pill-secondary:hover {
+  background: #c58932;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(224, 169, 79, 0.35);
 }
 
 /* Product Card Pencil Edit Overlay */

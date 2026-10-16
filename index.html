@@ -17,47 +17,14 @@
 </head>
 <body>
 
-  <!-- Announcement Bar with Top-Left Staff Portal -->
+  <!-- Announcement Bar -->
   <aside class="announcement-bar" aria-label="Announcement">
     <div class="announcement-inner">
-      <div class="announcement-left">
-        <button class="staff-portal-btn" id="staffPortalBtn" aria-label="Staff and Owner Login">
-          <i class="fas fa-user-shield"></i>
-          <span id="staffBtnLabel">Staff</span>
-        </button>
-      </div>
       <div class="announcement-center">
         <span id="announcementText">🌸 Handcrafted with Love • Custom Color Orders Available • Worldwide Shipping</span>
       </div>
       <div class="announcement-right">
         <a href="https://www.instagram.com/croche_boutiq/" target="_blank" rel="noopener">Follow @croche_boutiq <i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Owner Administration Bar (Visible in Owner Mode) -->
-  <aside class="owner-admin-bar" id="ownerAdminBar" style="display: none;" aria-label="Owner Admin Controls">
-    <div class="container owner-bar-container">
-      <div class="owner-bar-info">
-        <span class="owner-status-pill"><i class="fas fa-crown"></i> OWNER EDIT MODE</span>
-        <span class="owner-status-desc">Click any pencil icon (<i class="fas fa-pencil-alt"></i>) on products to change pictures or details. Changes update live!</span>
-      </div>
-      <div class="owner-bar-actions">
-        <button class="btn-owner-action btn-owner-accent" id="btnAdminEditCategories">
-          <i class="fas fa-tags"></i> Edit Categories
-        </button>
-        <button class="btn-owner-action btn-owner-primary" id="btnAdminAddProduct">
-          <i class="fas fa-plus-circle"></i> Add Product
-        </button>
-        <button class="btn-owner-action btn-owner-secondary" id="btnAdminExportData" title="Export catalog JSON">
-          <i class="fas fa-download"></i> Export Data
-        </button>
-        <button class="btn-owner-action btn-owner-danger" id="btnAdminResetDefaults" title="Restore default catalog">
-          <i class="fas fa-rotate-left"></i> Reset
-        </button>
-        <button class="btn-owner-action btn-owner-logout" id="btnAdminLogout" title="Exit Staff Mode">
-          <i class="fas fa-sign-out-alt"></i> Exit Staff Mode
-        </button>
       </div>
     </div>
   </aside>
@@ -199,9 +166,14 @@
             <!-- Rendered dynamically via JS so custom/edited categories appear immediately! -->
             <button class="tab-btn active" data-category="all">All Items</button>
           </div>
-          <button class="btn-edit-categories-pill" id="btnEditCategories" style="display: none;" title="Edit or Add Categories">
-            <i class="fas fa-tags"></i> Edit Categories
-          </button>
+          <div class="owner-catalog-actions" id="ownerCatalogActions" style="display: none;">
+            <button class="btn-owner-pill btn-owner-pill-primary" id="btnAdminAddProduct" title="Add New Product">
+              <i class="fas fa-plus-circle"></i> Add Product
+            </button>
+            <button class="btn-owner-pill btn-owner-pill-secondary" id="btnEditCategories" title="Edit Categories">
+              <i class="fas fa-tags"></i> Edit Categories
+            </button>
+          </div>
         </div>
       </div>
 
@@ -614,40 +586,66 @@
     <div class="modal-dialog modal-dialog-sm">
       <button class="modal-close-btn" id="staffModalCloseBtn" aria-label="Close modal">&times;</button>
       <div class="staff-modal-content">
-        <div class="staff-modal-header">
-          <div class="staff-modal-icon">
-            <i class="fas fa-user-shield"></i>
+        <!-- Logged Out View: Login Form -->
+        <div id="staffLoggedOutView">
+          <div class="staff-modal-header">
+            <div class="staff-modal-icon">
+              <i class="fas fa-user-shield"></i>
+            </div>
+            <h3>Owner &amp; Staff Login</h3>
+            <p>Sign in to unlock full editing rights: change product pictures, edit details, or add new creations directly to the live website.</p>
           </div>
-          <h3>Owner &amp; Staff Login</h3>
-          <p>Sign in to unlock full editing rights: change product pictures, edit details, or add new creations directly to the live website.</p>
+
+          <form id="staffLoginForm" class="staff-login-form">
+            <div class="form-group">
+              <label for="staffUsername" class="form-label">Username *</label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-user"></i>
+                <input type="text" id="staffUsername" class="form-control" placeholder="Enter username (owner)" required autocomplete="username">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="staffPassword" class="form-label">Password *</label>
+              <div class="input-icon-wrap">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="staffPassword" class="form-control" placeholder="Enter password (admin123)" required autocomplete="current-password">
+              </div>
+            </div>
+
+            <div class="staff-credentials-hint">
+              <i class="fas fa-info-circle"></i>
+              <span><strong>Owner Credentials:</strong> Username: <code>owner</code> &bull; Password: <code>admin123</code></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 14px; justify-content: center;">
+              <i class="fas fa-unlock-alt"></i> Login to Edit Website
+            </button>
+          </form>
         </div>
 
-        <form id="staffLoginForm" class="staff-login-form">
-          <div class="form-group">
-            <label for="staffUsername" class="form-label">Username *</label>
-            <div class="input-icon-wrap">
-              <i class="fas fa-user"></i>
-              <input type="text" id="staffUsername" class="form-control" placeholder="Enter username (owner)" required autocomplete="username">
+        <!-- Logged In View: Owner Quick Actions -->
+        <div id="staffLoggedInView" style="display: none;">
+          <div class="staff-modal-header">
+            <div class="staff-modal-icon" style="background: rgba(37, 211, 102, 0.15); color: #25D366;">
+              <i class="fas fa-crown"></i>
             </div>
+            <h3>Owner Mode Active</h3>
+            <p>You have full edit rights. Click any pencil icon (<i class="fas fa-pencil-alt"></i>) on products to change pictures. Everything updates live.</p>
           </div>
 
-          <div class="form-group">
-            <label for="staffPassword" class="form-label">Password *</label>
-            <div class="input-icon-wrap">
-              <i class="fas fa-lock"></i>
-              <input type="password" id="staffPassword" class="form-control" placeholder="Enter password (admin123)" required autocomplete="current-password">
-            </div>
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px;">
+            <button type="button" class="btn btn-primary" id="btnModalAddProduct" style="justify-content: center;">
+              <i class="fas fa-plus-circle"></i> Add New Product
+            </button>
+            <button type="button" class="btn btn-secondary" id="btnModalEditCategories" style="justify-content: center;">
+              <i class="fas fa-tags"></i> Manage Categories
+            </button>
+            <button type="button" class="btn btn-danger-action" id="btnModalLogout" style="justify-content: center; margin-top: 6px;">
+              <i class="fas fa-sign-out-alt"></i> Exit Staff Mode (Logout)
+            </button>
           </div>
-
-          <div class="staff-credentials-hint">
-            <i class="fas fa-info-circle"></i>
-            <span><strong>Owner Credentials:</strong> Username: <code>owner</code> &bull; Password: <code>admin123</code></span>
-          </div>
-
-          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 14px; justify-content: center;">
-            <i class="fas fa-unlock-alt"></i> Login to Edit Website
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   </div>

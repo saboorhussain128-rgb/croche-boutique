@@ -31,21 +31,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnEditHeroImage = document.getElementById("btnEditHeroImage");
   const btnEditStoryImage = document.getElementById("btnEditStoryImage");
 
-  // Staff & Owner Elements (Both Navbar and Announcement buttons)
+  // Staff & Owner Elements (Navbar Button & Staff Modal Views)
   const navStaffBtn = document.getElementById("navStaffBtn");
   const navStaffBtnLabel = document.getElementById("navStaffBtnLabel");
-  const staffPortalBtn = document.getElementById("staffPortalBtn");
-  const staffBtnLabel = document.getElementById("staffBtnLabel");
   const staffLoginModal = document.getElementById("staffLoginModal");
   const staffModalCloseBtn = document.getElementById("staffModalCloseBtn");
   const staffLoginForm = document.getElementById("staffLoginForm");
-  const ownerAdminBar = document.getElementById("ownerAdminBar");
+  const staffLoggedOutView = document.getElementById("staffLoggedOutView");
+  const staffLoggedInView = document.getElementById("staffLoggedInView");
+  const btnModalAddProduct = document.getElementById("btnModalAddProduct");
+  const btnModalEditCategories = document.getElementById("btnModalEditCategories");
+  const btnModalLogout = document.getElementById("btnModalLogout");
+  const ownerCatalogActions = document.getElementById("ownerCatalogActions");
   const btnAdminAddProduct = document.getElementById("btnAdminAddProduct");
-  const btnAdminEditCategories = document.getElementById("btnAdminEditCategories");
   const btnEditCategories = document.getElementById("btnEditCategories");
-  const btnAdminExportData = document.getElementById("btnAdminExportData");
-  const btnAdminResetDefaults = document.getElementById("btnAdminResetDefaults");
-  const btnAdminLogout = document.getElementById("btnAdminLogout");
 
   // Category Manager Modal Elements
   const categoryManagerModal = document.getElementById("categoryManagerModal");
@@ -183,19 +182,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 7. Staff Portal Buttons (Beside FAQ in Navbar & Top-Left in Announcement Bar)
+  // 7. Staff Portal Button in Navbar
   function handleStaffClick(e) {
     if (e) e.preventDefault();
-    if (isOwnerMode) {
-      if (ownerAdminBar) ownerAdminBar.scrollIntoView({ behavior: "smooth" });
-      showToast("👑 Owner Edit Mode is currently active! Click Exit in the top bar to log out.");
-    } else {
-      openStaffModal();
-    }
+    openStaffModal();
   }
 
   if (navStaffBtn) navStaffBtn.addEventListener("click", handleStaffClick);
-  if (staffPortalBtn) staffPortalBtn.addEventListener("click", handleStaffClick);
 
   // 8. Staff Login Form Submission
   if (staffLoginForm) {
@@ -211,33 +204,42 @@ document.addEventListener("DOMContentLoaded", () => {
         closeStaffModal();
         enableOwnerModeUI();
         renderProducts();
-        showToast("👑 Welcome Owner! Edit mode is now ACTIVE. You can edit all categories, products, and images live!");
+        showToast("👑 Welcome Owner! Edit mode is now ACTIVE. Click any pencil icon on products to edit.");
       } else {
         showToast("❌ Incorrect credentials. (Demo login: username: owner / password: admin123)");
       }
     });
   }
 
-  // 9. Owner Admin Bar Actions
-  if (btnAdminLogout) {
-    btnAdminLogout.addEventListener("click", () => {
+  // 9. Owner Modal & Catalog Actions
+  if (btnModalAddProduct) {
+    btnModalAddProduct.addEventListener("click", () => {
+      closeStaffModal();
+      openProductEditor(null);
+    });
+  }
+
+  if (btnModalEditCategories) {
+    btnModalEditCategories.addEventListener("click", () => {
+      closeStaffModal();
+      openCategoryManager();
+    });
+  }
+
+  if (btnModalLogout) {
+    btnModalLogout.addEventListener("click", () => {
       isOwnerMode = false;
       localStorage.removeItem("crochet_owner_mode");
       disableOwnerModeUI();
       renderProducts();
+      closeStaffModal();
       showToast("👋 Logged out of Staff Mode. Returned to normal customer view.");
     });
   }
 
   if (btnAdminAddProduct) {
     btnAdminAddProduct.addEventListener("click", () => {
-      openProductEditor(null); // Add new product
-    });
-  }
-
-  if (btnAdminEditCategories) {
-    btnAdminEditCategories.addEventListener("click", () => {
-      openCategoryManager();
+      openProductEditor(null);
     });
   }
 
@@ -972,28 +974,20 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   // 23. Owner Mode UI Activation / Deactivation
   function enableOwnerModeUI() {
-    if (ownerAdminBar) ownerAdminBar.style.display = "block";
-    if (btnEditCategories) btnEditCategories.style.display = "inline-flex";
+    if (ownerCatalogActions) ownerCatalogActions.style.display = "flex";
 
     if (navStaffBtnLabel) navStaffBtnLabel.textContent = "Owner (Active)";
     if (navStaffBtn) navStaffBtn.classList.add("logged-in");
-
-    if (staffBtnLabel) staffBtnLabel.textContent = "Owner (Active)";
-    if (staffPortalBtn) staffPortalBtn.classList.add("logged-in");
 
     if (btnEditHeroImage) btnEditHeroImage.style.display = "inline-flex";
     if (btnEditStoryImage) btnEditStoryImage.style.display = "inline-flex";
   }
 
   function disableOwnerModeUI() {
-    if (ownerAdminBar) ownerAdminBar.style.display = "none";
-    if (btnEditCategories) btnEditCategories.style.display = "none";
+    if (ownerCatalogActions) ownerCatalogActions.style.display = "none";
 
     if (navStaffBtnLabel) navStaffBtnLabel.textContent = "Staff";
     if (navStaffBtn) navStaffBtn.classList.remove("logged-in");
-
-    if (staffBtnLabel) staffBtnLabel.textContent = "Staff";
-    if (staffPortalBtn) staffPortalBtn.classList.remove("logged-in");
 
     if (btnEditHeroImage) btnEditHeroImage.style.display = "none";
     if (btnEditStoryImage) btnEditStoryImage.style.display = "none";
@@ -1257,12 +1251,18 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
   }
 
   function openStaffModal() {
-    if (staffLoginModal) {
-      staffLoginModal.classList.add("active");
-      document.body.style.overflow = "hidden";
+    if (!staffLoginModal) return;
+    if (isOwnerMode) {
+      if (staffLoggedOutView) staffLoggedOutView.style.display = "none";
+      if (staffLoggedInView) staffLoggedInView.style.display = "block";
+    } else {
+      if (staffLoggedOutView) staffLoggedOutView.style.display = "block";
+      if (staffLoggedInView) staffLoggedInView.style.display = "none";
       const userField = document.getElementById("staffUsername");
-      if (userField) userField.focus();
+      if (userField) setTimeout(() => userField.focus(), 100);
     }
+    staffLoginModal.classList.add("active");
+    document.body.style.overflow = "hidden";
   }
 
   function closeStaffModal() {
