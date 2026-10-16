@@ -67,8 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const editorImagePreview = document.getElementById("editorImagePreview");
   const editorFileInput = document.getElementById("editorFileInput");
   const editorImageUrl = document.getElementById("editorImageUrl");
-  const btnToggleIgLibrary = document.getElementById("btnToggleIgLibrary");
-  const igMediaPickerGrid = document.getElementById("igMediaPickerGrid");
+  const editorLeftPickerGrid = document.getElementById("editorLeftPickerGrid");
+  const editorVisibleCheck = document.getElementById("editorVisibleCheck");
+  const btnHeaderDeleteProduct = document.getElementById("btnHeaderDeleteProduct");
+  const btnEditorDeleteProduct = document.getElementById("btnEditorDeleteProduct");
   const btnCancelEditor = document.getElementById("btnCancelEditor");
 
   // Section Photo Editor Elements
@@ -440,6 +442,10 @@ document.addEventListener("DOMContentLoaded", () => {
         reader.onload = (re) => {
           if (editorImagePreview) editorImagePreview.src = re.target.result;
           if (editorImageUrl) editorImageUrl.value = re.target.result;
+          if (editorLeftPickerGrid) {
+            editorLeftPickerGrid.querySelectorAll(".editor-pic-card").forEach(c => c.classList.remove("selected"));
+          }
+          showToast("📷 Uploaded custom picture! Click 'Save to Live Website' to publish.");
         };
         reader.readAsDataURL(file);
       }
@@ -455,11 +461,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (btnToggleIgLibrary && igMediaPickerGrid) {
-    btnToggleIgLibrary.addEventListener("click", () => {
-      const isVisible = igMediaPickerGrid.style.display === "grid";
-      igMediaPickerGrid.style.display = isVisible ? "none" : "grid";
-    });
+  function handleDeleteFromEditor() {
+    const prodId = editProductId ? editProductId.value : "";
+    const prod = PRODUCTS.find(p => p.id === prodId);
+    if (prod) {
+      deleteProduct(prod);
+      closeProductEditor();
+    }
+  }
+
+  if (btnHeaderDeleteProduct) {
+    btnHeaderDeleteProduct.addEventListener("click", handleDeleteFromEditor);
+  }
+
+  if (btnEditorDeleteProduct) {
+    btnEditorDeleteProduct.addEventListener("click", handleDeleteFromEditor);
   }
 
   if (productEditorForm) {
@@ -644,16 +660,17 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
     });
   }
 
-  // 17. Render Products with Owner Mode Pencil Icons
+  // 17. Render Products with Owner Mode Pencil Icons and Single "Get This" Button
   function renderProducts() {
     if (!productsGrid) return;
     productsGrid.innerHTML = "";
 
     const filtered = PRODUCTS.filter(p => {
+      // If customer view, only show items with visible !== false
+      if (!isOwnerMode && p.visible === false) return false;
       const matchesCat = (activeCategory === "all") || (p.category === activeCategory);
       const matchesQuery = p.name.toLowerCase().includes(searchQuery) ||
-                           p.description.toLowerCase().includes(searchQuery) ||
-                           (p.yarnType && p.yarnType.toLowerCase().includes(searchQuery));
+                           p.description.toLowerCase().includes(searchQuery);
       return matchesCat && matchesQuery;
     });
 
@@ -677,7 +694,7 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
         const btnEmpty = document.getElementById("btnEmptyAddProduct");
         if (btnEmpty) {
           btnEmpty.addEventListener("click", () => {
-            openProductEditor(null, activeCategory === "all" ? "tops" : activeCategory);
+            openProductEditor(null, activeCategory === "all" ? (CATEGORIES[0] ? CATEGORIES[0].id : "sweaters") : activeCategory);
           });
         }
       }
@@ -685,12 +702,18 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
     }
 
     filtered.forEach(p => {
+      const isHidden = (p.visible === false);
       const card = document.createElement("div");
-      card.className = "product-card";
+      card.className = `product-card ${isHidden ? "product-card-hidden" : ""}`;
       card.innerHTML = `
         <div class="product-thumb-wrap">
           <img src="${p.image}" alt="${p.name}" class="product-thumb" loading="lazy">
           <span class="badge-tag badge-${p.badgeType}">${p.badge}</span>
+          ${isHidden && isOwnerMode ? `
+            <span class="badge-tag" style="top: 48px; background: #444; color: #fff;">
+              <i class="fas fa-eye-slash"></i> Hidden
+            </span>
+          ` : ""}
           ${isOwnerMode ? `
             <div class="product-admin-overlay">
               <button class="product-pencil-btn" data-id="${p.id}" title="Edit product & picture">
@@ -706,43 +729,22 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
           <span class="product-category-label">${formatCategory(p.category)}</span>
           <h3 class="product-title">${p.name}</h3>
           <p class="product-excerpt">${p.description}</p>
-          <div class="product-meta-specs">
-            <span>🧶 ${p.yarnType}</span>
-            <span>•</span>
-            <span>📐 ${p.dimensions}</span>
-          </div>
-          <div class="product-bottom-row">
-            <span class="product-custom-tag"><i class="fas fa-sparkles"></i> Made to Order</span>
-            <div class="product-actions">
-              <button class="btn-card-knowmore" data-id="${p.id}" title="View details and specs">
-                <i class="fas fa-info-circle"></i> Know More
-              </button>
-              <button class="btn-card-inquire" data-id="${p.id}">Inquire / Order</button>
-              <button class="btn-card-wa" data-id="${p.id}" title="Inquire on WhatsApp">
-                <i class="fab fa-whatsapp"></i>
-              </button>
-            </div>
+          <div class="product-bottom-action">
+            <button class="btn-get-this" data-id="${p.id}">
+              <i class="fas fa-bag-shopping"></i> Get This
+            </button>
           </div>
         </div>
       `;
 
-      // Customer Actions
-      card.querySelector(".btn-card-knowmore").addEventListener("click", () => {
-        openQuickView(p);
-      });
-
-      card.querySelector(".btn-card-inquire").addEventListener("click", () => {
+      // Customer Action: Click "Get This" to select item and scroll to inquiry form
+      card.querySelector(".btn-get-this").addEventListener("click", () => {
         selectProductAndScroll(p);
-      });
-
-      card.querySelector(".btn-card-wa").addEventListener("click", (e) => {
-        e.stopPropagation();
-        openWhatsAppForProduct(p);
       });
 
       card.querySelector(".product-thumb-wrap").addEventListener("click", (e) => {
         if (e.target.closest(".product-admin-overlay")) return;
-        openQuickView(p);
+        selectProductAndScroll(p);
       });
 
       // Owner Actions (Pencil Edit & Delete)
@@ -997,75 +999,103 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     if (btnEditStoryImage) btnEditStoryImage.style.display = "none";
   }
 
-  // 24. Product Editor Modal Handlers
+  // 24. Product Editor Modal Handlers with Left-Side Picture Selector
+  let activeSelectedImagePath = "";
+
   function openProductEditor(product, defaultCat) {
     if (!productEditorModal) return;
 
     // Reset inputs
     if (editorFileInput) editorFileInput.value = "";
-    if (igMediaPickerGrid) igMediaPickerGrid.style.display = "none";
 
     populateCategoryDropdowns();
 
-    // Populate Instagram media picker grid
-    populateIgPicker(igMediaPickerGrid, (selectedPath) => {
-      if (editorImageUrl) editorImageUrl.value = selectedPath;
-      if (editorImagePreview) editorImagePreview.src = selectedPath;
-    });
+    // Determine currently active image
+    activeSelectedImagePath = product ? product.image : (INSTAGRAM_MEDIA_LIBRARY[0] ? INSTAGRAM_MEDIA_LIBRARY[0].path : "images/instagram_logo.jpg");
+
+    // Populate Left-Side Picture Selection Gallery with Select Check Icons
+    renderLeftPictureGallery(activeSelectedImagePath);
 
     if (product) {
       // Edit existing product
       if (editProductId) editProductId.value = product.id;
-      if (editorModalTitle) editorModalTitle.textContent = "Edit Product & Change Picture";
+      if (editorModalTitle) editorModalTitle.textContent = "Edit Product & Picture";
       if (editorModalTag) editorModalTag.textContent = "Editing: " + product.name;
       document.getElementById("editorName").value = product.name;
       if (editorCategorySelect) editorCategorySelect.value = product.category;
       document.getElementById("editorBadge").value = product.badge || "";
       document.getElementById("editorBadgeType").value = product.badgeType || "bestseller";
       document.getElementById("editorDescription").value = product.description || "";
-      document.getElementById("editorYarn").value = product.yarnType || "";
-      document.getElementById("editorDimensions").value = product.dimensions || "";
-      document.getElementById("editorCare").value = product.care || "";
-      document.getElementById("editorColors").value = (product.colors || []).join(", ");
       if (editorImageUrl) editorImageUrl.value = product.image;
       if (editorImagePreview) editorImagePreview.src = product.image;
+      if (editorVisibleCheck) editorVisibleCheck.checked = (product.visible !== false);
+
+      // Show Delete Buttons when editing an existing product
+      if (btnHeaderDeleteProduct) btnHeaderDeleteProduct.style.display = "inline-flex";
+      if (btnEditorDeleteProduct) btnEditorDeleteProduct.style.display = "inline-flex";
     } else {
       // Add new product
       if (editProductId) editProductId.value = "";
       if (editorModalTitle) editorModalTitle.textContent = "Add New Product to Boutique";
       if (editorModalTag) editorModalTag.textContent = "New Creation";
       document.getElementById("editorName").value = "";
-      if (editorCategorySelect) editorCategorySelect.value = defaultCat || (CATEGORIES[0] ? CATEGORIES[0].id : "tops");
+      if (editorCategorySelect) editorCategorySelect.value = defaultCat || (CATEGORIES[0] ? CATEGORIES[0].id : "sweaters");
       document.getElementById("editorBadge").value = "New Drop";
       document.getElementById("editorBadgeType").value = "featured";
       document.getElementById("editorDescription").value = "";
-      document.getElementById("editorYarn").value = "100% Breathable Milk Cotton";
-      document.getElementById("editorDimensions").value = "Custom Tailored";
-      document.getElementById("editorCare").value = "Hand wash cold, lay flat to dry";
-      document.getElementById("editorColors").value = "Custom Palette";
-      const defaultImg = (INSTAGRAM_MEDIA_LIBRARY && INSTAGRAM_MEDIA_LIBRARY[0]) ? INSTAGRAM_MEDIA_LIBRARY[0].path : "images/instagram_logo.jpg";
-      if (editorImageUrl) editorImageUrl.value = defaultImg;
-      if (editorImagePreview) editorImagePreview.src = defaultImg;
+      if (editorImageUrl) editorImageUrl.value = activeSelectedImagePath;
+      if (editorImagePreview) editorImagePreview.src = activeSelectedImagePath;
+      if (editorVisibleCheck) editorVisibleCheck.checked = true;
+
+      // Hide Delete Buttons when adding a new product
+      if (btnHeaderDeleteProduct) btnHeaderDeleteProduct.style.display = "none";
+      if (btnEditorDeleteProduct) btnEditorDeleteProduct.style.display = "none";
     }
 
     productEditorModal.classList.add("active");
     document.body.style.overflow = "hidden";
   }
 
+  function renderLeftPictureGallery(selectedPath) {
+    if (!editorLeftPickerGrid || !Array.isArray(INSTAGRAM_MEDIA_LIBRARY)) return;
+    editorLeftPickerGrid.innerHTML = "";
+
+    INSTAGRAM_MEDIA_LIBRARY.forEach(item => {
+      const isSelected = (item.path === selectedPath);
+      const card = document.createElement("div");
+      card.className = `editor-pic-card ${isSelected ? "selected" : ""}`;
+      card.innerHTML = `
+        <div class="editor-pic-thumb-wrap">
+          <img src="${item.path}" alt="${item.label}" loading="lazy">
+          <div class="pic-check-badge" title="Select picture">
+            <i class="fas fa-check"></i>
+          </div>
+        </div>
+        <span class="editor-pic-label" title="${item.label}">${item.label}</span>
+      `;
+
+      card.addEventListener("click", () => {
+        activeSelectedImagePath = item.path;
+        if (editorImageUrl) editorImageUrl.value = item.path;
+        if (editorImagePreview) editorImagePreview.src = item.path;
+        editorLeftPickerGrid.querySelectorAll(".editor-pic-card").forEach(c => c.classList.remove("selected"));
+        card.classList.add("selected");
+        showToast(`📷 Selected "${item.label}". Click 'Save to Live Website' to publish.`);
+      });
+
+      editorLeftPickerGrid.appendChild(card);
+    });
+  }
+
   function saveProductFromEditor() {
     const prodId = editProductId ? editProductId.value : "";
     const name = document.getElementById("editorName").value.trim();
-    const category = editorCategorySelect ? editorCategorySelect.value : "tops";
+    const category = editorCategorySelect ? editorCategorySelect.value : (CATEGORIES[0] ? CATEGORIES[0].id : "sweaters");
     const badge = document.getElementById("editorBadge").value.trim() || "Artisan Pick";
     const badgeType = document.getElementById("editorBadgeType").value;
     const desc = document.getElementById("editorDescription").value.trim();
-    const yarn = document.getElementById("editorYarn").value.trim() || "100% Milk Cotton";
-    const dimensions = document.getElementById("editorDimensions").value.trim() || "Custom Tailored";
-    const care = document.getElementById("editorCare").value.trim() || "Hand wash cold, dry flat";
-    const colorsRaw = document.getElementById("editorColors").value;
-    const colors = colorsRaw.split(",").map(c => c.trim()).filter(Boolean);
-    const img = (editorImageUrl && editorImageUrl.value.trim()) || 
-                (editorImagePreview && editorImagePreview.src) || "images/instagram_logo.jpg";
+    const isVisible = editorVisibleCheck ? editorVisibleCheck.checked : true;
+    const img = (editorImageUrl && editorImageUrl.value.trim()) || activeSelectedImagePath || "images/instagram_logo.jpg";
 
     if (!name || !desc) {
       showToast("Please provide product name and description.");
@@ -1083,11 +1113,8 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
           badge,
           badgeType,
           description: desc,
-          yarnType: yarn,
-          dimensions,
-          care,
-          colors: colors.length ? colors : ["Custom Tone"],
-          image: img
+          image: img,
+          visible: isVisible
         };
         showToast(`✨ Updated "${name}" successfully on live website!`);
       }
@@ -1101,11 +1128,8 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
         badge,
         badgeType,
         description: desc,
-        yarnType: yarn,
-        dimensions,
-        care,
-        colors: colors.length ? colors : ["Custom Tone"],
-        image: img
+        image: img,
+        visible: isVisible
       };
       PRODUCTS.unshift(newProd);
       showToast(`🎉 Added "${name}" to live boutique collection!`);
@@ -1126,7 +1150,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       localStorage.setItem("crochet_custom_products", JSON.stringify(PRODUCTS));
       renderProducts();
       populateProductSelect();
-      showToast(`🗑️ Removed "${product.name}" from catalog.`);
+      showToast(`🗑️ Removed "${product.name}" from live catalog.`);
     }
   }
 
@@ -1179,6 +1203,14 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   // 27. Storage & Defaults Loader
   function loadCustomizedData() {
+    // Migration check: ensure version 3 is loaded to wipe old technical descriptions and old categories
+    const CATALOG_VERSION = "v3";
+    if (localStorage.getItem("crochet_catalog_version") !== CATALOG_VERSION) {
+      localStorage.removeItem("crochet_custom_categories");
+      localStorage.removeItem("crochet_custom_products");
+      localStorage.setItem("crochet_catalog_version", CATALOG_VERSION);
+    }
+
     // Categories override
     const savedCategories = localStorage.getItem("crochet_custom_categories");
     if (savedCategories) {
@@ -1286,13 +1318,14 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     const found = CATEGORIES.find(c => c.id === catId);
     if (found) return found.name;
     const defaultMap = {
-      tops: "Sweaters & Tops",
-      scarves: "Shawls & Scarves",
-      bags: "Sling Bags & Pouches",
-      baby: "Baby Wear & Sets",
-      caps: "Caps & Headwear",
-      gloves: "Hand Gloves",
-      accessories: "Charms & Accessories"
+      sweaters: "Sweaters",
+      shirts: "Shirts",
+      kids: "Kids",
+      gloves: "Gloves",
+      skaffs: "Skaffs",
+      caps: "Caps",
+      bags: "Bags",
+      accessories: "Accessories"
     };
     return defaultMap[catId] || catId;
   }

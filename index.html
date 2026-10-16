@@ -75,11 +75,9 @@
 
       <ul class="nav-links">
         <li><a href="#catalog">Collection</a></li>
-        <li><a href="#inquiry">Custom Orders</a></li>
         <li><a href="#instagram">Instagram Feed</a></li>
         <li><a href="#about">Our Story</a></li>
         <li><a href="#reviews">Reviews</a></li>
-        <li><a href="#faq">FAQ</a></li>
         <li class="nav-item-staff">
           <button class="nav-staff-btn" id="navStaffBtn" aria-label="Staff and Owner Portal">
             <i class="fas fa-user-shield"></i>
@@ -90,7 +88,7 @@
 
       <div class="nav-actions">
         <a href="#inquiry" class="btn-header-inquiry">
-          <i class="fas fa-heart"></i>
+          <i class="fas fa-bag-shopping"></i>
           <span>Order Inquiry</span>
         </a>
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Navigation Menu">
@@ -102,19 +100,24 @@
 
   <!-- Hero Section -->
   <header class="hero">
+    <!-- Animated background aura -->
+    <div class="hero-glow-backdrop" aria-hidden="true"></div>
+    <div class="hero-sparkle-orb orb-1" aria-hidden="true"></div>
+    <div class="hero-sparkle-orb orb-2" aria-hidden="true"></div>
+
     <div class="container hero-grid">
       <div class="hero-content">
-        <div class="hero-pill">
-          <i class="fas fa-sparkles"></i> 100% Stitched by Hand with Patience & Care
+        <div class="hero-pill animated-fade-in">
+          <i class="fas fa-sparkles"></i> 100% Stitched by Hand with Patience &amp; Care
         </div>
-        <h1>
-          Soft Stitches, Warm Moments & <span>Bespoke Crochet</span>.
+        <h1 class="animated-slide-up">
+          Soft Stitches, Warm Moments &amp; <span>Bespoke Crochet</span>.
         </h1>
-        <p>
+        <p class="animated-slide-up delay-1">
           Welcome to <strong>The Crochet Boutique</strong>! From viral amigurumi plushies and heirloom baby sets to chunky granny square totes and forever floral bouquets — every piece is individually handcrafted just for you.
         </p>
-        <div class="hero-buttons">
-          <a href="#catalog" class="btn btn-primary">
+        <div class="hero-buttons animated-slide-up delay-2">
+          <a href="#catalog" class="btn btn-primary btn-animated-pulse">
             <i class="fas fa-search"></i> Explore Catalog
           </a>
           <a href="#inquiry" class="btn btn-secondary">
@@ -124,12 +127,12 @@
             <i class="fab fa-instagram"></i> @croche_boutiq
           </a>
         </div>
-        <div class="hero-badges">
+        <div class="hero-badges animated-slide-up delay-3">
           <div class="hero-badge-item">
             <div class="hero-badge-icon"><i class="fas fa-seedling" style="color: var(--color-secondary);"></i></div>
             <div class="hero-badge-text">
               <strong>Premium Yarns</strong>
-              <span>Milk Cotton & Chenille</span>
+              <span>Milk Cotton &amp; Chenille</span>
             </div>
           </div>
           <div class="hero-badge-item">
@@ -150,13 +153,19 @@
       </div>
 
       <div class="hero-visual">
-        <div class="hero-card-main">
+        <div class="hero-floating-badge badge-float-1">
+          <i class="fas fa-sparkles" style="color: #FFB703;"></i> 100% Handcrafted
+        </div>
+        <div class="hero-floating-badge badge-float-2">
+          <i class="fas fa-heart" style="color: #E27396;"></i> Made with Love
+        </div>
+        <div class="hero-card-main animated-float-card">
           <img id="heroMainImage" src="images/ig_CJBs-DlBzGs.jpg" alt="Handcrafted crochet winter wrap shawl with The Crochet Boutique handmade happiness watermark">
           <button class="section-pencil-btn" id="btnEditHeroImage" title="Change Hero Image" style="display: none;">
             <i class="fas fa-pencil-alt"></i> Change Picture
           </button>
         </div>
-        <div class="hero-floating-card">
+        <div class="hero-floating-card animated-float-badge">
           <img src="images/instagram_logo.jpg" alt="@croche_boutiq logo badge" class="hero-floating-avatar">
           <div>
             <strong style="font-size: 0.92rem; display: block;">@croche_boutiq</strong>
@@ -643,127 +652,123 @@
     </div>
   </div>
 
-  <!-- Product Editor Modal (For changing picture, details, or adding new items) -->
+  <!-- Product Editor Modal (With Left-Side Picture Selector & Product Add/Remove) -->
   <div class="modal-backdrop" id="productEditorModal">
-    <div class="modal-dialog modal-dialog-lg">
+    <div class="modal-dialog modal-dialog-xl">
       <button class="modal-close-btn" id="productEditorCloseBtn" aria-label="Close modal">&times;</button>
       <div class="editor-modal-content">
         <div class="editor-modal-header">
-          <span class="section-tag" id="editorModalTag">Owner Catalog Manager</span>
-          <h2 id="editorModalTitle">Edit Product &amp; Change Picture</h2>
-          <p id="editorModalSubtitle">Any updates saved here will automatically update on the live website immediately.</p>
+          <div class="editor-header-flex">
+            <div>
+              <span class="section-tag" id="editorModalTag">Owner Catalog Manager</span>
+              <h2 id="editorModalTitle">Edit Product &amp; Picture</h2>
+              <p id="editorModalSubtitle">Select pictures on the left panel. Only selected &amp; saved pictures are visible on the website.</p>
+            </div>
+            <div id="editorModalHeaderActions">
+              <button type="button" class="btn-danger-outline" id="btnHeaderDeleteProduct" style="display: none;">
+                <i class="fas fa-trash-alt"></i> Remove Product
+              </button>
+            </div>
+          </div>
         </div>
 
         <form id="productEditorForm">
           <input type="hidden" id="editProductId" value="">
 
-          <!-- Image Selection & Live Preview -->
-          <div class="editor-image-section">
-            <label class="form-label" style="font-weight: 700; margin-bottom: 8px;">Product Picture *</label>
-            <div class="image-picker-layout">
-              <div class="image-preview-card">
-                <img id="editorImagePreview" src="images/instagram_logo.jpg" alt="Preview">
-                <span class="preview-badge">Live Preview</span>
+          <div class="editor-split-layout">
+            <!-- Left Side: Picture Selection Gallery with Select Icons -->
+            <div class="editor-left-gallery-panel">
+              <div class="editor-gallery-header">
+                <label class="form-label" style="font-weight: 700; margin-bottom: 2px;">
+                  <i class="fas fa-images"></i> Select Product Picture
+                </label>
+                <span class="editor-gallery-sub">Click a picture to select with check icon (<i class="fas fa-check-circle" style="color: var(--color-primary);"></i>)</span>
               </div>
-              <div class="image-picker-controls">
-                <div class="upload-control-group">
-                  <label class="btn-file-upload">
-                    <i class="fas fa-cloud-arrow-up"></i> Upload Picture from Device
-                    <input type="file" id="editorFileInput" accept="image/*" style="display: none;">
-                  </label>
-                  <span class="upload-hint">Upload any image file (JPG, PNG, WEBP) from your phone or computer</span>
-                </div>
 
-                <div class="form-group" style="margin-top: 10px; margin-bottom: 8px;">
-                  <label for="editorImageUrl" class="form-label" style="font-size: 0.8rem;">Or Enter Image Path / URL:</label>
-                  <input type="text" id="editorImageUrl" class="form-control" placeholder="e.g. images/ig_CHupfP7BRvI.jpg">
-                </div>
+              <!-- Upload from device option -->
+              <div class="editor-upload-bar">
+                <label class="btn-file-upload-compact">
+                  <i class="fas fa-cloud-arrow-up"></i> Upload From Device
+                  <input type="file" id="editorFileInput" accept="image/*" style="display: none;">
+                </label>
+              </div>
 
-                <div class="ig-library-toggle-wrap">
-                  <button type="button" class="btn-link-sm" id="btnToggleIgLibrary">
-                    <i class="fab fa-instagram"></i> Pick from @croche_boutiq Instagram Library (18 Photos) <i class="fas fa-chevron-down" id="igToggleArrow"></i>
-                  </button>
-                </div>
+              <!-- Selectable Pictures Grid with Check Icons -->
+              <div class="editor-selectable-grid" id="editorLeftPickerGrid">
+                <!-- Dynamically populated with pictures & select check icons -->
               </div>
             </div>
 
-            <!-- Collapsible Instagram Gallery -->
-            <div class="ig-media-picker-grid" id="igMediaPickerGrid" style="display: none;"></div>
-          </div>
+            <!-- Right Side: Details & Visibility Controls -->
+            <div class="editor-right-form-panel">
+              <!-- Selected Image Live Spotlight Card -->
+              <div class="editor-selected-preview-box">
+                <div class="editor-preview-thumb-wrap">
+                  <img id="editorImagePreview" src="images/instagram_logo.jpg" alt="Selected Preview">
+                  <span class="preview-badge" id="previewSelectStatus"><i class="fas fa-check-circle"></i> Picture Selected</span>
+                </div>
+                <div class="editor-preview-meta">
+                  <span class="editor-preview-label">Selected Photo Path / URL:</span>
+                  <input type="text" id="editorImageUrl" class="form-control form-control-sm" placeholder="e.g. images/ig_CHupfP7BRvI.jpg">
+                  <div class="editor-visibility-card">
+                    <label class="visibility-checkbox-label">
+                      <input type="checkbox" id="editorVisibleCheck" checked>
+                      <span><i class="fas fa-eye"></i> Visible on Website</span>
+                    </label>
+                    <small class="text-muted">When unchecked, this item will be hidden from website visitors.</small>
+                  </div>
+                </div>
+              </div>
 
-          <!-- Product Details Form Grid -->
-          <div class="form-group-grid" style="margin-top: 16px;">
-            <div class="form-group">
-              <label for="editorName" class="form-label">Product Name *</label>
-              <input type="text" id="editorName" class="form-control" required placeholder="e.g. Custom Chunky Braid Winter Sweater">
+              <!-- Product Details -->
+              <div class="form-group-grid" style="margin-top: 14px;">
+                <div class="form-group">
+                  <label for="editorName" class="form-label">Product Name *</label>
+                  <input type="text" id="editorName" class="form-control" required placeholder="e.g. Cozy Chunky Braid Winter Sweater">
+                </div>
+
+                <div class="form-group">
+                  <label for="editorCategory" class="form-label">Category *</label>
+                  <select id="editorCategory" class="form-control" required>
+                    <!-- Populated dynamically via JS: sweaters, shirts, kids, gloves, skaffs, caps, bags, accessories -->
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group-grid">
+                <div class="form-group">
+                  <label for="editorBadge" class="form-label">Badge Tag (Optional)</label>
+                  <input type="text" id="editorBadge" class="form-control" placeholder="e.g. Bestseller, Client Favorite...">
+                </div>
+
+                <div class="form-group">
+                  <label for="editorBadgeType" class="form-label">Badge Color Accent</label>
+                  <select id="editorBadgeType" class="form-control">
+                    <option value="bestseller">Rose Gold (Bestseller)</option>
+                    <option value="featured">Sage Green (Featured)</option>
+                    <option value="custom">Gold Mustard (Custom)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="editorDescription" class="form-label">Product Description *</label>
+                <textarea id="editorDescription" class="form-control" rows="3" required placeholder="Describe the stitches, fit, and artisan details..."></textarea>
+              </div>
+
+              <!-- Form Action Buttons -->
+              <div class="editor-form-actions">
+                <button type="submit" class="btn btn-primary btn-save-product">
+                  <i class="fas fa-check-circle"></i> Save to Live Website
+                </button>
+                <button type="button" class="btn btn-danger-action" id="btnEditorDeleteProduct" style="display: none;">
+                  <i class="fas fa-trash-alt"></i> Remove Product
+                </button>
+                <button type="button" class="btn btn-secondary" id="btnCancelEditor">
+                  Cancel
+                </button>
+              </div>
             </div>
-
-            <div class="form-group">
-              <label for="editorCategory" class="form-label">Category *</label>
-              <select id="editorCategory" class="form-control" required>
-                <option value="tops">Sweaters &amp; Tops</option>
-                <option value="scarves">Shawls &amp; Scarves</option>
-                <option value="bags">Sling Bags &amp; Pouches</option>
-                <option value="baby">Baby Wear &amp; Sets</option>
-                <option value="caps">Caps &amp; Headwear</option>
-                <option value="gloves">Hand Gloves</option>
-                <option value="accessories">Charms &amp; Accessories</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group-grid">
-            <div class="form-group">
-              <label for="editorBadge" class="form-label">Badge Tag (Optional)</label>
-              <input type="text" id="editorBadge" class="form-control" placeholder="e.g. Bestseller, Client Favorite, Viral...">
-            </div>
-
-            <div class="form-group">
-              <label for="editorBadgeType" class="form-label">Badge Color Accent</label>
-              <select id="editorBadgeType" class="form-control">
-                <option value="bestseller">Rose Gold (Bestseller)</option>
-                <option value="featured">Sage Green (Featured)</option>
-                <option value="custom">Gold Mustard (Custom)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="editorDescription" class="form-label">Product Description *</label>
-            <textarea id="editorDescription" class="form-control" rows="3" required placeholder="Describe the stitches, fit, and artisan details..."></textarea>
-          </div>
-
-          <div class="form-group-grid">
-            <div class="form-group">
-              <label for="editorYarn" class="form-label">Yarn Material Specs</label>
-              <input type="text" id="editorYarn" class="form-control" placeholder="e.g. 100% Breathable Milk Cotton">
-            </div>
-
-            <div class="form-group">
-              <label for="editorDimensions" class="form-label">Dimensions &amp; Sizing</label>
-              <input type="text" id="editorDimensions" class="form-control" placeholder="e.g. Custom Tailored (S, M, L, XL, XXL)">
-            </div>
-          </div>
-
-          <div class="form-group-grid">
-            <div class="form-group">
-              <label for="editorCare" class="form-label">Washing &amp; Care</label>
-              <input type="text" id="editorCare" class="form-control" placeholder="e.g. Hand wash cold, lay flat to dry">
-            </div>
-
-            <div class="form-group">
-              <label for="editorColors" class="form-label">Available Colors (Comma-separated)</label>
-              <input type="text" id="editorColors" class="form-control" placeholder="e.g. Heather Gray, Cream, Charcoal">
-            </div>
-          </div>
-
-          <div class="editor-form-actions">
-            <button type="submit" class="btn btn-primary btn-save-product">
-              <i class="fas fa-check-circle"></i> Save to Live Website
-            </button>
-            <button type="button" class="btn btn-secondary" id="btnCancelEditor">
-              Cancel
-            </button>
           </div>
         </form>
       </div>
