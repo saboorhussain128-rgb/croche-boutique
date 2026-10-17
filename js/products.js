@@ -11,7 +11,6 @@ const DEFAULT_CATEGORIES = [
   { id: "gloves", name: "Gloves" },
   { id: "skaffs", name: "Skaffs" },
   { id: "caps", name: "Caps" },
-  { id: "bags", name: "Bags" },
   { id: "accessories", name: "Accessories" }
 ];
 
@@ -418,47 +417,85 @@ const DEFAULT_PRODUCTS = [
     visible: true
   },
 
-  // --- BAGS ---
+  // --- ACCESSORIES / KEYCHAINS & DECOR ---
   {
-    id: "prod-sling-bag",
-    name: "Dual-Tone Crochet Sling Bag",
-    category: "bags",
-    badge: "Everyday Chic",
+    id: "prod-keychain-frock-beanie-favors",
+    name: "Mini Frock & Beanie Keychain Favors",
+    category: "accessories",
+    badge: "Bestseller Favors",
     badgeType: "bestseller",
-    image: "images/ig_CH-fP3kBb8_.jpg",
-    description: "Pastel pink and white handcrafted crochet sling bag with a braided shoulder strap and secure closure.",
+    image: "images/ig_CACVp9RlD-N.jpg",
+    description: "Charming handcrafted miniature dress and beanie hat keychains in bright color combos—ideal as bag charms, car key accents, or party favors.",
     visible: true
   },
-
-  // --- ACCESSORIES ---
   {
-    id: "prod-lipbalm-holder",
-    name: "Lip Balm & Perfume Sleeve Keychain",
+    id: "prod-lipbalm-rainbow-holder",
+    name: "Rainbow Striped Lip Balm Cozy Holder",
     category: "accessories",
-    badge: "Handy Cutie",
+    badge: "Everyday Essential",
+    badgeType: "featured",
+    image: "images/ig_CK7k9x6BF7k.jpg",
+    description: "Vibrant rainbow striped crochet sleeve with button-fastened strap—clip onto your bag, belt, or zipper pull so your lip balm is always handy.",
+    visible: true
+  },
+  {
+    id: "prod-keychain-scarlet-frock",
+    name: "Scarlet & Ivory Frock Charm Keychain",
+    category: "accessories",
+    badge: "Sweet Accent",
+    badgeType: "custom",
+    image: "images/ig_CLFEoLPBs4Z.jpg",
+    description: "Delightful red and ivory miniature baby frock crochet keychain charm with ruffled yoke and secure silver keyring.",
+    visible: true
+  },
+  {
+    id: "prod-keychain-burgundy-dress",
+    name: "Burgundy Wine Miniature Dress Charm",
+    category: "accessories",
+    badge: "Artisan Made",
+    badgeType: "featured",
+    image: "images/ig_CLgTuurhPIa.jpg",
+    description: "Deep burgundy wine and ivory miniature crochet dress charm keychain, delicately stitched with lacy scalloped hem details.",
+    visible: true
+  },
+  {
+    id: "prod-keychain-skyblue-frock",
+    name: "Sky Blue Ruffled Dress Keychain",
+    category: "accessories",
+    badge: "Cute Charm",
+    badgeType: "bestseller",
+    image: "images/ig_CL4a9T5BdqO.jpg",
+    description: "Soft sky blue and white miniature crochet frock keychain charm featuring delicate openwork stitches and sturdy silver chain.",
+    visible: true
+  },
+  {
+    id: "prod-lipbalm-zipper-holder",
+    name: "Zipper-Clip Lip Balm & Perfume Sleeve",
+    category: "accessories",
+    badge: "Everyday Favorite",
     badgeType: "bestseller",
     image: "images/ig_CKnLjpoBtpL.jpg",
-    description: "Cute and practical crochet sleeve keychain made to hold your everyday lip balm, lipstick, or travel perfume.",
+    description: "Color-blocked charcoal, white, yellow, and blue crochet sleeve designed to clip onto your handbag or zipper for lip balm or perfume vials.",
     visible: true
   },
   {
-    id: "prod-bow-dress-trio",
-    name: "Miniature Bow Dress Keychains Trio",
+    id: "prod-keychain-frock-romper-trio",
+    name: "Baby Frock & Romper Keychain Trio",
     category: "accessories",
     badge: "Gift Set",
     badgeType: "featured",
-    image: "images/ig_CN8CV0Oho8v.jpg",
-    description: "Set of three miniature crochet dress keychains with delicate bows in teal, orange, and pastel pink.",
+    image: "images/ig_CMkIy7ph3AJ.jpg",
+    description: "Collection of three handcrafted miniature charms including neon pink frock, maroon dress, and teal romper with bow accent.",
     visible: true
   },
   {
-    id: "prod-dress-charm",
-    name: "Signature Miniature Dress Charm",
+    id: "prod-keychain-coral-frock",
+    name: "Coral Rose Miniature Frock Charm",
     category: "accessories",
-    badge: "Artisan Charm",
+    badge: "Signature Piece",
     badgeType: "custom",
     image: "images/ig_CMkJJW7BC0u.jpg",
-    description: "Signature miniature dress charm with gold keyring and lobster clasp, hand-stitched with tiny ruffled sleeves.",
+    description: "Petite coral rose and white crochet frock charm keychain, hand-stitched with tiny puffed shoulder frills and silver hardware.",
     visible: true
   },
   {
@@ -529,12 +566,12 @@ const INSTAGRAM_POSTS = [
     image: "images/ig_DS4u-38D8WW.jpg"
   },
   {
-    shortcode: "CH-fP3kBb8_",
-    url: "https://www.instagram.com/p/CH-fP3kBb8_/",
-    caption: "Pastel pink & white handcrafted crochet sling bag with braided handle. Compact and lightweight 💖",
-    likes: "29",
-    comments: "4",
-    image: "images/ig_CH-fP3kBb8_.jpg"
+    shortcode: "CACVp9RlD-N",
+    url: "https://www.instagram.com/p/CACVp9RlD-N/",
+    caption: "Cute keychains for you and your friends! Handcrafted miniature dress & cap charms in playful colorways 💖✨",
+    likes: "26",
+    comments: "5",
+    image: "images/ig_CACVp9RlD-N.jpg"
   },
   {
     shortcode: "C20K7HEhjVy",
@@ -791,11 +828,62 @@ const INSTAGRAM_POSTS = [
     likes: "8",
     comments: "0",
     image: "images/ig_Cxxc5C6hjTc.jpg"
+  },
+  {
+    shortcode: "CK7k9x6BF7k",
+    url: "https://www.instagram.com/p/CK7k9x6BF7k/",
+    caption: "Another fancy lip balm holder with rainbow shades! The button loop attaches anywhere on your bag or zipper 🌈💄",
+    likes: "29",
+    comments: "4",
+    image: "images/ig_CK7k9x6BF7k.jpg"
+  },
+  {
+    shortcode: "CLFEoLPBs4Z",
+    url: "https://www.instagram.com/p/CLFEoLPBs4Z/",
+    caption: "Isn’t it cute? Handmade miniature red dress keychain charm stitched with love at @croche_boutiq 👗❤️",
+    likes: "29",
+    comments: "0",
+    image: "images/ig_CLFEoLPBs4Z.jpg"
+  },
+  {
+    shortcode: "CLgTuurhPIa",
+    url: "https://www.instagram.com/p/CLgTuurhPIa/",
+    caption: "Miniature crochet dress charm in elegant wine and white tones. Handcrafted perfection for keys or bag decor 🍷🤍",
+    likes: "26",
+    comments: "1",
+    image: "images/ig_CLgTuurhPIa.jpg"
+  },
+  {
+    shortcode: "CL4a9T5BdqO",
+    url: "https://www.instagram.com/p/CL4a9T5BdqO/",
+    caption: "Sky blue handcrafted miniature frock keychain charm. A sweet personal keepsake or thoughtful handmade gift 🩵✨",
+    likes: "22",
+    comments: "0",
+    image: "images/ig_CL4a9T5BdqO.jpg"
+  },
+  {
+    shortcode: "CMkIy7ph3AJ",
+    url: "https://www.instagram.com/p/CMkIy7ph3AJ/",
+    caption: "Miniature baby frock & bow romper keychains trio! Hand-crocheted cuties ready to accessorize your keys or bags 🎀👗",
+    likes: "30",
+    comments: "0",
+    image: "images/ig_CMkIy7ph3AJ.jpg"
   }
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
 const INSTAGRAM_MEDIA_LIBRARY = [
+  { path: "images/ig_CACVp9RlD-N.jpg", label: "Mini Frock & Beanie Keychains" },
+  { path: "images/ig_CK7k9x6BF7k.jpg", label: "Rainbow Lip Balm Cozy Holder" },
+  { path: "images/ig_CLFEoLPBs4Z.jpg", label: "Scarlet Frock Keychain Charm" },
+  { path: "images/ig_CLgTuurhPIa.jpg", label: "Burgundy Dress Keychain Charm" },
+  { path: "images/ig_CL4a9T5BdqO.jpg", label: "Sky Blue Frock Keychain Charm" },
+  { path: "images/ig_CKnLjpoBtpL.jpg", label: "Zipper-Clip Lip Balm Sleeve" },
+  { path: "images/ig_CMkIy7ph3AJ.jpg", label: "Frock & Romper Keychain Trio" },
+  { path: "images/ig_CMkJJW7BC0u.jpg", label: "Coral Rose Miniature Dress Charm" },
+  { path: "images/ig_CN8CV0Oho8v.jpg", label: "Bow Dress Keychains Trio" },
+  { path: "images/ig_DAeOAb_BWR1.jpg", label: "Floral Motif Accent" },
+  { path: "images/ig_DAePie2BVDh.jpg", label: "Textured Motif Accent" },
   { path: "images/ig_CBs6Rc2BIkd.jpg", label: "Turquoise Stripe Pom Beanie" },
   { path: "images/ig_CFHNKTVBFRS.jpg", label: "Rainbow Baby Beanie" },
   { path: "images/ig_CFXCSBGhhVp.jpg", label: "Candy Cane Stripe Beanie" },
@@ -836,11 +924,5 @@ const INSTAGRAM_MEDIA_LIBRARY = [
   { path: "images/ig_CHupfP7BRvI.jpg", label: "Chunky Winter Sweater" },
   { path: "images/ig_C-rtiUdyMfY.jpg", label: "Lace Motif Top" },
   { path: "images/ig_DSw1FkSjy_a.jpg", label: "Winter Neck Warmer" },
-  { path: "images/ig_CH-fP3kBb8_.jpg", label: "Pink & White Sling Bag" },
-  { path: "images/ig_CKnLjpoBtpL.jpg", label: "Lip Balm & Perfume Sleeve" },
-  { path: "images/ig_CN8CV0Oho8v.jpg", label: "Bow Dress Keychains Trio" },
-  { path: "images/ig_CMkJJW7BC0u.jpg", label: "Miniature Dress Charm" },
-  { path: "images/ig_DAeOAb_BWR1.jpg", label: "Floral Motif Accent" },
-  { path: "images/ig_DAePie2BVDh.jpg", label: "Textured Motif Accent" },
   { path: "images/instagram_logo.jpg", label: "Official Boutique Logo" }
 ];

@@ -1244,8 +1244,8 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   // 27. Storage & Defaults Loader
   function loadCustomizedData() {
-    // Migration check: ensure version 9 is loaded to refresh authentic Caps & Hats from Instagram
-    const CATALOG_VERSION = "v9";
+    // Migration check: ensure version 10 is loaded to remove bags and refresh authentic Accessories from Instagram
+    const CATALOG_VERSION = "v10";
     if (localStorage.getItem("crochet_catalog_version") !== CATALOG_VERSION) {
       localStorage.removeItem("crochet_custom_categories");
       localStorage.removeItem("crochet_custom_products");
@@ -1371,7 +1371,6 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       gloves: "Gloves",
       skaffs: "Skaffs",
       caps: "Caps",
-      bags: "Bags",
       accessories: "Accessories"
     };
     return defaultMap[catId] || catId;
