@@ -214,6 +214,36 @@ const DEFAULT_PRODUCTS = [
 
   // --- GLOVES ---
   {
+    id: "prod-gloves-navy",
+    name: "Indigo Navy Full-Fingered Gloves",
+    category: "gloves",
+    badge: "Winter Warmth",
+    badgeType: "bestseller",
+    image: "images/ig_C2dLainBu80.jpg",
+    description: "Warm handcrafted deep navy blue full-fingered crochet gloves stitched with dense thermal stitches for frosty days.",
+    visible: true
+  },
+  {
+    id: "prod-gloves-forest",
+    name: "Forest Green Ribbed Cuff Gloves",
+    category: "gloves",
+    badge: "Artisan Classic",
+    badgeType: "featured",
+    image: "images/ig_C2WlKHDIxBn.jpg",
+    description: "Full-fingered hand-crocheted winter gloves in deep forest moss with comfortable ribbed elastic wrists.",
+    visible: true
+  },
+  {
+    id: "prod-gloves-detail",
+    name: "Bespoke Textured Knit Hand Gloves",
+    category: "gloves",
+    badge: "Custom Crafted",
+    badgeType: "custom",
+    image: "images/ig_C2UOTUIBz7_.jpg",
+    description: "Precision-crafted textured crochet hand gloves showcasing intricate finger shaping and soft insulating yarn.",
+    visible: true
+  },
+  {
     id: "prod-fingerless-gloves",
     name: "Handcrafted Fingerless Hand Gloves",
     category: "gloves",
@@ -531,11 +561,39 @@ const INSTAGRAM_POSTS = [
     likes: "15",
     comments: "0",
     image: "images/ig_Cx-6B6dhKzI.jpg"
+  },
+  {
+    shortcode: "C2dLainBu80",
+    url: "https://www.instagram.com/p/C2dLainBu80/",
+    caption: "Handcrafted indigo navy full-fingered crochet winter gloves. Keep your hands warm with handcrafted love ❄️🧤",
+    likes: "4",
+    comments: "0",
+    image: "images/ig_C2dLainBu80.jpg"
+  },
+  {
+    shortcode: "C2WlKHDIxBn",
+    url: "https://www.instagram.com/p/C2WlKHDIxBn/",
+    caption: "Deep forest green hand-crocheted winter gloves with ribbed elastic cuffs. Ready for chilly days 🌲🧤",
+    likes: "6",
+    comments: "0",
+    image: "images/ig_C2WlKHDIxBn.jpg"
+  },
+  {
+    shortcode: "C2UOTUIBz7_",
+    url: "https://www.instagram.com/p/C2UOTUIBz7_/",
+    caption: "Detail in every stitch. Custom tailored crochet winter gloves for the frosty season 🧶✨",
+    likes: "6",
+    comments: "0",
+    image: "images/ig_C2UOTUIBz7_.jpg"
   }
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
 const INSTAGRAM_MEDIA_LIBRARY = [
+  { path: "images/ig_C2dLainBu80.jpg", label: "Navy Blue Full-Finger Gloves" },
+  { path: "images/ig_C2WlKHDIxBn.jpg", label: "Forest Green Ribbed Gloves" },
+  { path: "images/ig_C2UOTUIBz7_.jpg", label: "Textured Knit Gloves Detail" },
+  { path: "images/gloves.jpg", label: "Fingerless Hand Gloves" },
   { path: "images/ig_CvcmF28Ba8Q.jpg", label: "Cornflower Blue Baby Overalls" },
   { path: "images/ig_CvcZPilhixz.jpg", label: "Rainbow Baby Pinafore" },
   { path: "images/ig_Cx-6B6dhKzI.jpg", label: "Sky Blue Baby Romper Suit" },
@@ -555,7 +613,6 @@ const INSTAGRAM_MEDIA_LIBRARY = [
   { path: "images/ig_CjsnA1Eh-gv.jpg", label: "Navy Striped Hooded Sweater" },
   { path: "images/ig_CHupfP7BRvI.jpg", label: "Chunky Winter Sweater" },
   { path: "images/ig_C-rtiUdyMfY.jpg", label: "Lace Motif Top" },
-  { path: "images/gloves.jpg", label: "Fingerless Hand Gloves" },
   { path: "images/ig_CJBs-DlBzGs.jpg", label: "Triangular Winter Shawl" },
   { path: "images/ig_DS4u-38D8WW.jpg", label: "Striped Winter Scarf" },
   { path: "images/ig_DSw1FkSjy_a.jpg", label: "Winter Neck Warmer" },
