@@ -76,17 +76,87 @@ const DEFAULT_PRODUCTS = [
     badge: "Summer Essential",
     badgeType: "featured",
     image: "images/ig_CxJM5tFIL-H.jpg",
-    description: "Lightweight summer shell stitch crop top with delicate scalloped borders, perfect for warm days and festival wear.",
+    description: "Lightweight summer shell stitch crop top with delicate scalloped borders, perfect for warm days and festival styling.",
+    visible: true
+  },
+  {
+    id: "prod-chevron-wave-blouse",
+    name: "Cyan & Purple Chevron Wave Blouse",
+    category: "shirts",
+    badge: "Boutique Pick",
+    badgeType: "bestseller",
+    image: "images/ig_Cjpvof8hXY-.jpg",
+    description: "Handcrafted cyan and royal purple chevron wave crochet blouse with scoop neckline, scalloped cap sleeves, and crystal buttons.",
+    visible: true
+  },
+  {
+    id: "prod-shimmer-mesh-top",
+    name: "Midnight Shimmer Open-Mesh Top",
+    category: "shirts",
+    badge: "Evening Glam",
+    badgeType: "custom",
+    image: "images/ig_CxLTWx5h2ez.jpg",
+    description: "Elegant black shimmer yarn openwork crochet mesh top designed for chic layering over bralettes or camisoles.",
+    visible: true
+  },
+  {
+    id: "prod-flared-sleeve-top",
+    name: "Bespoke Flared Sleeve Statement Top",
+    category: "shirts",
+    badge: "Trending",
+    badgeType: "featured",
+    image: "images/ig_CxSZ-STh5iO.jpg",
+    description: "Custom tailored striped wrap silhouette elevated with hand-crocheted flared bell sleeves for a slow-fashion artisanal look.",
+    visible: true
+  },
+  {
+    id: "prod-colorblock-stripe-cardigan",
+    name: "Pastel Colorblock Cardigan Top",
+    category: "shirts",
+    badge: "Artisan Drop",
+    badgeType: "bestseller",
+    image: "images/ig_Cx3Z7bzh7iB.jpg",
+    description: "Vibrant multi-stripe colorblock cardigan top hand-stitched in turquoise, coral, and navy with scalloped ivory trim.",
     visible: true
   },
   {
     id: "prod-artisan-shirt-top",
     name: "Handcrafted Lace Motif Top",
     category: "shirts",
-    badge: "Trending",
+    badge: "Boho Classic",
     badgeType: "custom",
     image: "images/ig_C-rtiUdyMfY.jpg",
     description: "Mindfully stitched artisan crochet top crafted with airy openwork motifs in warm, sun-kissed shades.",
+    visible: true
+  },
+  {
+    id: "prod-sunshine-frock-top",
+    name: "Sunshine & Plum Tiered Frill Top",
+    category: "shirts",
+    badge: "Sweet Style",
+    badgeType: "featured",
+    image: "images/ig_C0cc_cZhB1z.jpg",
+    description: "Bright yellow and deep purple tiered scallop frill crochet top complete with a matching sunflower floral headband.",
+    visible: true
+  },
+  {
+    id: "prod-turquoise-stripe-top",
+    name: "Ocean Turquoise Striped Hooded Top",
+    category: "shirts",
+    badge: "Cozy Layer",
+    badgeType: "custom",
+    image: "images/ig_CjBH7-MBbxJ.jpg",
+    description: "Warm textured hooded button top featuring soothing turquoise, oatmeal, and white stripes for comfortable everyday wear.",
+    visible: true
+  },
+  {
+    id: "prod-sky-dungaree-top",
+    name: "Sky Blue Dungaree Pinafore Top",
+    category: "shirts",
+    badge: "Little Keepsake",
+    badgeType: "featured",
+    image: "images/ig_C03kkwvBzx0.jpg",
+    description: "Charming sky blue hand-crocheted dungaree pinafore top with wooden strap buttons and delicate floral pocket applique.",
     visible: true
   },
 
@@ -351,17 +421,80 @@ const INSTAGRAM_POSTS = [
     likes: "17",
     comments: "0",
     image: "images/ig_CjsnA1Eh-gv.jpg"
+  },
+  {
+    shortcode: "Cjpvof8hXY-",
+    url: "https://www.instagram.com/p/Cjpvof8hXY-/",
+    caption: "Handcrafted cyan & royal purple chevron wave crochet blouse with scalloped cap sleeves 💙💜",
+    likes: "18",
+    comments: "0",
+    image: "images/ig_Cjpvof8hXY-.jpg"
+  },
+  {
+    shortcode: "CxLTWx5h2ez",
+    url: "https://www.instagram.com/p/CxLTWx5h2ez/",
+    caption: "Midnight shimmer open-weave crochet mesh top. Effortless artisanal sparkle ✨🖤",
+    likes: "12",
+    comments: "0",
+    image: "images/ig_CxLTWx5h2ez.jpg"
+  },
+  {
+    shortcode: "CxSZ-STh5iO",
+    url: "https://www.instagram.com/reel/CxSZ-STh5iO/",
+    caption: "Bespoke striped top paired with statement hand-crocheted flared bell sleeves 💫🧶",
+    likes: "13",
+    comments: "0",
+    image: "images/ig_CxSZ-STh5iO.jpg"
+  },
+  {
+    shortcode: "Cx3Z7bzh7iB",
+    url: "https://www.instagram.com/reel/Cx3Z7bzh7iB/",
+    caption: "Vibrant colorblock striped crochet cardigan top with scalloped ivory trim 🎨🧵",
+    likes: "14",
+    comments: "1",
+    image: "images/ig_Cx3Z7bzh7iB.jpg"
+  },
+  {
+    shortcode: "C0cc_cZhB1z",
+    url: "https://www.instagram.com/p/C0cc_cZhB1z/",
+    caption: "Little princess sunny yellow & plum layered frill crochet top with sunflower band 🌻💛",
+    likes: "27",
+    comments: "2",
+    image: "images/ig_C0cc_cZhB1z.jpg"
+  },
+  {
+    shortcode: "CjBH7-MBbxJ",
+    url: "https://www.instagram.com/p/CjBH7-MBbxJ/",
+    caption: "Turquoise and oatmeal textured striped hooded crochet button top for chilly days 🌊🧶",
+    likes: "22",
+    comments: "3",
+    image: "images/ig_CjBH7-MBbxJ.jpg"
+  },
+  {
+    shortcode: "C03kkwvBzx0",
+    url: "https://www.instagram.com/p/C03kkwvBzx0/",
+    caption: "Hand-crocheted sky blue toddler dungaree pinafore top with tiny floral pocket 👶🌸",
+    likes: "12",
+    comments: "0",
+    image: "images/ig_C03kkwvBzx0.jpg"
   }
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
 const INSTAGRAM_MEDIA_LIBRARY = [
+  { path: "images/ig_CxJM5tFIL-H.jpg", label: "Summer Shell Crop Top" },
+  { path: "images/ig_Cjpvof8hXY-.jpg", label: "Cyan Chevron Wave Blouse" },
+  { path: "images/ig_CxLTWx5h2ez.jpg", label: "Midnight Shimmer Mesh Top" },
+  { path: "images/ig_CxSZ-STh5iO.jpg", label: "Flared Sleeve Statement Top" },
+  { path: "images/ig_Cx3Z7bzh7iB.jpg", label: "Colorblock Striped Cardigan" },
+  { path: "images/ig_C0cc_cZhB1z.jpg", label: "Sunshine Tiered Frill Top" },
+  { path: "images/ig_CjBH7-MBbxJ.jpg", label: "Ocean Striped Hooded Top" },
+  { path: "images/ig_C03kkwvBzx0.jpg", label: "Sky Blue Dungaree Top" },
   { path: "images/ig_Cx8BjkChvHR.jpg", label: "White Cardigan with Plaid Collar" },
   { path: "images/ig_C3lWoevhF3x.jpg", label: "Speckled Lavender Cardigan" },
   { path: "images/ig_C0mrcL4h-h8.jpg", label: "Apple Green Hooded Sweater" },
   { path: "images/ig_CjsnA1Eh-gv.jpg", label: "Navy Striped Hooded Sweater" },
   { path: "images/ig_CHupfP7BRvI.jpg", label: "Chunky Winter Sweater" },
-  { path: "images/ig_CxJM5tFIL-H.jpg", label: "Summer Shell Crop Top" },
   { path: "images/ig_C-rtiUdyMfY.jpg", label: "Lace Motif Top" },
   { path: "images/ig_DJt-WgyBRhE.jpg", label: "Baby Romper & Cap Set" },
   { path: "images/ig_C20K7HEhjVy.jpg", label: "Baby Wrap Blanket" },
