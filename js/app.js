@@ -135,12 +135,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btnHeaderInquiry = document.querySelector(".btn-header-inquiry");
   if (btnHeaderInquiry) {
-    btnHeaderInquiry.addEventListener("click", () => {
-      btnHeaderInquiry.classList.add("active");
-      setTimeout(() => {
+    let inquiryTouchTimer = null;
+    const triggerInquiryPink = () => {
+      btnHeaderInquiry.classList.add("touch-active");
+    };
+    const releaseInquiryPink = () => {
+      clearTimeout(inquiryTouchTimer);
+      inquiryTouchTimer = setTimeout(() => {
+        btnHeaderInquiry.classList.remove("touch-active");
         btnHeaderInquiry.classList.remove("active");
-      }, 1800);
+      }, 500);
+    };
+
+    btnHeaderInquiry.addEventListener("touchstart", triggerInquiryPink, { passive: true });
+    btnHeaderInquiry.addEventListener("touchend", releaseInquiryPink, { passive: true });
+    btnHeaderInquiry.addEventListener("touchcancel", releaseInquiryPink, { passive: true });
+    btnHeaderInquiry.addEventListener("pointerdown", triggerInquiryPink);
+    btnHeaderInquiry.addEventListener("pointerup", releaseInquiryPink);
+    btnHeaderInquiry.addEventListener("pointercancel", releaseInquiryPink);
+
+    btnHeaderInquiry.addEventListener("click", () => {
+      btnHeaderInquiry.classList.add("touch-active");
+      clearTimeout(inquiryTouchTimer);
+      inquiryTouchTimer = setTimeout(() => {
+        btnHeaderInquiry.classList.remove("touch-active");
+        btnHeaderInquiry.classList.remove("active");
+      }, 800);
     });
+  }
+
+  if (navStaffBtn) {
+    let staffTouchTimer = null;
+    const triggerStaffTouch = () => {
+      navStaffBtn.classList.add("touch-active");
+    };
+    const releaseStaffTouch = () => {
+      clearTimeout(staffTouchTimer);
+      staffTouchTimer = setTimeout(() => {
+        navStaffBtn.classList.remove("touch-active");
+      }, 400);
+    };
+    navStaffBtn.addEventListener("touchstart", triggerStaffTouch, { passive: true });
+    navStaffBtn.addEventListener("touchend", releaseStaffTouch, { passive: true });
+    navStaffBtn.addEventListener("touchcancel", releaseStaffTouch, { passive: true });
   }
 
   // 6. Modals Universal Close Handlers
