@@ -1244,8 +1244,8 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   // 27. Storage & Defaults Loader
   function loadCustomizedData() {
-    // Migration check: ensure version 5 is loaded to refresh authentic shirts and tops from Instagram
-    const CATALOG_VERSION = "v5";
+    // Migration check: ensure version 6 is loaded to refresh authentic Kids & Baby pieces from Instagram
+    const CATALOG_VERSION = "v6";
     if (localStorage.getItem("crochet_catalog_version") !== CATALOG_VERSION) {
       localStorage.removeItem("crochet_custom_categories");
       localStorage.removeItem("crochet_custom_products");

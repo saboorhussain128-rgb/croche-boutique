@@ -168,7 +168,37 @@ const DEFAULT_PRODUCTS = [
     badge: "Newborn Keepsake",
     badgeType: "bestseller",
     image: "images/ig_DJt-WgyBRhE.jpg",
-    description: "Adorable baby romper with matching bonnet cap, hand-stitched from ultra-gentle yarn for toddlers and newborns.",
+    description: "Adorable ivory baby romper with matching bonnet cap, hand-stitched from ultra-gentle yarn for toddlers and newborns.",
+    visible: true
+  },
+  {
+    id: "prod-baby-blue-overalls",
+    name: "Cornflower Blue Baby Overalls",
+    category: "kids",
+    badge: "Gentle Knit",
+    badgeType: "featured",
+    image: "images/ig_CvcmF28Ba8Q.jpg",
+    description: "Handcrafted cornflower blue baby suspender overalls hand-stitched with ultra-gentle yarn and comfortable button straps.",
+    visible: true
+  },
+  {
+    id: "prod-baby-rainbow-dress",
+    name: "Rainbow Confetti Baby Pinafore",
+    category: "kids",
+    badge: "Boutique Special",
+    badgeType: "custom",
+    image: "images/ig_CvcZPilhixz.jpg",
+    description: "Vibrant pastel rainbow confetti crochet baby pinafore dress handcrafted with tender stitches and contrast red buttons.",
+    visible: true
+  },
+  {
+    id: "prod-baby-cozy-cardigan",
+    name: "Sky Blue Cozy Baby Romper Suit",
+    category: "kids",
+    badge: "Warm Snuggle",
+    badgeType: "bestseller",
+    image: "images/ig_Cx-6B6dhKzI.jpg",
+    description: "Snug sky blue hand-crocheted baby romper suit crafted with warm textured stitches and wooden button fastening.",
     visible: true
   },
   {
@@ -477,11 +507,40 @@ const INSTAGRAM_POSTS = [
     likes: "12",
     comments: "0",
     image: "images/ig_C03kkwvBzx0.jpg"
+  },
+  {
+    shortcode: "CvcmF28Ba8Q",
+    url: "https://www.instagram.com/p/CvcmF28Ba8Q/",
+    caption: "Handcrafted cornflower blue baby suspender overalls for tiny dreamers 💙👶",
+    likes: "23",
+    comments: "0",
+    image: "images/ig_CvcmF28Ba8Q.jpg"
+  },
+  {
+    shortcode: "CvcZPilhixz",
+    url: "https://www.instagram.com/p/CvcZPilhixz/",
+    caption: "Pastel rainbow confetti crochet baby pinafore dress with contrast red buttons 🌈🍼",
+    likes: "24",
+    comments: "0",
+    image: "images/ig_CvcZPilhixz.jpg"
+  },
+  {
+    shortcode: "Cx-6B6dhKzI",
+    url: "https://www.instagram.com/reel/Cx-6B6dhKzI/",
+    caption: "Snug sky blue hand-crocheted baby romper suit with wooden button fastening 🤍🧸",
+    likes: "15",
+    comments: "0",
+    image: "images/ig_Cx-6B6dhKzI.jpg"
   }
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
 const INSTAGRAM_MEDIA_LIBRARY = [
+  { path: "images/ig_CvcmF28Ba8Q.jpg", label: "Cornflower Blue Baby Overalls" },
+  { path: "images/ig_CvcZPilhixz.jpg", label: "Rainbow Baby Pinafore" },
+  { path: "images/ig_Cx-6B6dhKzI.jpg", label: "Sky Blue Baby Romper Suit" },
+  { path: "images/ig_DJt-WgyBRhE.jpg", label: "Baby Romper & Cap Set" },
+  { path: "images/ig_C20K7HEhjVy.jpg", label: "Baby Wrap Blanket" },
   { path: "images/ig_CxJM5tFIL-H.jpg", label: "Summer Shell Crop Top" },
   { path: "images/ig_Cjpvof8hXY-.jpg", label: "Cyan Chevron Wave Blouse" },
   { path: "images/ig_CxLTWx5h2ez.jpg", label: "Midnight Shimmer Mesh Top" },
@@ -496,8 +555,6 @@ const INSTAGRAM_MEDIA_LIBRARY = [
   { path: "images/ig_CjsnA1Eh-gv.jpg", label: "Navy Striped Hooded Sweater" },
   { path: "images/ig_CHupfP7BRvI.jpg", label: "Chunky Winter Sweater" },
   { path: "images/ig_C-rtiUdyMfY.jpg", label: "Lace Motif Top" },
-  { path: "images/ig_DJt-WgyBRhE.jpg", label: "Baby Romper & Cap Set" },
-  { path: "images/ig_C20K7HEhjVy.jpg", label: "Baby Wrap Blanket" },
   { path: "images/gloves.jpg", label: "Fingerless Hand Gloves" },
   { path: "images/ig_CJBs-DlBzGs.jpg", label: "Triangular Winter Shawl" },
   { path: "images/ig_DS4u-38D8WW.jpg", label: "Striped Winter Scarf" },
