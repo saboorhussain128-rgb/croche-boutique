@@ -256,6 +256,66 @@ const DEFAULT_PRODUCTS = [
 
   // --- SKAFFS (SCARVES & SHAWLS) ---
   {
+    id: "prod-scarf-charcoal-muffler",
+    name: "Charcoal Grey Openwork Muffler",
+    category: "skaffs",
+    badge: "Unisex Warmth",
+    badgeType: "bestseller",
+    image: "images/ig_CD2CptlhHzo.jpg",
+    description: "Classic handcrafted charcoal grey openwork crochet muffler scarf designed for lightweight comfort and cold-weather style.",
+    visible: true
+  },
+  {
+    id: "prod-scarf-ribbed-forest",
+    name: "Forest Charcoal Ribbed Scarf",
+    category: "skaffs",
+    badge: "Artisan Classic",
+    badgeType: "featured",
+    image: "images/ig_CDsepDbh262.jpg",
+    description: "Soft and warm unisex crochet winter scarf stitched with dense vertical ridges for everyday cold protection.",
+    visible: true
+  },
+  {
+    id: "prod-scarf-berry-magenta",
+    name: "Berry Heather Ribbed Muffler",
+    category: "skaffs",
+    badge: "Trending Color",
+    badgeType: "custom",
+    image: "images/ig_C0OD_rQBoSg.jpg",
+    description: "Vibrant berry magenta pink ribbed crochet muffler scarf hand-stitched with plush textured ridges.",
+    visible: true
+  },
+  {
+    id: "prod-scarf-berry-cowl",
+    name: "Heather Rose Infinity Neck Cowl",
+    category: "skaffs",
+    badge: "Snug Style",
+    badgeType: "featured",
+    image: "images/ig_C0OE7i5B8R0.jpg",
+    description: "Cozy heather rose crochet infinity loop cowl wrap tailored to keep breezes out with effortless elegance.",
+    visible: true
+  },
+  {
+    id: "prod-scarf-black-muffler",
+    name: "Midnight Black Minimalist Scarf",
+    category: "skaffs",
+    badge: "Unisex Style",
+    badgeType: "bestseller",
+    image: "images/ig_CG5DRCtBSPI.jpg",
+    description: "Sleek jet black handcrafted crochet winter scarf with textured thermal stitches for effortless daily warmth.",
+    visible: true
+  },
+  {
+    id: "prod-scarf-cobalt-waffle",
+    name: "Cobalt Blue Waffle Texture Muffler",
+    category: "skaffs",
+    badge: "Boutique Special",
+    badgeType: "custom",
+    image: "images/ig_B8CYsECF4_T.jpg",
+    description: "Eye-catching electric cobalt blue muffler scarf crafted with 3D waffle bubble stitches for supreme coziness.",
+    visible: true
+  },
+  {
     id: "prod-shawl-triangular",
     name: "Triangular Winter Wrap Shawl",
     category: "skaffs",
@@ -273,16 +333,6 @@ const DEFAULT_PRODUCTS = [
     badgeType: "featured",
     image: "images/ig_DS4u-38D8WW.jpg",
     description: "Vibrant striped crochet winter scarf drop, crafted with dense textured stitches for reliable cold-weather comfort.",
-    visible: true
-  },
-  {
-    id: "prod-neck-warmer",
-    name: "Winter Cozy Neck Warmer",
-    category: "skaffs",
-    badge: "Cozy Warmth",
-    badgeType: "custom",
-    image: "images/ig_DSw1FkSjy_a.jpg",
-    description: "Snug winter neck wrap handcrafted with plush stitches to keep breezes out with effortless elegance.",
     visible: true
   },
 
@@ -585,11 +635,67 @@ const INSTAGRAM_POSTS = [
     likes: "6",
     comments: "0",
     image: "images/ig_C2UOTUIBz7_.jpg"
+  },
+  {
+    shortcode: "CD2CptlhHzo",
+    url: "https://www.instagram.com/p/CD2CptlhHzo/",
+    caption: "Warm and comfy unisex crochet scarf. Handcrafted happiness you can carry in your bag 🖤🧣",
+    likes: "56",
+    comments: "0",
+    image: "images/ig_CD2CptlhHzo.jpg"
+  },
+  {
+    shortcode: "CDsepDbh262",
+    url: "https://www.instagram.com/p/CDsepDbh262/",
+    caption: "Crochet scarves for your loved ones. Handcrafted soft and warm slow-stitched comfort ❄️🧶",
+    likes: "31",
+    comments: "0",
+    image: "images/ig_CDsepDbh262.jpg"
+  },
+  {
+    shortcode: "C0OD_rQBoSg",
+    url: "https://www.instagram.com/p/C0OD_rQBoSg/",
+    caption: "Rich berry heather ribbed crochet muffler scarf on delicate lace backdrop 🍇🧣",
+    likes: "4",
+    comments: "1",
+    image: "images/ig_C0OD_rQBoSg.jpg"
+  },
+  {
+    shortcode: "C0OE7i5B8R0",
+    url: "https://www.instagram.com/p/C0OE7i5B8R0/",
+    caption: "Cozy heather rose crochet infinity neck cowl wrap. Stay toasty in every breeze 🌸✨",
+    likes: "10",
+    comments: "0",
+    image: "images/ig_C0OE7i5B8R0.jpg"
+  },
+  {
+    shortcode: "CG5DRCtBSPI",
+    url: "https://www.instagram.com/p/CG5DRCtBSPI/",
+    caption: "Crochet scarf for men and unisex. Minimalist jet black textured winter muffler 🖤❄️",
+    likes: "32",
+    comments: "9",
+    image: "images/ig_CG5DRCtBSPI.jpg"
+  },
+  {
+    shortcode: "B8CYsECF4_T",
+    url: "https://www.instagram.com/p/B8CYsECF4_T/",
+    caption: "Vibrant electric cobalt blue 3D waffle texture crochet muffler scarf 💙🧶",
+    likes: "16",
+    comments: "0",
+    image: "images/ig_B8CYsECF4_T.jpg"
   }
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
 const INSTAGRAM_MEDIA_LIBRARY = [
+  { path: "images/ig_CD2CptlhHzo.jpg", label: "Charcoal Grey Muffler" },
+  { path: "images/ig_CDsepDbh262.jpg", label: "Forest Charcoal Ribbed Scarf" },
+  { path: "images/ig_C0OD_rQBoSg.jpg", label: "Berry Heather Ribbed Muffler" },
+  { path: "images/ig_C0OE7i5B8R0.jpg", label: "Heather Rose Infinity Cowl" },
+  { path: "images/ig_CG5DRCtBSPI.jpg", label: "Midnight Black Scarf" },
+  { path: "images/ig_B8CYsECF4_T.jpg", label: "Cobalt Blue Waffle Muffler" },
+  { path: "images/ig_CJBs-DlBzGs.jpg", label: "Triangular Winter Shawl" },
+  { path: "images/ig_DS4u-38D8WW.jpg", label: "Striped Winter Scarf" },
   { path: "images/ig_C2dLainBu80.jpg", label: "Navy Blue Full-Finger Gloves" },
   { path: "images/ig_C2WlKHDIxBn.jpg", label: "Forest Green Ribbed Gloves" },
   { path: "images/ig_C2UOTUIBz7_.jpg", label: "Textured Knit Gloves Detail" },
@@ -613,8 +719,6 @@ const INSTAGRAM_MEDIA_LIBRARY = [
   { path: "images/ig_CjsnA1Eh-gv.jpg", label: "Navy Striped Hooded Sweater" },
   { path: "images/ig_CHupfP7BRvI.jpg", label: "Chunky Winter Sweater" },
   { path: "images/ig_C-rtiUdyMfY.jpg", label: "Lace Motif Top" },
-  { path: "images/ig_CJBs-DlBzGs.jpg", label: "Triangular Winter Shawl" },
-  { path: "images/ig_DS4u-38D8WW.jpg", label: "Striped Winter Scarf" },
   { path: "images/ig_DSw1FkSjy_a.jpg", label: "Winter Neck Warmer" },
   { path: "images/ig_CxAuDhSBjWJ.jpg", label: "Bobble Ear-Warmer Headband" },
   { path: "images/caps.jpg", label: "Daisy Granny Square Hat" },
