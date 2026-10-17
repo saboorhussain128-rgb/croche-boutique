@@ -338,6 +338,66 @@ const DEFAULT_PRODUCTS = [
 
   // --- CAPS & HATS ---
   {
+    id: "prod-beanie-turquoise-pompom",
+    name: "Turquoise Stripe Pom-Pom Beanie",
+    category: "caps",
+    badge: "Cozy Warmth",
+    badgeType: "bestseller",
+    image: "images/ig_CBs6Rc2BIkd.jpg",
+    description: "Hand-crocheted turquoise and white ribbed striped winter beanie cap finished with a plush pom-pom top.",
+    visible: true
+  },
+  {
+    id: "prod-beanie-rainbow-baby",
+    name: "Rainbow Ribbed Baby Beanie",
+    category: "caps",
+    badge: "Little Bright",
+    badgeType: "featured",
+    image: "images/ig_CFHNKTVBFRS.jpg",
+    description: "Colorful rainbow textured ribbed baby beanie cap topped with a fluffy ivory pom-pom for joyful winter smiles.",
+    visible: true
+  },
+  {
+    id: "prod-beanie-candycane-duo",
+    name: "Candy Cane Striped Pom Beanie",
+    category: "caps",
+    badge: "Festive Drop",
+    badgeType: "custom",
+    image: "images/ig_CFXCSBGhhVp.jpg",
+    description: "Crisp striped crochet winter beanie crafted in festive candy red/white and ocean blue/white with matching pom-pom.",
+    visible: true
+  },
+  {
+    id: "prod-beanie-red-bow",
+    name: "Sweet Bow Striped Baby Beanie",
+    category: "caps",
+    badge: "Sweet Accent",
+    badgeType: "bestseller",
+    image: "images/ig_CFqNgvFBVzz.jpg",
+    description: "Adorable red and ivory striped crochet baby cap adorned with an oversized handcrafted red statement bow.",
+    visible: true
+  },
+  {
+    id: "prod-turban-knot-headband",
+    name: "Textured Knot Turban Headband",
+    category: "caps",
+    badge: "Chic Comfort",
+    badgeType: "featured",
+    image: "images/ig_ChLvDGBhnpy.jpg",
+    description: "Hand-stitched charcoal twist-knot ear-warmer crochet headband offering sleek warmth without flattening your hairstyle.",
+    visible: true
+  },
+  {
+    id: "prod-beanie-plum-slouch",
+    name: "Plum Berry Textured Slouch Beanie",
+    category: "caps",
+    badge: "Winter Drop",
+    badgeType: "custom",
+    image: "images/ig_Cxxc5C6hjTc.jpg",
+    description: "Deep plum berry crochet winter beanie hand-stitched with richly textured puff stitches for effortless slouchy drape.",
+    visible: true
+  },
+  {
     id: "prod-bobble-headband",
     name: "Bobble Ear-Warmer Headband",
     category: "caps",
@@ -683,11 +743,67 @@ const INSTAGRAM_POSTS = [
     likes: "16",
     comments: "0",
     image: "images/ig_B8CYsECF4_T.jpg"
+  },
+  {
+    shortcode: "CBs6Rc2BIkd",
+    url: "https://www.instagram.com/p/CBs6Rc2BIkd/",
+    caption: "Keep your kids safe and warm this winter with colourful pom-pom crochet beanies 💙❄️",
+    likes: "80",
+    comments: "4",
+    image: "images/ig_CBs6Rc2BIkd.jpg"
+  },
+  {
+    shortcode: "CFHNKTVBFRS",
+    url: "https://www.instagram.com/p/CFHNKTVBFRS/",
+    caption: "Handmade baby beanies in rainbow hues. Style it the way you like 🌈🍼",
+    likes: "44",
+    comments: "3",
+    image: "images/ig_CFHNKTVBFRS.jpg"
+  },
+  {
+    shortcode: "CFXCSBGhhVp",
+    url: "https://www.instagram.com/p/CFXCSBGhhVp/",
+    caption: "Festive candy cane striped crochet winter beanies with soft fluffy pom-poms 🍬✨",
+    likes: "51",
+    comments: "37",
+    image: "images/ig_CFXCSBGhhVp.jpg"
+  },
+  {
+    shortcode: "CFqNgvFBVzz",
+    url: "https://www.instagram.com/p/CFqNgvFBVzz/",
+    caption: "Winter wear for kids! Red & white striped crochet cap with handcrafted bow 🎀🤍",
+    likes: "51",
+    comments: "0",
+    image: "images/ig_CFqNgvFBVzz.jpg"
+  },
+  {
+    shortcode: "ChLvDGBhnpy",
+    url: "https://www.instagram.com/p/ChLvDGBhnpy/",
+    caption: "Chic twist-knot textured crochet ear-warmer turban headband for breezy outings 🖤✨",
+    likes: "11",
+    comments: "0",
+    image: "images/ig_ChLvDGBhnpy.jpg"
+  },
+  {
+    shortcode: "Cxxc5C6hjTc",
+    url: "https://www.instagram.com/p/Cxxc5C6hjTc/",
+    caption: "Rich plum berry textured slouchy crochet beanie. Made with love at @croche_boutiq 🍇🧶",
+    likes: "8",
+    comments: "0",
+    image: "images/ig_Cxxc5C6hjTc.jpg"
   }
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
 const INSTAGRAM_MEDIA_LIBRARY = [
+  { path: "images/ig_CBs6Rc2BIkd.jpg", label: "Turquoise Stripe Pom Beanie" },
+  { path: "images/ig_CFHNKTVBFRS.jpg", label: "Rainbow Baby Beanie" },
+  { path: "images/ig_CFXCSBGhhVp.jpg", label: "Candy Cane Stripe Beanie" },
+  { path: "images/ig_CFqNgvFBVzz.jpg", label: "Sweet Bow Baby Beanie" },
+  { path: "images/ig_ChLvDGBhnpy.jpg", label: "Textured Knot Headband" },
+  { path: "images/ig_Cxxc5C6hjTc.jpg", label: "Plum Berry Slouch Beanie" },
+  { path: "images/ig_CxAuDhSBjWJ.jpg", label: "Bobble Ear-Warmer Headband" },
+  { path: "images/caps.jpg", label: "Daisy Granny Square Hat" },
   { path: "images/ig_CD2CptlhHzo.jpg", label: "Charcoal Grey Muffler" },
   { path: "images/ig_CDsepDbh262.jpg", label: "Forest Charcoal Ribbed Scarf" },
   { path: "images/ig_C0OD_rQBoSg.jpg", label: "Berry Heather Ribbed Muffler" },
@@ -720,8 +836,6 @@ const INSTAGRAM_MEDIA_LIBRARY = [
   { path: "images/ig_CHupfP7BRvI.jpg", label: "Chunky Winter Sweater" },
   { path: "images/ig_C-rtiUdyMfY.jpg", label: "Lace Motif Top" },
   { path: "images/ig_DSw1FkSjy_a.jpg", label: "Winter Neck Warmer" },
-  { path: "images/ig_CxAuDhSBjWJ.jpg", label: "Bobble Ear-Warmer Headband" },
-  { path: "images/caps.jpg", label: "Daisy Granny Square Hat" },
   { path: "images/ig_CH-fP3kBb8_.jpg", label: "Pink & White Sling Bag" },
   { path: "images/ig_CKnLjpoBtpL.jpg", label: "Lip Balm & Perfume Sleeve" },
   { path: "images/ig_CN8CV0Oho8v.jpg", label: "Bow Dress Keychains Trio" },

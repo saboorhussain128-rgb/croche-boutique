@@ -1244,8 +1244,8 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   // 27. Storage & Defaults Loader
   function loadCustomizedData() {
-    // Migration check: ensure version 8 is loaded to refresh authentic Skaffs pieces from Instagram
-    const CATALOG_VERSION = "v8";
+    // Migration check: ensure version 9 is loaded to refresh authentic Caps & Hats from Instagram
+    const CATALOG_VERSION = "v9";
     if (localStorage.getItem("crochet_catalog_version") !== CATALOG_VERSION) {
       localStorage.removeItem("crochet_custom_categories");
       localStorage.removeItem("crochet_custom_products");
