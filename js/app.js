@@ -1244,8 +1244,8 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   // 27. Storage & Defaults Loader
   function loadCustomizedData() {
-    // Migration check: ensure version 3 is loaded to wipe old technical descriptions and old categories
-    const CATALOG_VERSION = "v3";
+    // Migration check: ensure version 4 is loaded to refresh authentic Instagram product photos
+    const CATALOG_VERSION = "v4";
     if (localStorage.getItem("crochet_catalog_version") !== CATALOG_VERSION) {
       localStorage.removeItem("crochet_custom_categories");
       localStorage.removeItem("crochet_custom_products");

@@ -18,23 +18,53 @@ const DEFAULT_CATEGORIES = [
 const DEFAULT_PRODUCTS = [
   // --- SWEATERS ---
   {
-    id: "prod-sweater-braid",
-    name: "Cozy Chunky Braid Winter Sweater",
+    id: "prod-sweater-cardigan-plaid",
+    name: "White Cardigan with Plaid Collar",
     category: "sweaters",
     badge: "Boutique Favorite",
     badgeType: "bestseller",
-    image: "images/ig_CHupfP7BRvI.jpg",
-    description: "Handcrafted chunky winter sweater featuring intricate 3D braided cable stitches with a relaxed, cozy drape.",
+    image: "images/ig_Cx8BjkChvHR.jpg",
+    description: "Handcrafted white open-stitch cardigan sweater featuring a royal blue and wine plaid collar, wooden butterfly buttons, and coordinating headband.",
     visible: true
   },
   {
     id: "prod-sweater-pullover",
-    name: "Soft Open-Knit Pullover Sweater",
+    name: "Speckled Pastel Lavender Cardigan",
     category: "sweaters",
     badge: "Warm Knit",
     badgeType: "featured",
     image: "images/ig_C3lWoevhF3x.jpg",
-    description: "Relaxed open-stitch crochet sweater offering lightweight comfort, effortless layering, and slow-crafted charm.",
+    description: "Cozy button-up cardigan crafted with speckled lavender, purple, and cream yarns, finished with a soft ribbed neckline and cuffs.",
+    visible: true
+  },
+  {
+    id: "prod-sweater-hooded-green",
+    name: "Apple Green Hooded Cardigan Sweater",
+    category: "sweaters",
+    badge: "Trending",
+    badgeType: "custom",
+    image: "images/ig_C0mrcL4h-h8.jpg",
+    description: "Vibrant textured apple green hooded crochet sweater jacket featuring wooden front buttons and cozy contrast drawstring ties.",
+    visible: true
+  },
+  {
+    id: "prod-sweater-hooded-striped",
+    name: "Navy & Cream Striped Hooded Sweater",
+    category: "sweaters",
+    badge: "Winter Drop",
+    badgeType: "featured",
+    image: "images/ig_CjsnA1Eh-gv.jpg",
+    description: "Classic navy and ivory striped hooded winter sweater jacket hand-stitched with warm textured stitches and front button closure.",
+    visible: true
+  },
+  {
+    id: "prod-sweater-braid",
+    name: "Cozy Chunky Braid Winter Sweater",
+    category: "sweaters",
+    badge: "Handmade Classic",
+    badgeType: "bestseller",
+    image: "images/ig_CHupfP7BRvI.jpg",
+    description: "Handcrafted chunky winter sweater featuring intricate 3D braided cable stitches with a relaxed, cozy drape.",
     visible: true
   },
 
@@ -297,13 +327,40 @@ const INSTAGRAM_POSTS = [
     likes: "19",
     comments: "2",
     image: "images/ig_CMkJJW7BC0u.jpg"
+  },
+  {
+    shortcode: "Cx8BjkChvHR",
+    url: "https://www.instagram.com/p/Cx8BjkChvHR/",
+    caption: "Handcrafted white crochet baby cardigan with plaid collar & butterfly buttons 🤍🦋",
+    likes: "13",
+    comments: "0",
+    image: "images/ig_Cx8BjkChvHR.jpg"
+  },
+  {
+    shortcode: "C0mrcL4h-h8",
+    url: "https://www.instagram.com/p/C0mrcL4h-h8/",
+    caption: "Vibrant apple green textured hooded cardigan sweater with red button details 🍏🧶",
+    likes: "14",
+    comments: "0",
+    image: "images/ig_C0mrcL4h-h8.jpg"
+  },
+  {
+    shortcode: "CjsnA1Eh-gv",
+    url: "https://www.instagram.com/p/CjsnA1Eh-gv/",
+    caption: "Navy and cream striped hooded crochet winter jacket. Warm stitches for chilly days ⚓❄️",
+    likes: "17",
+    comments: "0",
+    image: "images/ig_CjsnA1Eh-gv.jpg"
   }
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
 const INSTAGRAM_MEDIA_LIBRARY = [
+  { path: "images/ig_Cx8BjkChvHR.jpg", label: "White Cardigan with Plaid Collar" },
+  { path: "images/ig_C3lWoevhF3x.jpg", label: "Speckled Lavender Cardigan" },
+  { path: "images/ig_C0mrcL4h-h8.jpg", label: "Apple Green Hooded Sweater" },
+  { path: "images/ig_CjsnA1Eh-gv.jpg", label: "Navy Striped Hooded Sweater" },
   { path: "images/ig_CHupfP7BRvI.jpg", label: "Chunky Winter Sweater" },
-  { path: "images/ig_C3lWoevhF3x.jpg", label: "Open-Knit Pullover" },
   { path: "images/ig_CxJM5tFIL-H.jpg", label: "Summer Shell Crop Top" },
   { path: "images/ig_C-rtiUdyMfY.jpg", label: "Lace Motif Top" },
   { path: "images/ig_DJt-WgyBRhE.jpg", label: "Baby Romper & Cap Set" },
