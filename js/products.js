@@ -872,7 +872,7 @@ const INSTAGRAM_POSTS = [
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
-const INSTAGRAM_MEDIA_LIBRARY = [
+const DEFAULT_MEDIA_LIBRARY = [
   { path: "images/ig_CACVp9RlD-N.jpg", label: "Mini Frock & Beanie Keychains" },
   { path: "images/ig_CK7k9x6BF7k.jpg", label: "Rainbow Lip Balm Cozy Holder" },
   { path: "images/ig_CLFEoLPBs4Z.jpg", label: "Scarlet Frock Keychain Charm" },
@@ -926,3 +926,7 @@ const INSTAGRAM_MEDIA_LIBRARY = [
   { path: "images/ig_DSw1FkSjy_a.jpg", label: "Winter Neck Warmer" },
   { path: "images/instagram_logo.jpg", label: "Official Boutique Logo" }
 ];
+
+// Active media library (can be modified by owner, adding/removing pictures)
+let MEDIA_LIBRARY = [...DEFAULT_MEDIA_LIBRARY];
+const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;

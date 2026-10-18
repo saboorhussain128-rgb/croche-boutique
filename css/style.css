@@ -2663,3 +2663,120 @@ textarea.form-control {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Picture Remove Badge (Top Left of Thumbnail) */
+.pic-remove-btn {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid #FFCDD2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  color: #D32F2F;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 3;
+  padding: 0;
+}
+
+.pic-remove-btn:hover {
+  background: #D32F2F;
+  color: white;
+  border-color: #D32F2F;
+  transform: scale(1.15);
+}
+
+.btn-url-add-compact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: white;
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-main);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+  width: 100%;
+}
+
+.btn-url-add-compact:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.editor-pic-card.custom-uploaded {
+  border-color: #FFE082;
+}
+
+.editor-pic-card.custom-uploaded .editor-pic-thumb-wrap::after {
+  content: "Custom";
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFD54F;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* Sync / Export Modal Styles */
+.sync-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.sync-stat-card {
+  background: #FCF9F5;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  text-align: center;
+}
+
+.sync-stat-val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  line-height: 1.2;
+}
+
+.sync-stat-lbl {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.sync-action-box {
+  background: #FFF;
+  border: 1.5px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 14px;
+}
+
+.sync-action-box.highlight {
+  border-color: var(--color-primary);
+  background: #FFF7F8;
+}
+

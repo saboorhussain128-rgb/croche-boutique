@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=3.0">
+  <link rel="stylesheet" href="css/style.css?v=3.1">
 </head>
 <body ontouchstart="">
 
@@ -641,6 +641,9 @@
             <button type="button" class="btn btn-secondary" id="btnModalEditCategories" style="justify-content: center;">
               <i class="fas fa-tags"></i> Manage Categories
             </button>
+            <button type="button" class="btn btn-secondary" id="btnModalLiveSync" style="justify-content: center; background: #FFF7F8; border-color: var(--color-primary); color: var(--color-primary); font-weight: 700;">
+              <i class="fas fa-cloud-arrow-up"></i> Sync &amp; Publish to Live Website
+            </button>
             <button type="button" class="btn btn-danger-action" id="btnModalLogout" style="justify-content: center; margin-top: 6px;">
               <i class="fas fa-sign-out-alt"></i> Exit Staff Mode (Logout)
             </button>
@@ -674,26 +677,49 @@
           <input type="hidden" id="editProductId" value="">
 
           <div class="editor-split-layout">
-            <!-- Left Side: Picture Selection Gallery with Select Icons -->
+            <!-- Left Side: Picture Selection Gallery with Add/Remove Controls -->
             <div class="editor-left-gallery-panel">
               <div class="editor-gallery-header">
-                <label class="form-label" style="font-weight: 700; margin-bottom: 2px;">
-                  <i class="fas fa-images"></i> Select Product Picture
-                </label>
-                <span class="editor-gallery-sub">Click a picture to select with check icon (<i class="fas fa-check-circle" style="color: var(--color-primary);"></i>)</span>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <label class="form-label" style="font-weight: 700; margin-bottom: 2px;">
+                    <i class="fas fa-images"></i> Picture Gallery (<span id="galleryPicCount">0</span>)
+                  </label>
+                  <span id="galleryPicFilterTag" class="badge-tag" style="display: none; font-size: 0.65rem; padding: 2px 6px;">Filtered</span>
+                </div>
+                <span class="editor-gallery-sub">Click a picture to select (<i class="fas fa-check" style="color: var(--color-primary);"></i>) • Click trash (<i class="fas fa-trash-alt" style="color: #D32F2F;"></i>) to remove from gallery</span>
               </div>
 
-              <!-- Upload from device option -->
+              <!-- Upload & Add Pictures Bar -->
               <div class="editor-upload-bar">
-                <label class="btn-file-upload-compact">
-                  <i class="fas fa-cloud-arrow-up"></i> Upload From Device
-                  <input type="file" id="editorFileInput" accept="image/*" style="display: none;">
-                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                  <label class="btn-file-upload-compact" title="Upload one or multiple photos from your device">
+                    <i class="fas fa-cloud-arrow-up"></i> Upload Photo
+                    <input type="file" id="editorFileInput" accept="image/*" multiple style="display: none;">
+                  </label>
+                  <button type="button" class="btn-url-add-compact" id="btnToggleAddUrl" title="Add picture by image URL or link">
+                    <i class="fas fa-link"></i> Add via Link
+                  </button>
+                </div>
+
+                <!-- Inline URL Input Dropdown -->
+                <div id="editorUrlInputBar" style="display: none; margin-top: 8px; background: #FFF7F8; padding: 8px; border-radius: var(--radius-sm); border: 1.5px solid var(--color-primary-light);">
+                  <div style="display: flex; gap: 6px;">
+                    <input type="text" id="newPictureUrlInput" class="form-control form-control-sm" placeholder="Paste image URL (https://...)">
+                    <button type="button" class="btn btn-primary btn-sm" id="btnAddPictureUrl" style="white-space: nowrap; padding: 4px 10px; font-size: 0.8rem;">
+                      <i class="fas fa-plus"></i> Add
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Picture Search Filter -->
+                <div style="margin-top: 8px;">
+                  <input type="text" id="picSearchInput" class="form-control form-control-sm" placeholder="🔍 Search gallery pictures...">
+                </div>
               </div>
 
-              <!-- Selectable Pictures Grid with Check Icons -->
+              <!-- Selectable Pictures Grid with Check & Remove Badges -->
               <div class="editor-selectable-grid" id="editorLeftPickerGrid">
-                <!-- Dynamically populated with pictures & select check icons -->
+                <!-- Dynamically populated with pictures & action badges -->
               </div>
             </div>
 
@@ -708,6 +734,11 @@
                 <div class="editor-preview-meta">
                   <span class="editor-preview-label">Selected Photo Path / URL:</span>
                   <input type="text" id="editorImageUrl" class="form-control form-control-sm" placeholder="e.g. images/ig_CHupfP7BRvI.jpg">
+                  <div class="editor-preview-actions" style="display: flex; gap: 8px; margin-top: 6px;">
+                    <button type="button" class="btn-danger-outline" id="btnClearProductImage" style="padding: 4px 10px; font-size: 0.78rem;">
+                      <i class="fas fa-image-slash"></i> Remove Picture from Product
+                    </button>
+                  </div>
                   <div class="editor-visibility-card">
                     <label class="visibility-checkbox-label">
                       <input type="checkbox" id="editorVisibleCheck" checked>
@@ -851,12 +882,88 @@
     </div>
   </div>
 
+  <!-- Live Website Sync / Publish Modal -->
+  <div class="modal-backdrop" id="liveSyncModal">
+    <div class="modal-dialog modal-dialog-md">
+      <button class="modal-close-btn" id="liveSyncCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="editor-modal-content" style="padding: 24px;">
+        <div class="staff-modal-header" style="text-align: left; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div class="staff-modal-icon" style="background: rgba(200, 109, 118, 0.12); color: var(--color-primary); width: 44px; height: 44px; font-size: 1.3rem;">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div>
+              <h3 style="margin: 0; font-size: 1.3rem;">Publish to Live Website</h3>
+              <p style="margin: 0; font-size: 0.85rem; color: var(--color-text-muted);">Sync all your changes directly to the public live website</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Status Overview -->
+        <div class="sync-stats-grid">
+          <div class="sync-stat-card">
+            <div class="sync-stat-val" id="syncStatProducts">0</div>
+            <div class="sync-stat-lbl">Active Products</div>
+          </div>
+          <div class="sync-stat-card">
+            <div class="sync-stat-val" id="syncStatPictures">0</div>
+            <div class="sync-stat-lbl">Gallery Pictures</div>
+          </div>
+          <div class="sync-stat-card">
+            <div class="sync-stat-val" style="color: #25D366;"><i class="fas fa-check-circle"></i></div>
+            <div class="sync-stat-lbl">Live in Browser</div>
+          </div>
+        </div>
+
+        <!-- Option 1: GitHub Automatic Sync (Recommended) -->
+        <div class="sync-action-box highlight">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <strong style="color: var(--color-primary); font-size: 0.95rem;">
+              <i class="fab fa-github"></i> Instant GitHub Pages Publish
+            </strong>
+            <span class="badge-tag badge-bestseller" style="position: static; font-size: 0.7rem; padding: 2px 8px;">1-Click</span>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-bottom: 10px;">
+            Publish directly to <code>saboorhussain128-rgb/croche-boutique</code> repository so all visitors worldwide see your added/removed pictures and products immediately.
+          </p>
+          <div class="form-group" style="margin-bottom: 10px;">
+            <label class="form-label" style="font-size: 0.78rem;">GitHub Personal Access Token (PAT):</label>
+            <input type="password" id="githubTokenInput" class="form-control form-control-sm" placeholder="Paste your GitHub token (ghp_...)">
+            <small class="text-muted" style="font-size: 0.72rem;">Saved securely in your browser so you only need to enter it once.</small>
+          </div>
+          <button type="button" class="btn btn-primary" id="btnPublishToGitHub" style="width: 100%; justify-content: center;">
+            <i class="fas fa-paper-plane"></i> Publish Changes Live Now
+          </button>
+          <div id="githubSyncFeedback" style="margin-top: 8px; font-size: 0.82rem; display: none;"></div>
+        </div>
+
+        <!-- Option 2: Download & Backup Updated products.js -->
+        <div class="sync-action-box">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <strong style="font-size: 0.9rem;"><i class="fas fa-file-code"></i> Download Updated Catalog File</strong>
+          </div>
+          <p style="font-size: 0.82rem; color: var(--color-text-muted); margin-bottom: 10px;">
+            Download <code>products.js</code> with all your current products and pictures to commit to GitHub anytime.
+          </p>
+          <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnDownloadProductsJs" style="flex: 1; justify-content: center;">
+              <i class="fas fa-download"></i> Download products.js
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btnCopyProductsJs" style="flex: 1; justify-content: center;">
+              <i class="fas fa-copy"></i> Copy Code
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=3.0"></script>
-  <script src="js/products.js?v=3.0"></script>
-  <script src="js/app.js?v=3.0"></script>
+  <script src="js/config.js?v=3.1"></script>
+  <script src="js/products.js?v=3.1"></script>
+  <script src="js/app.js?v=3.1"></script>
 </body>
 </html>

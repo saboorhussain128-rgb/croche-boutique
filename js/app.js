@@ -71,6 +71,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnHeaderDeleteProduct = document.getElementById("btnHeaderDeleteProduct");
   const btnEditorDeleteProduct = document.getElementById("btnEditorDeleteProduct");
   const btnCancelEditor = document.getElementById("btnCancelEditor");
+  const previewSelectStatus = document.getElementById("previewSelectStatus");
+  const galleryPicCount = document.getElementById("galleryPicCount");
+  const galleryPicFilterTag = document.getElementById("galleryPicFilterTag");
+  const btnToggleAddUrl = document.getElementById("btnToggleAddUrl");
+  const editorUrlInputBar = document.getElementById("editorUrlInputBar");
+  const newPictureUrlInput = document.getElementById("newPictureUrlInput");
+  const btnAddPictureUrl = document.getElementById("btnAddPictureUrl");
+  const picSearchInput = document.getElementById("picSearchInput");
+  const btnClearProductImage = document.getElementById("btnClearProductImage");
+  const btnModalLiveSync = document.getElementById("btnModalLiveSync");
+  const liveSyncModal = document.getElementById("liveSyncModal");
+  const liveSyncCloseBtn = document.getElementById("liveSyncCloseBtn");
+  const syncStatProducts = document.getElementById("syncStatProducts");
+  const syncStatPictures = document.getElementById("syncStatPictures");
+  const githubTokenInput = document.getElementById("githubTokenInput");
+  const btnPublishToGitHub = document.getElementById("btnPublishToGitHub");
+  const githubSyncFeedback = document.getElementById("githubSyncFeedback");
+  const btnDownloadProductsJs = document.getElementById("btnDownloadProductsJs");
+  const btnCopyProductsJs = document.getElementById("btnCopyProductsJs");
 
   // Section Photo Editor Elements
   const sectionPhotoModal = document.getElementById("sectionPhotoModal");
@@ -482,23 +501,129 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 13. Product Editor Form & Image Controls
+  // 13. Product Editor Form, Picture Add/Remove & Live Sync Controls
   if (editorFileInput) {
     editorFileInput.addEventListener("change", (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (file) {
+      const files = Array.from(e.target.files || []);
+      if (files.length === 0) return;
+
+      let loadedCount = 0;
+      let lastUploadedPath = "";
+      let lastLabel = "";
+
+      files.forEach(file => {
         const reader = new FileReader();
         reader.onload = (re) => {
-          if (editorImagePreview) editorImagePreview.src = re.target.result;
-          if (editorImageUrl) editorImageUrl.value = re.target.result;
-          if (editorLeftPickerGrid) {
-            editorLeftPickerGrid.querySelectorAll(".editor-pic-card").forEach(c => c.classList.remove("selected"));
+          const dataUrl = re.target.result;
+          const cleanName = file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ");
+          const label = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+          lastUploadedPath = dataUrl;
+          lastLabel = label;
+
+          // Prepend to active MEDIA_LIBRARY
+          MEDIA_LIBRARY.unshift({
+            path: dataUrl,
+            label: label || "Custom Uploaded Photo",
+            custom: true
+          });
+
+          loadedCount++;
+          if (loadedCount === files.length) {
+            saveMediaLibrary();
+            selectPictureForProduct(lastUploadedPath, lastLabel);
+            renderLeftPictureGallery(lastUploadedPath);
+            showToast(`🎉 Added ${files.length} picture(s) to gallery and selected!`);
           }
-          showToast("📷 Uploaded custom picture! Click 'Save to Live Website' to publish.");
         };
         reader.readAsDataURL(file);
+      });
+      editorFileInput.value = "";
+    });
+  }
+
+  // Toggle URL Input Bar
+  if (btnToggleAddUrl && editorUrlInputBar) {
+    btnToggleAddUrl.addEventListener("click", () => {
+      const isHidden = (editorUrlInputBar.style.display === "none");
+      editorUrlInputBar.style.display = isHidden ? "block" : "none";
+      if (isHidden && newPictureUrlInput) newPictureUrlInput.focus();
+    });
+  }
+
+  // Add Picture from URL
+  if (btnAddPictureUrl && newPictureUrlInput) {
+    btnAddPictureUrl.addEventListener("click", () => {
+      const url = newPictureUrlInput.value.trim();
+      if (!url) {
+        showToast("Please enter an image URL.");
+        return;
+      }
+      const label = "Linked Photo " + (MEDIA_LIBRARY.length + 1);
+      MEDIA_LIBRARY.unshift({
+        path: url,
+        label: label,
+        custom: true
+      });
+      saveMediaLibrary();
+      selectPictureForProduct(url, label);
+      renderLeftPictureGallery(url);
+      newPictureUrlInput.value = "";
+      if (editorUrlInputBar) editorUrlInputBar.style.display = "none";
+      showToast("✅ Added picture to gallery from link!");
+    });
+
+    newPictureUrlInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        btnAddPictureUrl.click();
       }
     });
+  }
+
+  // Picture Gallery Search Filter
+  if (picSearchInput) {
+    picSearchInput.addEventListener("input", (e) => {
+      currentPicSearchTerm = e.target.value;
+      renderLeftPictureGallery(activeSelectedImagePath);
+    });
+  }
+
+  // Remove Picture From Current Product
+  if (btnClearProductImage) {
+    btnClearProductImage.addEventListener("click", () => {
+      clearProductImage();
+    });
+  }
+
+  // Live Website Sync Modal Open / Close
+  if (btnModalLiveSync) {
+    btnModalLiveSync.addEventListener("click", () => {
+      closeStaffModal();
+      openLiveSyncModal();
+    });
+  }
+
+  if (liveSyncCloseBtn) {
+    liveSyncCloseBtn.addEventListener("click", closeLiveSyncModal);
+  }
+
+  if (liveSyncModal) {
+    liveSyncModal.addEventListener("click", (e) => {
+      if (e.target === liveSyncModal) closeLiveSyncModal();
+    });
+  }
+
+  // Live Sync Actions
+  if (btnPublishToGitHub) {
+    btnPublishToGitHub.addEventListener("click", publishToGitHub);
+  }
+
+  if (btnDownloadProductsJs) {
+    btnDownloadProductsJs.addEventListener("click", downloadProductsJs);
+  }
+
+  if (btnCopyProductsJs) {
+    btnCopyProductsJs.addEventListener("click", copyProductsJs);
   }
 
   if (editorImageUrl) {
@@ -506,6 +631,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const val = e.target.value.trim();
       if (val && editorImagePreview) {
         editorImagePreview.src = val;
+        activeSelectedImagePath = val;
       }
     });
   }
@@ -1040,21 +1166,78 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     if (btnEditStoryImage) btnEditStoryImage.style.display = "none";
   }
 
-  // 24. Product Editor Modal Handlers with Left-Side Picture Selector
+  // 24. Product Editor Modal Handlers with Left-Side Picture Gallery
   let activeSelectedImagePath = "";
+  let currentPicSearchTerm = "";
+
+  function selectPictureForProduct(path, label) {
+    activeSelectedImagePath = path || "";
+    if (editorImageUrl) editorImageUrl.value = path || "";
+    if (editorImagePreview) editorImagePreview.src = path || "images/instagram_logo.jpg";
+
+    if (previewSelectStatus) {
+      if (path && path !== "images/instagram_logo.jpg") {
+        previewSelectStatus.innerHTML = `<i class="fas fa-check-circle"></i> Picture Selected`;
+        previewSelectStatus.style.background = "var(--color-primary)";
+      } else {
+        previewSelectStatus.innerHTML = `<i class="fas fa-image-slash"></i> No Picture`;
+        previewSelectStatus.style.background = "#777";
+      }
+    }
+
+    if (editorLeftPickerGrid) {
+      editorLeftPickerGrid.querySelectorAll(".editor-pic-card").forEach(c => {
+        if (c.dataset.path === path) {
+          c.classList.add("selected");
+        } else {
+          c.classList.remove("selected");
+        }
+      });
+    }
+
+    if (label) {
+      showToast(`📷 Selected "${label}". Click 'Save to Live Website' to publish.`);
+    }
+  }
+
+  function clearProductImage() {
+    selectPictureForProduct("", "");
+    showToast("ℹ️ Cleared picture from this product. You can pick another picture or save.");
+  }
+
+  function removePictureFromGallery(item) {
+    if (confirm(`Are you sure you want to remove "${item.label}" from your picture gallery?`)) {
+      const idx = MEDIA_LIBRARY.findIndex(m => m.path === item.path);
+      if (idx !== -1) {
+        MEDIA_LIBRARY.splice(idx, 1);
+        saveMediaLibrary();
+
+        // If this removed picture is currently selected for the product, clear it!
+        if (activeSelectedImagePath === item.path) {
+          clearProductImage();
+        }
+
+        renderLeftPictureGallery(activeSelectedImagePath);
+        showToast(`🗑️ Removed "${item.label}" from picture gallery.`);
+      }
+    }
+  }
 
   function openProductEditor(product, defaultCat) {
     if (!productEditorModal) return;
 
     // Reset inputs
     if (editorFileInput) editorFileInput.value = "";
+    currentPicSearchTerm = "";
+    if (picSearchInput) picSearchInput.value = "";
+    if (editorUrlInputBar) editorUrlInputBar.style.display = "none";
 
     populateCategoryDropdowns();
 
     // Determine currently active image
-    activeSelectedImagePath = product ? product.image : (INSTAGRAM_MEDIA_LIBRARY[0] ? INSTAGRAM_MEDIA_LIBRARY[0].path : "images/instagram_logo.jpg");
+    activeSelectedImagePath = product ? (product.image || "") : (MEDIA_LIBRARY[0] ? MEDIA_LIBRARY[0].path : "images/instagram_logo.jpg");
 
-    // Populate Left-Side Picture Selection Gallery with Select Check Icons
+    // Populate Left-Side Picture Selection Gallery with Action Badges
     renderLeftPictureGallery(activeSelectedImagePath);
 
     if (product) {
@@ -1067,9 +1250,19 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       document.getElementById("editorBadge").value = product.badge || "";
       document.getElementById("editorBadgeType").value = product.badgeType || "bestseller";
       document.getElementById("editorDescription").value = product.description || "";
-      if (editorImageUrl) editorImageUrl.value = product.image;
-      if (editorImagePreview) editorImagePreview.src = product.image;
+      if (editorImageUrl) editorImageUrl.value = product.image || "";
+      if (editorImagePreview) editorImagePreview.src = product.image || "images/instagram_logo.jpg";
       if (editorVisibleCheck) editorVisibleCheck.checked = (product.visible !== false);
+
+      if (previewSelectStatus) {
+        if (product.image && product.image !== "images/instagram_logo.jpg") {
+          previewSelectStatus.innerHTML = `<i class="fas fa-check-circle"></i> Picture Selected`;
+          previewSelectStatus.style.background = "var(--color-primary)";
+        } else {
+          previewSelectStatus.innerHTML = `<i class="fas fa-image-slash"></i> No Picture`;
+          previewSelectStatus.style.background = "#777";
+        }
+      }
 
       // Show Delete Buttons when editing an existing product
       if (btnHeaderDeleteProduct) btnHeaderDeleteProduct.style.display = "inline-flex";
@@ -1085,8 +1278,18 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       document.getElementById("editorBadgeType").value = "featured";
       document.getElementById("editorDescription").value = "";
       if (editorImageUrl) editorImageUrl.value = activeSelectedImagePath;
-      if (editorImagePreview) editorImagePreview.src = activeSelectedImagePath;
+      if (editorImagePreview) editorImagePreview.src = activeSelectedImagePath || "images/instagram_logo.jpg";
       if (editorVisibleCheck) editorVisibleCheck.checked = true;
+
+      if (previewSelectStatus) {
+        if (activeSelectedImagePath && activeSelectedImagePath !== "images/instagram_logo.jpg") {
+          previewSelectStatus.innerHTML = `<i class="fas fa-check-circle"></i> Picture Selected`;
+          previewSelectStatus.style.background = "var(--color-primary)";
+        } else {
+          previewSelectStatus.innerHTML = `<i class="fas fa-image-slash"></i> No Picture`;
+          previewSelectStatus.style.background = "#777";
+        }
+      }
 
       // Hide Delete Buttons when adding a new product
       if (btnHeaderDeleteProduct) btnHeaderDeleteProduct.style.display = "none";
@@ -1098,16 +1301,43 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
   }
 
   function renderLeftPictureGallery(selectedPath) {
-    if (!editorLeftPickerGrid || !Array.isArray(INSTAGRAM_MEDIA_LIBRARY)) return;
+    if (!editorLeftPickerGrid || !Array.isArray(MEDIA_LIBRARY)) return;
     editorLeftPickerGrid.innerHTML = "";
 
-    INSTAGRAM_MEDIA_LIBRARY.forEach(item => {
+    if (galleryPicCount) {
+      galleryPicCount.textContent = MEDIA_LIBRARY.length;
+    }
+
+    const term = currentPicSearchTerm.toLowerCase().trim();
+    const items = term ? MEDIA_LIBRARY.filter(m => (m.label || "").toLowerCase().includes(term) || (m.path || "").toLowerCase().includes(term)) : MEDIA_LIBRARY;
+
+    if (galleryPicFilterTag) {
+      galleryPicFilterTag.style.display = term ? "inline-block" : "none";
+    }
+
+    if (items.length === 0) {
+      editorLeftPickerGrid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 36px 12px; color: var(--color-text-muted);">
+          <i class="fas fa-search" style="font-size: 1.8rem; margin-bottom: 8px; opacity: 0.4;"></i>
+          <p style="font-size: 0.85rem; font-weight: 600;">No pictures match "${currentPicSearchTerm}"</p>
+          <small>Click "Upload Photo" or "Add via Link" above to add new pictures!</small>
+        </div>
+      `;
+      return;
+    }
+
+    items.forEach(item => {
       const isSelected = (item.path === selectedPath);
+      const isCustom = (item.path && item.path.startsWith("data:")) || item.custom;
       const card = document.createElement("div");
-      card.className = `editor-pic-card ${isSelected ? "selected" : ""}`;
+      card.className = `editor-pic-card ${isSelected ? "selected" : ""} ${isCustom ? "custom-uploaded" : ""}`;
+      card.dataset.path = item.path;
       card.innerHTML = `
         <div class="editor-pic-thumb-wrap">
           <img src="${item.path}" alt="${item.label}" loading="lazy">
+          <button type="button" class="pic-remove-btn" title="Remove picture from gallery">
+            <i class="fas fa-trash-alt"></i>
+          </button>
           <div class="pic-check-badge" title="Select picture">
             <i class="fas fa-check"></i>
           </div>
@@ -1115,17 +1345,179 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
         <span class="editor-pic-label" title="${item.label}">${item.label}</span>
       `;
 
-      card.addEventListener("click", () => {
-        activeSelectedImagePath = item.path;
-        if (editorImageUrl) editorImageUrl.value = item.path;
-        if (editorImagePreview) editorImagePreview.src = item.path;
-        editorLeftPickerGrid.querySelectorAll(".editor-pic-card").forEach(c => c.classList.remove("selected"));
-        card.classList.add("selected");
-        showToast(`📷 Selected "${item.label}". Click 'Save to Live Website' to publish.`);
+      card.addEventListener("click", (e) => {
+        if (e.target.closest(".pic-remove-btn")) return;
+        selectPictureForProduct(item.path, item.label);
       });
+
+      const removeBtn = card.querySelector(".pic-remove-btn");
+      if (removeBtn) {
+        removeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          removePictureFromGallery(item);
+        });
+      }
 
       editorLeftPickerGrid.appendChild(card);
     });
+  }
+
+  // Live Website GitHub Publishing & Export Helpers
+  function generateProductsJsFileContent() {
+    return `/**
+ * Catalog of Handcrafted Products for The Crochet Boutique
+ * 100% authentic photography sourced directly from @croche_boutiq Instagram profile.
+ * Synced live via Boutique Owner Dashboard
+ */
+
+const DEFAULT_CATEGORIES = ${JSON.stringify(CATEGORIES, null, 2)};
+
+const DEFAULT_PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};
+
+// Active categories & products arrays (initialized from localStorage or defaults)
+let CATEGORIES = [...DEFAULT_CATEGORIES];
+let PRODUCTS = [...DEFAULT_PRODUCTS];
+
+const INSTAGRAM_POSTS = ${JSON.stringify(INSTAGRAM_POSTS, null, 2)};
+
+// Available authentic Instagram images library for the owner to pick from on the left side
+const DEFAULT_MEDIA_LIBRARY = ${JSON.stringify(MEDIA_LIBRARY, null, 2)};
+
+// Active media library (can be modified by owner, adding/removing pictures)
+let MEDIA_LIBRARY = [...DEFAULT_MEDIA_LIBRARY];
+const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
+`;
+  }
+
+  async function publishToGitHub() {
+    if (!githubTokenInput || !btnPublishToGitHub) return;
+    const token = githubTokenInput.value.trim();
+    if (!token) {
+      if (githubSyncFeedback) {
+        githubSyncFeedback.style.display = "block";
+        githubSyncFeedback.style.color = "#D32F2F";
+        githubSyncFeedback.innerHTML = `<i class="fas fa-exclamation-circle"></i> Please enter your GitHub Personal Access Token (PAT).`;
+      }
+      githubTokenInput.focus();
+      return;
+    }
+
+    localStorage.setItem("crochet_github_token", token);
+
+    const originalBtnHtml = btnPublishToGitHub.innerHTML;
+    btnPublishToGitHub.disabled = true;
+    btnPublishToGitHub.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Publishing to GitHub Pages...`;
+
+    if (githubSyncFeedback) {
+      githubSyncFeedback.style.display = "block";
+      githubSyncFeedback.style.color = "var(--color-primary)";
+      githubSyncFeedback.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Contacting GitHub API...`;
+    }
+
+    try {
+      const repo = "saboorhussain128-rgb/croche-boutique";
+      const path = "js/products.js";
+      const fileUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+      // 1. Fetch current file SHA
+      const getRes = await fetch(fileUrl, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github.v3+json"
+        }
+      });
+
+      if (!getRes.ok) {
+        throw new Error(`GitHub check failed (${getRes.status}). Verify your token has 'repo' permissions.`);
+      }
+
+      const getData = await getRes.json();
+      const currentSha = getData.sha;
+
+      // 2. Generate updated file content & encode base64
+      const fileContent = generateProductsJsFileContent();
+      const encoded = btoa(unescape(encodeURIComponent(fileContent)));
+
+      // 3. Put updated file
+      const putRes = await fetch(fileUrl, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/vnd.github.v3+json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          message: "feat: Update catalog and media library from Boutique Owner Dashboard",
+          content: encoded,
+          sha: currentSha
+        })
+      });
+
+      if (!putRes.ok) {
+        const errJson = await putRes.json();
+        throw new Error(errJson.message || `GitHub commit failed (${putRes.status})`);
+      }
+
+      if (githubSyncFeedback) {
+        githubSyncFeedback.style.color = "#25D366";
+        githubSyncFeedback.innerHTML = `<strong><i class="fas fa-check-circle"></i> Successfully Published Live!</strong> GitHub Pages will deploy your latest pictures and products to all visitors in ~1-2 minutes.`;
+      }
+      showToast("🚀 Successfully published all changes live to GitHub!");
+    } catch (err) {
+      console.error("GitHub publish error:", err);
+      if (githubSyncFeedback) {
+        githubSyncFeedback.style.color = "#D32F2F";
+        githubSyncFeedback.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error: ${err.message}`;
+      }
+      showToast("⚠️ Could not publish to GitHub: " + err.message);
+    } finally {
+      btnPublishToGitHub.disabled = false;
+      btnPublishToGitHub.innerHTML = originalBtnHtml;
+    }
+  }
+
+  function downloadProductsJs() {
+    const content = generateProductsJsFileContent();
+    const blob = new Blob([content], { type: "application/javascript;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "products.js";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast("💾 Downloaded updated products.js file successfully!");
+  }
+
+  function copyProductsJs() {
+    const content = generateProductsJsFileContent();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(content).then(() => {
+        showToast("📋 Copied full updated products.js code to clipboard!");
+      }).catch(() => {
+        showToast("Could not access clipboard.");
+      });
+    }
+  }
+
+  function openLiveSyncModal() {
+    if (!liveSyncModal) return;
+    if (syncStatProducts) syncStatProducts.textContent = PRODUCTS.length;
+    if (syncStatPictures) syncStatPictures.textContent = MEDIA_LIBRARY.length;
+    if (githubTokenInput) {
+      const savedToken = localStorage.getItem("crochet_github_token");
+      if (savedToken) githubTokenInput.value = savedToken;
+    }
+    if (githubSyncFeedback) githubSyncFeedback.style.display = "none";
+    liveSyncModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLiveSyncModal() {
+    if (!liveSyncModal) return;
+    liveSyncModal.classList.remove("active");
+    document.body.style.overflow = "auto";
   }
 
   function saveProductFromEditor() {
@@ -1174,6 +1566,16 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       };
       PRODUCTS.unshift(newProd);
       showToast(`🎉 Added "${name}" to live boutique collection!`);
+    }
+
+    // If custom image, ensure it is preserved in MEDIA_LIBRARY
+    if (img && img !== "images/instagram_logo.jpg" && !MEDIA_LIBRARY.some(m => m.path === img)) {
+      MEDIA_LIBRARY.unshift({
+        path: img,
+        label: name + " Photo",
+        custom: true
+      });
+      saveMediaLibrary();
     }
 
     // Persist to localStorage
@@ -1244,12 +1646,22 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
 
   // 27. Storage & Defaults Loader
   function loadCustomizedData() {
-    // Migration check: ensure version 10 is loaded to remove bags and refresh authentic Accessories from Instagram
     const CATALOG_VERSION = "v10";
     if (localStorage.getItem("crochet_catalog_version") !== CATALOG_VERSION) {
-      localStorage.removeItem("crochet_custom_categories");
-      localStorage.removeItem("crochet_custom_products");
       localStorage.setItem("crochet_catalog_version", CATALOG_VERSION);
+    }
+
+    // Media Library override
+    const savedMedia = localStorage.getItem("crochet_media_library");
+    if (savedMedia) {
+      try {
+        const parsedMedia = JSON.parse(savedMedia);
+        if (Array.isArray(parsedMedia) && parsedMedia.length > 0) {
+          MEDIA_LIBRARY = parsedMedia;
+        }
+      } catch (e) {
+        console.error("Failed to load custom media library:", e);
+      }
     }
 
     // Categories override
@@ -1288,6 +1700,14 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     const savedStory = localStorage.getItem("crochet_story_image");
     if (savedStory && storyMainImage) {
       storyMainImage.src = savedStory;
+    }
+  }
+
+  function saveMediaLibrary() {
+    try {
+      localStorage.setItem("crochet_media_library", JSON.stringify(MEDIA_LIBRARY));
+    } catch (e) {
+      console.warn("Could not save media library to storage:", e);
     }
   }
 
