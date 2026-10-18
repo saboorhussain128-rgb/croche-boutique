@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const ownerCatalogActions = document.getElementById("ownerCatalogActions");
   const btnAdminAddProduct = document.getElementById("btnAdminAddProduct");
   const btnEditCategories = document.getElementById("btnEditCategories");
+  const btnAdminResetDefaults = document.getElementById("btnAdminResetDefaults");
+  const btnAdminExportData = document.getElementById("btnAdminExportData");
 
   // Category Manager Modal Elements
   const categoryManagerModal = document.getElementById("categoryManagerModal");
@@ -71,6 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnHeaderDeleteProduct = document.getElementById("btnHeaderDeleteProduct");
   const btnEditorDeleteProduct = document.getElementById("btnEditorDeleteProduct");
   const btnCancelEditor = document.getElementById("btnCancelEditor");
+  const btnSubmitProductEditor = document.getElementById("btnSubmitProductEditor");
+  const btnSubmitProductEditorText = document.getElementById("btnSubmitProductEditorText");
   const previewSelectStatus = document.getElementById("previewSelectStatus");
   const galleryPicCount = document.getElementById("galleryPicCount");
   const galleryPicFilterTag = document.getElementById("galleryPicFilterTag");
@@ -655,6 +659,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (productEditorForm) {
     productEditorForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      saveProductFromEditor();
+    });
+  }
+
+  if (btnSubmitProductEditor) {
+    btnSubmitProductEditor.addEventListener("click", (e) => {
+      if (productEditorForm) {
+        if (productEditorForm.checkValidity && !productEditorForm.checkValidity()) {
+          productEditorForm.reportValidity();
+          return;
+        }
+      }
       e.preventDefault();
       saveProductFromEditor();
     });
@@ -1267,6 +1284,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       // Show Delete Buttons when editing an existing product
       if (btnHeaderDeleteProduct) btnHeaderDeleteProduct.style.display = "inline-flex";
       if (btnEditorDeleteProduct) btnEditorDeleteProduct.style.display = "inline-flex";
+      if (btnSubmitProductEditorText) btnSubmitProductEditorText.textContent = "Save Changes to Website";
     } else {
       // Add new product
       if (editProductId) editProductId.value = "";
@@ -1294,6 +1312,7 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       // Hide Delete Buttons when adding a new product
       if (btnHeaderDeleteProduct) btnHeaderDeleteProduct.style.display = "none";
       if (btnEditorDeleteProduct) btnEditorDeleteProduct.style.display = "none";
+      if (btnSubmitProductEditorText) btnSubmitProductEditorText.textContent = "Add Product to Website";
     }
 
     productEditorModal.classList.add("active");
