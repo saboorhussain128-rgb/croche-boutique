@@ -129,6 +129,21 @@ document.addEventListener("DOMContentLoaded", () => {
     return match ? match[1] : null;
   }
 
+  function hasLocalVerifiedImage(code) {
+    if (!code) return null;
+    if (typeof DEFAULT_MEDIA_LIBRARY !== "undefined" && Array.isArray(DEFAULT_MEDIA_LIBRARY)) {
+      const found = DEFAULT_MEDIA_LIBRARY.find(m => m.path && m.path.includes(code));
+      if (found && found.path) return found.path;
+    }
+    if (typeof INSTAGRAM_POSTS !== "undefined" && Array.isArray(INSTAGRAM_POSTS)) {
+      const post = INSTAGRAM_POSTS.find(p => p.shortcode === code);
+      if (post && post.image && typeof DEFAULT_MEDIA_LIBRARY !== "undefined" && DEFAULT_MEDIA_LIBRARY.some(m => m.path === post.image)) {
+        return post.image;
+      }
+    }
+    return null;
+  }
+
   function resolveProductImage(urlOrPath) {
     if (!urlOrPath) return "images/instagram_logo.jpg";
     const str = String(urlOrPath).trim();
@@ -137,23 +152,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isInstagramUrl(str)) {
       const code = extractInstagramShortcode(str);
       if (code) {
-        // 1. Check MEDIA_LIBRARY
+        // 1. Check MEDIA_LIBRARY for custom cached/data image
         if (typeof MEDIA_LIBRARY !== "undefined" && Array.isArray(MEDIA_LIBRARY)) {
-          const found = MEDIA_LIBRARY.find(m => m.path && m.path.includes(code));
+          const found = MEDIA_LIBRARY.find(m => m.path && (m.shortcode === code || m.path.includes(code)));
           if (found && found.path && !isInstagramUrl(found.path)) return found.path;
         }
-        // 2. Check DEFAULT_MEDIA_LIBRARY
-        if (typeof DEFAULT_MEDIA_LIBRARY !== "undefined" && Array.isArray(DEFAULT_MEDIA_LIBRARY)) {
-          const found = DEFAULT_MEDIA_LIBRARY.find(m => m.path && m.path.includes(code));
-          if (found && found.path) return found.path;
-        }
-        // 3. Check INSTAGRAM_POSTS
-        if (typeof INSTAGRAM_POSTS !== "undefined" && Array.isArray(INSTAGRAM_POSTS)) {
-          const post = INSTAGRAM_POSTS.find(p => p.shortcode === code || (p.image && p.image.includes(code)));
-          if (post && post.image) return post.image;
-        }
-        // 4. Default repository file naming convention
-        return "images/ig_" + code + ".jpg";
+        // 2. Check authentic local verified image
+        const local = hasLocalVerifiedImage(code);
+        if (local) return local;
       }
     }
     return str;
@@ -166,64 +172,135 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isInstagramUrl(clean)) {
       const code = extractInstagramShortcode(clean);
 
-      // Check if this post already has an authentic local image file in the project
-      const localCandidate = resolveProductImage(clean);
+      // 1. Check if this post already has an authentic verified local file in the project
+      const localFile = hasLocalVerifiedImage(code);
       let localLabel = "Instagram Photo (" + code + ")";
-      if (typeof DEFAULT_MEDIA_LIBRARY !== "undefined" && Array.isArray(DEFAULT_MEDIA_LIBRARY)) {
-        const item = DEFAULT_MEDIA_LIBRARY.find(m => m.path && m.path.includes(code));
-        if (item && item.label) localLabel = item.label;
-      }
+      let localCaption = "";
       if (typeof INSTAGRAM_POSTS !== "undefined" && Array.isArray(INSTAGRAM_POSTS)) {
         const p = INSTAGRAM_POSTS.find(x => x.shortcode === code);
-        if (p && p.caption) localLabel = p.caption.slice(0, 35) + "...";
+        if (p) {
+          if (p.caption) {
+            localCaption = p.caption;
+            localLabel = p.caption.slice(0, 35) + "...";
+          }
+        }
       }
 
-      if (localCandidate && localCandidate.startsWith("images/ig_")) {
+      if (localFile) {
         const result = {
-          image: localCandidate,
+          image: localFile,
           label: localLabel,
+          description: localCaption,
           source: "local",
-          shortcode: code
+          shortcode: code,
+          instagramUrl: clean
         };
         if (options.onSuccess) options.onSuccess(result);
         return result;
       }
 
-      // External / brand new post: fetch live thumbnail & metadata via Microlink API
-      if (options.onProgress) options.onProgress("Fetching picture from Instagram...");
-      try {
-        const resp = await fetch("https://api.microlink.io?url=" + encodeURIComponent(clean));
-        const res = await resp.json();
-        if (res.status === "success" && res.data && res.data.image && res.data.image.url) {
+      // 2. Check if already in MEDIA_LIBRARY as a custom data URL or image
+      if (typeof MEDIA_LIBRARY !== "undefined" && Array.isArray(MEDIA_LIBRARY)) {
+        const cached = MEDIA_LIBRARY.find(m => m.shortcode === code || (m.instagramUrl && m.instagramUrl.includes(code)));
+        if (cached && cached.path && !isInstagramUrl(cached.path)) {
           const result = {
-            image: res.data.image.url,
-            label: res.data.description ? (res.data.description.slice(0, 35) + "...") : ("Instagram Photo (" + code + ")"),
-            description: res.data.description || "",
-            source: "remote",
-            shortcode: code
+            image: cached.path,
+            label: cached.label || localLabel,
+            description: cached.description || localCaption,
+            source: "cached",
+            shortcode: code,
+            instagramUrl: clean
           };
           if (options.onSuccess) options.onSuccess(result);
           return result;
+        }
+      }
+
+      // 3. New external post: fetch live photo & caption via Microlink API
+      if (options.onProgress) options.onProgress("Connecting to Instagram & retrieving product photo...");
+      let fetchedImageUrl = null;
+      let fetchedCaption = "";
+      let fetchedTitle = "";
+
+      try {
+        const resp = await fetch("https://api.microlink.io?url=" + encodeURIComponent(clean));
+        if (resp.ok) {
+          const res = await resp.json();
+          if (res.status === "success" && res.data) {
+            if (res.data.image && res.data.image.url) {
+              fetchedImageUrl = res.data.image.url;
+            }
+            if (res.data.description) {
+              fetchedCaption = res.data.description;
+            }
+            if (res.data.title) {
+              fetchedTitle = res.data.title;
+            }
+          }
         }
       } catch (err) {
         console.warn("Could not fetch remote Instagram metadata:", err);
       }
 
-      // If remote fetch failed, use standard local naming convention as fallback
-      const fallbackResult = {
-        image: "images/ig_" + code + ".jpg",
-        label: "Instagram Photo (" + code + ")",
-        source: "fallback",
-        shortcode: code
-      };
-      if (options.onSuccess) options.onSuccess(fallbackResult);
-      return fallbackResult;
-    } else {
-      // Direct image URL or path
+      // Convert fetched image URL to Base64 Data URL so it is 100% permanent and never breaks or expires
+      let finalImage = fetchedImageUrl;
+      if (fetchedImageUrl) {
+        if (options.onProgress) options.onProgress("Optimizing product photo...");
+        try {
+          const imgResp = await fetch(fetchedImageUrl);
+          if (imgResp.ok) {
+            const blob = await imgResp.blob();
+            finalImage = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
+          }
+        } catch (b64Err) {
+          console.warn("Direct Data URL conversion failed, using direct CDN URL:", b64Err);
+          finalImage = fetchedImageUrl;
+        }
+      }
+
+      if (!finalImage) {
+        throw new Error("Could not extract image from this Instagram link. Please make sure the post is public, or upload photo directly.");
+      }
+
+      const cleanLabel = fetchedCaption ? (fetchedCaption.slice(0, 40) + "...") : ("Instagram Photo (" + code + ")");
+
       const result = {
-        image: clean,
+        image: finalImage,
+        label: cleanLabel,
+        description: fetchedCaption,
+        title: fetchedTitle,
+        source: "remote",
+        shortcode: code,
+        instagramUrl: clean
+      };
+      if (options.onSuccess) options.onSuccess(result);
+      return result;
+    } else {
+      // Direct image URL or Data URL
+      let finalImg = clean;
+      if (clean.startsWith("http") && !clean.startsWith("data:")) {
+        try {
+          const imgResp = await fetch(clean);
+          if (imgResp.ok) {
+            const blob = await imgResp.blob();
+            finalImg = await new Promise((res) => {
+              const reader = new FileReader();
+              reader.onloadend = () => res(reader.result);
+              reader.readAsDataURL(blob);
+            });
+          }
+        } catch (e) {}
+      }
+      const result = {
+        image: finalImg,
         label: "Linked Photo",
-        source: "direct"
+        source: "direct",
+        instagramUrl: ""
       };
       if (options.onSuccess) options.onSuccess(result);
       return result;
@@ -239,7 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return "sweaters";
     }
     // Kids
-    if (/\b(baby|toddler|kid|kids|child|infant|romper|pinafore|swaddle|overalls|baby set)\b/i.test(t)) {
+    if (/\b(baby|toddler|kid|kids|child|infant|romper|pinafore|swaddle|overalls|baby set|booties|newborn)\b/i.test(t)) {
       return "kids";
     }
     // Gloves
@@ -284,8 +361,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return "Handcrafted " + formatCategory(category) + " Piece";
     }
 
-    // Clean out hashtags, links, user tags, emojis
+    // Clean out Instagram metadata prefixes, hashtags, links, user tags, emojis
     let clean = caption
+      .replace(/^\s*\d+[\s\w,]+ - [\w_.]+ on [^:]+:\s*[“"']?/i, '')
+      .replace(/[”"']\s*$/, '')
       .replace(/#\w+/g, '')
       .replace(/https?:\/\/\S+/g, '')
       .replace(/@\w+/g, '')
@@ -310,6 +389,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function cleanDescriptionFromCaption(caption) {
     if (!caption) return "Handcrafted with premium artisan yarns and authentic slow-stitch detailing.";
     let desc = caption
+      .replace(/^\s*\d+[\s\w,]+ - [\w_.]+ on [^:]+:\s*[“"']?/i, '')
+      .replace(/[”"']\s*$/, '')
       .replace(/#\w+/g, '')
       .replace(/https?:\/\/\S+/g, '')
       .replace(/DM to order.*$/i, '')
@@ -319,6 +400,80 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/\s+/g, ' ')
       .trim();
     return desc || "Handcrafted with premium artisan yarns and authentic slow-stitch detailing.";
+  }
+
+  function applyDetectedProductDetails(resolved, url) {
+    if (!resolved || !resolved.image) return;
+
+    const shortcode = resolved.shortcode || extractInstagramShortcode(url || "") || "";
+    const finalPath = resolved.image;
+    const caption = resolved.description || "";
+    const detectedCategory = identifyCategoryFromText(caption + " " + (resolved.label || "") + " " + (resolved.title || ""));
+    const detectedName = generateProductNameFromCaption(caption, detectedCategory, shortcode);
+    const detectedDesc = cleanDescriptionFromCaption(caption);
+
+    // 1. Add to MEDIA_LIBRARY so it permanently appears in the Left Picture Gallery
+    const finalLabel = detectedName || resolved.label || ("Linked Photo " + (MEDIA_LIBRARY.length + 1));
+    const existingIdx = MEDIA_LIBRARY.findIndex(m => m.path === finalPath || (shortcode && m.shortcode === shortcode));
+    if (existingIdx >= 0) {
+      MEDIA_LIBRARY.splice(existingIdx, 1);
+    }
+    MEDIA_LIBRARY.unshift({
+      path: finalPath,
+      label: finalLabel,
+      custom: true,
+      shortcode: shortcode,
+      instagramUrl: resolved.instagramUrl || url || "",
+      description: caption
+    });
+    saveMediaLibrary();
+
+    // 2. Select image for current product and render gallery
+    selectPictureForProduct(finalPath, finalLabel);
+    renderLeftPictureGallery(finalPath);
+
+    // 3. Populate product editor fields
+    const nameInput = document.getElementById("editorName");
+    const descInput = document.getElementById("editorDescription");
+    const badgeInput = document.getElementById("editorBadge");
+    const badgeTypeSelect = document.getElementById("editorBadgeType");
+
+    if (nameInput) nameInput.value = detectedName;
+    if (descInput) descInput.value = detectedDesc;
+    if (editorCategorySelect && detectedCategory) editorCategorySelect.value = detectedCategory;
+    if (badgeInput && (!badgeInput.value.trim() || badgeInput.value === "Artisan Pick")) badgeInput.value = "New Drop";
+    if (badgeTypeSelect) badgeTypeSelect.value = "bestseller";
+
+    // 4. Update the detector status card with rich details: picture preview + what product link it is!
+    if (detectorStatusCard) {
+      detectorStatusCard.style.display = "block";
+      detectorStatusCard.className = "detector-status-card success";
+      detectorStatusCard.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="${finalPath}" alt="Product Picture" style="width: 58px; height: 58px; object-fit: cover; border-radius: var(--radius-sm); border: 2px solid #25D366; flex-shrink: 0;" onerror="this.src='images/instagram_logo.jpg';">
+          <div style="flex: 1; min-width: 0;">
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <i class="fas fa-check-circle" style="color: #25D366;"></i>
+              <strong style="color: #1b5e20;">Product Picture Loaded!</strong>
+              <span class="badge-tag badge-bestseller" style="position: static; font-size: 0.65rem; padding: 2px 7px;">${formatCategory(detectedCategory)}</span>
+            </div>
+            <div style="font-weight: 700; color: var(--color-text); margin-top: 3px; font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              ${detectedName}
+            </div>
+            ${(resolved.instagramUrl || url) ? `
+              <div style="font-size: 0.73rem; color: var(--color-text-muted); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                <i class="fab fa-instagram" style="color: #E1306C;"></i> Product Link: 
+                <a href="${resolved.instagramUrl || url}" target="_blank" rel="noopener" style="color: var(--color-primary); text-decoration: underline;">${resolved.instagramUrl || url}</a>
+              </div>
+            ` : ""}
+          </div>
+        </div>
+      `;
+    }
+
+    if (autoProductLinkInput && url && !autoProductLinkInput.value) {
+      autoProductLinkInput.value = url;
+    }
   }
 
   async function triggerAutoDetectProduct(rawUrl) {
@@ -334,7 +489,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const shortcode = extractInstagramShortcode(url);
     if (btnAutoDetectProduct) {
       btnAutoDetectProduct.disabled = true;
       btnAutoDetectProduct.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Identifying...`;
@@ -347,62 +501,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      // 1. Resolve photo & metadata
-      const resolved = await resolveAndPreviewInstagramUrl(url);
+      const resolved = await resolveAndPreviewInstagramUrl(url, {
+        onProgress: (msg) => {
+          if (detectorStatusCard) {
+            detectorStatusCard.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> ${msg}`;
+          }
+        }
+      });
 
       if (!resolved || !resolved.image) {
         throw new Error("Could not retrieve image from Instagram post.");
       }
 
-      // 2. Identify caption & category
-      let caption = resolved.description || "";
-      if (!caption && shortcode && typeof INSTAGRAM_POSTS !== "undefined" && Array.isArray(INSTAGRAM_POSTS)) {
-        const post = INSTAGRAM_POSTS.find(p => p.shortcode === shortcode);
-        if (post && post.caption) caption = post.caption;
-      }
-
-      const detectedCategory = identifyCategoryFromText(caption + " " + (resolved.label || ""));
-      const detectedName = generateProductNameFromCaption(caption, detectedCategory, shortcode);
-      const detectedDesc = cleanDescriptionFromCaption(caption);
-
-      // 3. Populate form fields
-      const nameInput = document.getElementById("editorName");
-      const descInput = document.getElementById("editorDescription");
-      const badgeInput = document.getElementById("editorBadge");
-      const badgeTypeSelect = document.getElementById("editorBadgeType");
-
-      if (nameInput) nameInput.value = detectedName;
-      if (descInput) descInput.value = detectedDesc;
-      if (editorCategorySelect) editorCategorySelect.value = detectedCategory;
-      if (badgeInput) badgeInput.value = "New Drop";
-      if (badgeTypeSelect) badgeTypeSelect.value = "bestseller";
-
-      // 4. Set image & gallery selection
-      selectPictureForProduct(resolved.image, detectedName);
-      renderLeftPictureGallery(resolved.image);
-
-      // 5. Update feedback card
-      if (detectorStatusCard) {
-        detectorStatusCard.className = "detector-status-card success";
-        detectorStatusCard.innerHTML = `
-          <div style="display: flex; align-items: flex-start; gap: 8px;">
-            <i class="fas fa-check-circle" style="font-size: 1.1rem; margin-top: 2px;"></i>
-            <div>
-              <strong>Auto-Detected:</strong> Identified as <u>${formatCategory(detectedCategory)}</u>.
-              <div>Product Name: "<strong>${detectedName}</strong>" with photo loaded. Review and click "Add Product to Website" below!</div>
-            </div>
-          </div>
-        `;
-      }
-
-      showToast(`✨ Identified as "${formatCategory(detectedCategory)}"! Form auto-filled.`);
+      applyDetectedProductDetails(resolved, url);
+      showToast(`✨ Identified as "${document.getElementById("editorName").value}"! Photo loaded.`);
     } catch (err) {
       console.error("Auto detect error:", err);
       if (detectorStatusCard) {
         detectorStatusCard.className = "detector-status-card error";
-        detectorStatusCard.innerHTML = `<i class="fas fa-exclamation-circle"></i> Could not auto-detect details from this link. Please enter details manually or upload photo file directly.`;
+        detectorStatusCard.innerHTML = `<i class="fas fa-exclamation-circle"></i> Could not load picture from link: ${err.message || "Please upload photo directly."}`;
       }
-      showToast("⚠️ Could not auto-detect product. Please fill manually.");
+      showToast("⚠️ Could not load picture from link. Please upload photo directly.");
     } finally {
       if (btnAutoDetectProduct) {
         btnAutoDetectProduct.disabled = false;
@@ -890,45 +1009,24 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const origText = btnAddPictureUrl.innerHTML;
-      btnAddPictureUrl.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Fetching...`;
+      btnAddPictureUrl.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Loading...`;
       btnAddPictureUrl.disabled = true;
 
       try {
-        const resolved = await resolveAndPreviewInstagramUrl(url, {
-          onProgress: (msg) => showToast(msg)
-        });
+        showToast("⏳ Fetching product picture and details from link...");
+        const resolved = await resolveAndPreviewInstagramUrl(url);
 
         if (resolved && resolved.image) {
-          const finalPath = resolved.image;
-          const finalLabel = resolved.label || ("Linked Photo " + (MEDIA_LIBRARY.length + 1));
-
-          if (!MEDIA_LIBRARY.some(m => m.path === finalPath)) {
-            MEDIA_LIBRARY.unshift({
-              path: finalPath,
-              label: finalLabel,
-              custom: true
-            });
-            saveMediaLibrary();
-          }
-
-          selectPictureForProduct(finalPath, finalLabel);
-          renderLeftPictureGallery(finalPath);
+          applyDetectedProductDetails(resolved, url);
           newPictureUrlInput.value = "";
           if (editorUrlInputBar) editorUrlInputBar.style.display = "none";
-
-          // If product name or description is empty and metadata is available, prefill
-          const descInput = document.getElementById("editorDescription");
-          if (resolved.description && descInput && !descInput.value.trim()) {
-            descInput.value = resolved.description;
-          }
-
-          showToast("✨ Photo loaded and selected from link!");
+          showToast("✨ Product picture loaded & details identified!");
         } else {
           showToast("⚠️ Could not load picture from link. Please upload photo directly.");
         }
       } catch (err) {
         console.error(err);
-        showToast("⚠️ Could not load picture from link.");
+        showToast("⚠️ Could not load picture from link: " + (err.message || "Please upload photo directly."));
       } finally {
         btnAddPictureUrl.innerHTML = origText;
         btnAddPictureUrl.disabled = false;
@@ -1009,18 +1107,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (editorImagePreview) editorImagePreview.style.opacity = "1";
 
         if (resolved && resolved.image) {
-          editorImageUrl.value = resolved.image;
-          activeSelectedImagePath = resolved.image;
-          selectPictureForProduct(resolved.image, resolved.label);
-          renderLeftPictureGallery(resolved.image);
-
-          // If description is empty and we got a description, fill it in
-          const descInput = document.getElementById("editorDescription");
-          if (resolved.description && descInput && !descInput.value.trim()) {
-            descInput.value = resolved.description;
-          }
-
-          showToast("✨ Converted Instagram link to authentic photo!");
+          applyDetectedProductDetails(resolved, val);
+          showToast("✨ Converted Instagram link to authentic photo & auto-filled details!");
         } else {
           showToast("⚠️ Could not load photo from Instagram link. Please upload photo directly.");
         }
@@ -1316,7 +1404,7 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
       card.className = `product-card ${isHidden ? "product-card-hidden" : ""}`;
       card.innerHTML = `
         <div class="product-thumb-wrap">
-          <img src="${resolveProductImage(p.image)}" alt="${p.name}" class="product-thumb" loading="lazy" onerror="this.onerror=null; this.src='images/instagram_logo.jpg';">
+          <img src="${resolveProductImage(p.image)}" alt="${p.name}" class="product-thumb" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='images/instagram_logo.jpg';">
           <span class="badge-tag badge-${p.badgeType}">${p.badge}</span>
           ${isHidden && isOwnerMode ? `
             <span class="badge-tag" style="top: 48px; background: #444; color: #fff;">
@@ -1338,6 +1426,13 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
           <span class="product-category-label">${formatCategory(p.category)}</span>
           <h3 class="product-title">${p.name}</h3>
           <p class="product-excerpt">${p.description}</p>
+          ${p.instagramUrl ? `
+            <div style="margin-bottom: 8px;">
+              <a href="${p.instagramUrl}" target="_blank" rel="noopener" class="product-ig-link" title="View authentic Instagram post" style="display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: #E1306C; text-decoration: none; font-weight: 600;">
+                <i class="fab fa-instagram"></i> View on Instagram
+              </a>
+            </div>
+          ` : ""}
           <div class="product-bottom-action">
             <button class="btn-get-this" data-id="${p.id}">
               <i class="fas fa-bag-shopping"></i> Get This
@@ -1719,18 +1814,14 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       document.getElementById("editorBadge").value = "New Drop";
       document.getElementById("editorBadgeType").value = "featured";
       document.getElementById("editorDescription").value = "";
-      if (editorImageUrl) editorImageUrl.value = activeSelectedImagePath;
-      if (editorImagePreview) editorImagePreview.src = activeSelectedImagePath || "images/instagram_logo.jpg";
+      activeSelectedImagePath = "";
+      if (editorImageUrl) editorImageUrl.value = "";
+      if (editorImagePreview) editorImagePreview.src = "images/instagram_logo.jpg";
       if (editorVisibleCheck) editorVisibleCheck.checked = true;
 
       if (previewSelectStatus) {
-        if (activeSelectedImagePath && activeSelectedImagePath !== "images/instagram_logo.jpg") {
-          previewSelectStatus.innerHTML = `<i class="fas fa-check-circle"></i> Picture Selected`;
-          previewSelectStatus.style.background = "var(--color-primary)";
-        } else {
-          previewSelectStatus.innerHTML = `<i class="fas fa-image-slash"></i> No Picture`;
-          previewSelectStatus.style.background = "#777";
-        }
+        previewSelectStatus.innerHTML = `<i class="fas fa-image-slash"></i> No Picture Selected`;
+        previewSelectStatus.style.background = "#888";
       }
 
       // Hide Delete Buttons when adding a new product
@@ -1778,13 +1869,18 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
       card.dataset.path = resolvedPath;
       card.innerHTML = `
         <div class="editor-pic-thumb-wrap">
-          <img src="${resolvedPath}" alt="${item.label}" loading="lazy" onerror="this.onerror=null; this.src='images/instagram_logo.jpg';">
+          <img src="${resolvedPath}" alt="${item.label}" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='images/instagram_logo.jpg';">
           <button type="button" class="pic-remove-btn" title="Remove picture from gallery">
             <i class="fas fa-trash-alt"></i>
           </button>
           <div class="pic-check-badge" title="Select picture">
             <i class="fas fa-check"></i>
           </div>
+          ${isCustom ? `
+            <span style="position: absolute; top: 4px; left: 4px; background: rgba(0,0,0,0.65); color: #fff; font-size: 0.58rem; padding: 1px 4px; border-radius: 3px; font-weight: 700; pointer-events: none;">
+              ${item.instagramUrl ? '<i class="fab fa-instagram"></i> LINK' : 'UPLOAD'}
+            </span>
+          ` : ""}
         </div>
         <span class="editor-pic-label" title="${item.label}">${item.label}</span>
       `;
@@ -1980,6 +2076,11 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
       return;
     }
 
+    const activeMedia = MEDIA_LIBRARY.find(m => m.path === img);
+    const igUrl = (autoProductLinkInput ? autoProductLinkInput.value.trim() : "") ||
+                  (activeMedia ? activeMedia.instagramUrl : "") ||
+                  (isInstagramUrl(rawImg) ? rawImg : "");
+
     if (prodId) {
       // Update existing item
       const idx = PRODUCTS.findIndex(p => p.id === prodId);
@@ -1992,6 +2093,7 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
           badgeType,
           description: desc,
           image: img,
+          instagramUrl: igUrl || PRODUCTS[idx].instagramUrl || "",
           visible: isVisible
         };
         showToast(`✨ Updated "${name}" successfully on live website!`);
@@ -2007,6 +2109,7 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
         badgeType,
         description: desc,
         image: img,
+        instagramUrl: igUrl || "",
         visible: isVisible
       };
       PRODUCTS.unshift(newProd);
@@ -2018,7 +2121,8 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
       MEDIA_LIBRARY.unshift({
         path: img,
         label: name + " Photo",
-        custom: true
+        custom: true,
+        instagramUrl: igUrl || ""
       });
       saveMediaLibrary();
     }
@@ -2100,14 +2204,15 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
 
   // 27. Storage & Defaults Loader
   function loadCustomizedData() {
-    const CATALOG_VERSION = "v10";
-    if (localStorage.getItem("crochet_catalog_version") !== CATALOG_VERSION) {
+    const CATALOG_VERSION = "v11";
+    const isNewVersion = (localStorage.getItem("crochet_catalog_version") !== CATALOG_VERSION);
+    if (isNewVersion) {
       localStorage.setItem("crochet_catalog_version", CATALOG_VERSION);
     }
 
     // Media Library override & auto-repair
     const savedMedia = localStorage.getItem("crochet_media_library");
-    if (savedMedia) {
+    if (savedMedia && !isNewVersion) {
       try {
         const parsedMedia = JSON.parse(savedMedia);
         if (Array.isArray(parsedMedia) && parsedMedia.length > 0) {
@@ -2118,6 +2223,13 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
               mediaNeedsUpdate = true;
             }
           });
+          // Merge in any new default media library items not yet in saved
+          DEFAULT_MEDIA_LIBRARY.forEach(defItem => {
+            if (!parsedMedia.some(m => m.path === defItem.path)) {
+              parsedMedia.push(defItem);
+              mediaNeedsUpdate = true;
+            }
+          });
           MEDIA_LIBRARY = parsedMedia;
           if (mediaNeedsUpdate) {
             saveMediaLibrary();
@@ -2125,7 +2237,11 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
         }
       } catch (e) {
         console.error("Failed to load custom media library:", e);
+        MEDIA_LIBRARY = [...DEFAULT_MEDIA_LIBRARY];
       }
+    } else {
+      MEDIA_LIBRARY = [...DEFAULT_MEDIA_LIBRARY];
+      saveMediaLibrary();
     }
 
     // Categories override
@@ -2147,21 +2263,22 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
       try {
         const parsedProds = JSON.parse(savedProducts);
         if (Array.isArray(parsedProds) && parsedProds.length > 0) {
-          let needsUpdate = false;
-          parsedProds.forEach(p => {
+          // Retain custom items and merge updated defaults
+          const customItems = parsedProds.filter(p => !DEFAULT_PRODUCTS.some(dp => dp.id === p.id));
+          customItems.forEach(p => {
             if (p.image && isInstagramUrl(p.image)) {
               p.image = resolveProductImage(p.image);
-              needsUpdate = true;
             }
           });
-          PRODUCTS = parsedProds;
-          if (needsUpdate) {
-            localStorage.setItem("crochet_custom_products", JSON.stringify(PRODUCTS));
-          }
+          PRODUCTS = [...DEFAULT_PRODUCTS, ...customItems];
+          localStorage.setItem("crochet_custom_products", JSON.stringify(PRODUCTS));
         }
       } catch (e) {
         console.error("Failed to load custom products:", e);
+        PRODUCTS = [...DEFAULT_PRODUCTS];
       }
+    } else {
+      PRODUCTS = [...DEFAULT_PRODUCTS];
     }
 
     // Hero image override

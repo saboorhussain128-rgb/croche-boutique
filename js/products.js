@@ -161,6 +161,17 @@ const DEFAULT_PRODUCTS = [
 
   // --- KIDS & BABY ---
   {
+    id: "prod-baby-newborn-romper-set",
+    name: "Newborn Crochet Romper & Accessories Set",
+    category: "kids",
+    badge: "New Drop",
+    badgeType: "bestseller",
+    image: "images/ig_CCnx9dBhjta.jpg",
+    description: "Adorable handmade newborn crochet romper set complete with coordinating cozy mittens, soft booties, and turban cap. Perfect gift for little ones 💚",
+    instagramUrl: "https://www.instagram.com/p/CCnx9dBhjta/",
+    visible: true
+  },
+  {
     id: "prod-baby-romper-set",
     name: "Crochet Baby Romper & Bonnet Set",
     category: "kids",
@@ -868,11 +879,20 @@ const INSTAGRAM_POSTS = [
     likes: "30",
     comments: "0",
     image: "images/ig_CMkIy7ph3AJ.jpg"
+  },
+  {
+    shortcode: "CCnx9dBhjta",
+    url: "https://www.instagram.com/p/CCnx9dBhjta/",
+    caption: "Romper set for a new born 0-3/3-6/6-12months. Handcrafted with love including booties, mittens and cap 💚",
+    likes: "93",
+    comments: "38",
+    image: "images/ig_CCnx9dBhjta.jpg"
   }
 ];
 
 // Available authentic Instagram images library for the owner to pick from on the left side
 const DEFAULT_MEDIA_LIBRARY = [
+  { path: "images/ig_CCnx9dBhjta.jpg", label: "Newborn Romper Set & Accessories" },
   { path: "images/ig_CACVp9RlD-N.jpg", label: "Mini Frock & Beanie Keychains" },
   { path: "images/ig_CK7k9x6BF7k.jpg", label: "Rainbow Lip Balm Cozy Holder" },
   { path: "images/ig_CLFEoLPBs4Z.jpg", label: "Scarlet Frock Keychain Charm" },
