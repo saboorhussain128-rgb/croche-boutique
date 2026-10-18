@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=3.3">
+  <link rel="stylesheet" href="css/style.css?v=3.4">
 </head>
 <body ontouchstart="">
 
@@ -172,6 +172,9 @@
             </button>
             <button class="btn-owner-pill btn-owner-pill-secondary" id="btnEditCategories" title="Edit Categories">
               <i class="fas fa-tags"></i> Edit Categories
+            </button>
+            <button class="btn-owner-pill btn-owner-pill-secondary" id="btnCatalogLiveSync" title="Publish to Live Website" style="background: #FFF7F8; border-color: var(--color-primary); color: var(--color-primary); font-weight: 700;">
+              <i class="fas fa-globe"></i> Publish Live
             </button>
           </div>
         </div>
@@ -676,6 +679,28 @@
         <form id="productEditorForm">
           <input type="hidden" id="editProductId" value="">
 
+          <!-- Smart Auto-Detect Product from Instagram Link Banner -->
+          <div class="auto-link-detector-card">
+            <div class="detector-header-row">
+              <div class="detector-title">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <span>Auto-Detect &amp; Fill Product from Link</span>
+              </div>
+              <span class="badge-tag badge-bestseller" style="position: static; font-size: 0.65rem; padding: 2px 8px;">Time Saver</span>
+            </div>
+            <p class="detector-help-text">Paste any Instagram post or reel link below. The system will automatically identify the product name, boutique category, artisan description, and load the picture for you!</p>
+            <div class="detector-input-row">
+              <div class="detector-input-wrap">
+                <i class="fab fa-instagram detector-field-icon"></i>
+                <input type="text" id="autoProductLinkInput" class="form-control" placeholder="Paste Instagram post link (e.g. https://www.instagram.com/p/CACVp9RlD-N/...)">
+              </div>
+              <button type="button" class="btn btn-primary" id="btnAutoDetectProduct" style="white-space: nowrap;">
+                <i class="fas fa-sparkles"></i> Auto-Detect Product
+              </button>
+            </div>
+            <div id="detectorStatusCard" class="detector-status-card" style="display: none;"></div>
+          </div>
+
           <div class="editor-split-layout">
             <!-- Left Side: Picture Selection Gallery with Add/Remove Controls -->
             <div class="editor-left-gallery-panel">
@@ -963,8 +988,8 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=3.3"></script>
-  <script src="js/products.js?v=3.3"></script>
-  <script src="js/app.js?v=3.3"></script>
+  <script src="js/config.js?v=3.4"></script>
+  <script src="js/products.js?v=3.4"></script>
+  <script src="js/app.js?v=3.4"></script>
 </body>
 </html>

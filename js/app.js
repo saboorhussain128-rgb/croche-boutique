@@ -84,6 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnAddPictureUrl = document.getElementById("btnAddPictureUrl");
   const picSearchInput = document.getElementById("picSearchInput");
   const btnClearProductImage = document.getElementById("btnClearProductImage");
+  const autoProductLinkInput = document.getElementById("autoProductLinkInput");
+  const btnAutoDetectProduct = document.getElementById("btnAutoDetectProduct");
+  const detectorStatusCard = document.getElementById("detectorStatusCard");
+  const btnCatalogLiveSync = document.getElementById("btnCatalogLiveSync");
   const btnModalLiveSync = document.getElementById("btnModalLiveSync");
   const liveSyncModal = document.getElementById("liveSyncModal");
   const liveSyncCloseBtn = document.getElementById("liveSyncCloseBtn");
@@ -223,6 +227,187 @@ document.addEventListener("DOMContentLoaded", () => {
       };
       if (options.onSuccess) options.onSuccess(result);
       return result;
+    }
+  }
+
+  // Smart Product Auto-Detection & Identification Helpers
+  function identifyCategoryFromText(text) {
+    const t = (text || "").toLowerCase();
+    
+    // Sweaters
+    if (/\b(sweater|cardigan|pullover|hoodie|braid|jumper|jacket|shrug|bolero|knitwear)\b/i.test(t)) {
+      return "sweaters";
+    }
+    // Kids
+    if (/\b(baby|toddler|kid|kids|child|infant|romper|pinafore|swaddle|overalls|baby set)\b/i.test(t)) {
+      return "kids";
+    }
+    // Gloves
+    if (/\b(glove|gloves|mitten|mittens|fingerless|hand gloves|wrist)\b/i.test(t)) {
+      return "gloves";
+    }
+    // Skaffs
+    if (/\b(scarf|scarfs|scarves|skaff|skaffs|muffler|cowl|shawl|wrap|neck warmer)\b/i.test(t)) {
+      return "skaffs";
+    }
+    // Caps
+    if (/\b(cap|caps|beanie|beanies|hat|hats|bucket hat|headband|ear-warmer|turban|beret)\b/i.test(t)) {
+      return "caps";
+    }
+    // Shirts
+    if (/\b(shirt|shirts|crop top|top|tops|blouse|halter|mesh top|shell top|tank)\b/i.test(t)) {
+      return "shirts";
+    }
+    // Accessories
+    if (/\b(keychain|keychains|charm|charms|lip balm|holder|pouch|decor|frock charm|motif|accent|bookmark|accessory)\b/i.test(t)) {
+      return "accessories";
+    }
+    return "accessories";
+  }
+
+  function generateProductNameFromCaption(caption, category, shortcode) {
+    // 1. Check if we already have a curated authentic title for this shortcode
+    if (shortcode && typeof DEFAULT_MEDIA_LIBRARY !== "undefined" && Array.isArray(DEFAULT_MEDIA_LIBRARY)) {
+      const foundInLib = DEFAULT_MEDIA_LIBRARY.find(m => m.path && m.path.includes(shortcode));
+      if (foundInLib && foundInLib.label && !foundInLib.label.startsWith("Instagram Photo")) {
+        return foundInLib.label;
+      }
+    }
+    if (shortcode && typeof DEFAULT_PRODUCTS !== "undefined" && Array.isArray(DEFAULT_PRODUCTS)) {
+      const foundInProd = DEFAULT_PRODUCTS.find(p => p.image && p.image.includes(shortcode));
+      if (foundInProd && foundInProd.name) {
+        return foundInProd.name;
+      }
+    }
+
+    if (!caption) {
+      return "Handcrafted " + formatCategory(category) + " Piece";
+    }
+
+    // Clean out hashtags, links, user tags, emojis
+    let clean = caption
+      .replace(/#\w+/g, '')
+      .replace(/https?:\/\/\S+/g, '')
+      .replace(/@\w+/g, '')
+      .replace(/[\u{1F300}-\u{1FAFF}]/gu, '')
+      .replace(/[\u{2600}-\u{26FF}]/gu, '')
+      .replace(/[\u{2700}-\u{27BF}]/gu, '')
+      .replace(/["“”'‘’•\-_*]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    // Take first sentence or clause
+    let firstPhrase = clean.split(/[.!\n\r?]/)[0].trim();
+    if (firstPhrase.length > 55) {
+      firstPhrase = firstPhrase.slice(0, 52).trim() + "...";
+    }
+    if (firstPhrase.length >= 4) {
+      return firstPhrase.replace(/\b\w/g, l => l.toUpperCase());
+    }
+    return "Handcrafted " + formatCategory(category);
+  }
+
+  function cleanDescriptionFromCaption(caption) {
+    if (!caption) return "Handcrafted with premium artisan yarns and authentic slow-stitch detailing.";
+    let desc = caption
+      .replace(/#\w+/g, '')
+      .replace(/https?:\/\/\S+/g, '')
+      .replace(/DM to order.*$/i, '')
+      .replace(/DM for orders.*$/i, '')
+      .replace(/WhatsApp to order.*$/i, '')
+      .replace(/Tap link.*$/i, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    return desc || "Handcrafted with premium artisan yarns and authentic slow-stitch detailing.";
+  }
+
+  async function triggerAutoDetectProduct(rawUrl) {
+    const url = (rawUrl || (autoProductLinkInput ? autoProductLinkInput.value : "")).trim();
+    if (!url) {
+      showToast("Please paste an Instagram post or reel link.");
+      if (autoProductLinkInput) autoProductLinkInput.focus();
+      return;
+    }
+
+    if (!isInstagramUrl(url)) {
+      showToast("Please enter a valid Instagram post link (e.g. https://www.instagram.com/p/...).");
+      return;
+    }
+
+    const shortcode = extractInstagramShortcode(url);
+    if (btnAutoDetectProduct) {
+      btnAutoDetectProduct.disabled = true;
+      btnAutoDetectProduct.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Identifying...`;
+    }
+
+    if (detectorStatusCard) {
+      detectorStatusCard.style.display = "block";
+      detectorStatusCard.className = "detector-status-card loading";
+      detectorStatusCard.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> Analyzing Instagram post, photo & product category...`;
+    }
+
+    try {
+      // 1. Resolve photo & metadata
+      const resolved = await resolveAndPreviewInstagramUrl(url);
+
+      if (!resolved || !resolved.image) {
+        throw new Error("Could not retrieve image from Instagram post.");
+      }
+
+      // 2. Identify caption & category
+      let caption = resolved.description || "";
+      if (!caption && shortcode && typeof INSTAGRAM_POSTS !== "undefined" && Array.isArray(INSTAGRAM_POSTS)) {
+        const post = INSTAGRAM_POSTS.find(p => p.shortcode === shortcode);
+        if (post && post.caption) caption = post.caption;
+      }
+
+      const detectedCategory = identifyCategoryFromText(caption + " " + (resolved.label || ""));
+      const detectedName = generateProductNameFromCaption(caption, detectedCategory, shortcode);
+      const detectedDesc = cleanDescriptionFromCaption(caption);
+
+      // 3. Populate form fields
+      const nameInput = document.getElementById("editorName");
+      const descInput = document.getElementById("editorDescription");
+      const badgeInput = document.getElementById("editorBadge");
+      const badgeTypeSelect = document.getElementById("editorBadgeType");
+
+      if (nameInput) nameInput.value = detectedName;
+      if (descInput) descInput.value = detectedDesc;
+      if (editorCategorySelect) editorCategorySelect.value = detectedCategory;
+      if (badgeInput) badgeInput.value = "New Drop";
+      if (badgeTypeSelect) badgeTypeSelect.value = "bestseller";
+
+      // 4. Set image & gallery selection
+      selectPictureForProduct(resolved.image, detectedName);
+      renderLeftPictureGallery(resolved.image);
+
+      // 5. Update feedback card
+      if (detectorStatusCard) {
+        detectorStatusCard.className = "detector-status-card success";
+        detectorStatusCard.innerHTML = `
+          <div style="display: flex; align-items: flex-start; gap: 8px;">
+            <i class="fas fa-check-circle" style="font-size: 1.1rem; margin-top: 2px;"></i>
+            <div>
+              <strong>Auto-Detected:</strong> Identified as <u>${formatCategory(detectedCategory)}</u>.
+              <div>Product Name: "<strong>${detectedName}</strong>" with photo loaded. Review and click "Add Product to Website" below!</div>
+            </div>
+          </div>
+        `;
+      }
+
+      showToast(`✨ Identified as "${formatCategory(detectedCategory)}"! Form auto-filled.`);
+    } catch (err) {
+      console.error("Auto detect error:", err);
+      if (detectorStatusCard) {
+        detectorStatusCard.className = "detector-status-card error";
+        detectorStatusCard.innerHTML = `<i class="fas fa-exclamation-circle"></i> Could not auto-detect details from this link. Please enter details manually or upload photo file directly.`;
+      }
+      showToast("⚠️ Could not auto-detect product. Please fill manually.");
+    } finally {
+      if (btnAutoDetectProduct) {
+        btnAutoDetectProduct.disabled = false;
+        btnAutoDetectProduct.innerHTML = `<i class="fas fa-sparkles"></i> Auto-Detect Product`;
+      }
     }
   }
 
@@ -655,6 +840,34 @@ document.addEventListener("DOMContentLoaded", () => {
         reader.readAsDataURL(file);
       });
       editorFileInput.value = "";
+    });
+  }
+
+  // Smart Auto-Detect from Link in Modal
+  if (btnAutoDetectProduct && autoProductLinkInput) {
+    btnAutoDetectProduct.addEventListener("click", () => {
+      triggerAutoDetectProduct();
+    });
+
+    autoProductLinkInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        triggerAutoDetectProduct();
+      }
+    });
+
+    autoProductLinkInput.addEventListener("paste", () => {
+      setTimeout(() => {
+        if (autoProductLinkInput.value.trim() && isInstagramUrl(autoProductLinkInput.value.trim())) {
+          triggerAutoDetectProduct();
+        }
+      }, 80);
+    });
+  }
+
+  if (btnCatalogLiveSync) {
+    btnCatalogLiveSync.addEventListener("click", () => {
+      openLiveSyncModal();
     });
   }
 
@@ -1453,6 +1666,11 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
     currentPicSearchTerm = "";
     if (picSearchInput) picSearchInput.value = "";
     if (editorUrlInputBar) editorUrlInputBar.style.display = "none";
+    if (autoProductLinkInput) autoProductLinkInput.value = "";
+    if (detectorStatusCard) {
+      detectorStatusCard.style.display = "none";
+      detectorStatusCard.innerHTML = "";
+    }
 
     populateCategoryDropdowns();
 
@@ -1812,6 +2030,15 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
     renderProducts();
     populateProductSelect();
     closeProductEditor();
+
+    // Check if GitHub token is configured for automatic global publish
+    const savedToken = localStorage.getItem("crochet_github_token");
+    if (savedToken) {
+      showToast(`🚀 Auto-publishing "${name}" to GitHub Pages for all customers...`);
+      publishToGitHub();
+    } else {
+      showToast(`🎉 "${name}" saved! Click "Publish Live" in toolbar to show to all customers.`);
+    }
   }
 
   function deleteProduct(product) {

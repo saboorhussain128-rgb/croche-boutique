@@ -420,12 +420,12 @@ const DEFAULT_PRODUCTS = [
   // --- ACCESSORIES / KEYCHAINS & DECOR ---
   {
     id: "prod-keychain-frock-beanie-favors",
-    name: "Mini Frock & Beanie Keychain Favors",
+    name: "Keychain - Miniature Frock & Beanie Charms",
     category: "accessories",
-    badge: "Bestseller Favors",
+    badge: "New Drop",
     badgeType: "bestseller",
     image: "images/ig_CACVp9RlD-N.jpg",
-    description: "Charming handcrafted miniature dress and beanie hat keychains in bright color combos—ideal as bag charms, car key accents, or party favors.",
+    description: "Cute handcrafted miniature dress and beanie hat keychains in bright color combos—ideal as bag charms, car key accents, or party favors.",
     visible: true
   },
   {
