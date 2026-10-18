@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=3.2">
+  <link rel="stylesheet" href="css/style.css?v=3.3">
 </head>
 <body ontouchstart="">
 
@@ -704,7 +704,7 @@
                 <!-- Inline URL Input Dropdown -->
                 <div id="editorUrlInputBar" style="display: none; margin-top: 8px; background: #FFF7F8; padding: 8px; border-radius: var(--radius-sm); border: 1.5px solid var(--color-primary-light);">
                   <div style="display: flex; gap: 6px;">
-                    <input type="text" id="newPictureUrlInput" class="form-control form-control-sm" placeholder="Paste image URL (https://...)">
+                    <input type="text" id="newPictureUrlInput" class="form-control form-control-sm" placeholder="Paste Instagram link (instagram.com/p/...) or image URL">
                     <button type="button" class="btn btn-primary btn-sm" id="btnAddPictureUrl" style="white-space: nowrap; padding: 4px 10px; font-size: 0.8rem;">
                       <i class="fas fa-plus"></i> Add
                     </button>
@@ -732,8 +732,9 @@
                   <span class="preview-badge" id="previewSelectStatus"><i class="fas fa-check-circle"></i> Picture Selected</span>
                 </div>
                 <div class="editor-preview-meta">
-                  <span class="editor-preview-label">Selected Photo Path / URL:</span>
-                  <input type="text" id="editorImageUrl" class="form-control form-control-sm" placeholder="e.g. images/ig_CHupfP7BRvI.jpg">
+                  <span class="editor-preview-label">Selected Photo Path / Instagram Link:</span>
+                  <input type="text" id="editorImageUrl" class="form-control form-control-sm" placeholder="e.g. Instagram link or images/ig_CACVp9RlD-N.jpg">
+                  <small class="text-muted" style="font-size: 0.72rem; display: block; margin-top: 3px;">Paste any Instagram post link (instagram.com/p/...), web image URL, or click a photo on the left.</small>
                   <div class="editor-preview-actions" style="display: flex; gap: 8px; margin-top: 6px;">
                     <button type="button" class="btn-danger-outline" id="btnClearProductImage" style="padding: 4px 10px; font-size: 0.78rem;">
                       <i class="fas fa-image-slash"></i> Remove Picture from Product
@@ -962,8 +963,8 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=3.2"></script>
-  <script src="js/products.js?v=3.2"></script>
-  <script src="js/app.js?v=3.2"></script>
+  <script src="js/config.js?v=3.3"></script>
+  <script src="js/products.js?v=3.3"></script>
+  <script src="js/app.js?v=3.3"></script>
 </body>
 </html>
