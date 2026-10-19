@@ -1,5 +1,5 @@
 /* ==========================================================================
-   The Crochet Boutique - Festive Themes & 3D Visual Styling
+   The Crochet Boutique - Ultra-Premium Festive Themes & 3D Visual Styling
    Supports: Christmas, Diwali, New Year, Holi, Eid-ul-Fitr, Eid-ul-Adha, Classic
    ========================================================================== */
 
@@ -11,94 +11,161 @@
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 10;
+  z-index: 12;
   transition: opacity 0.5s ease;
 }
 
-/* ==========================================================================
-   THEME PALETTES & ROOT OVERRIDES
-   ========================================================================== */
+/* --- Interactive Festive Product Card Ribbon Badge --- */
+.festive-product-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 4;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+  animation: festiveBadgePulse 3s infinite ease-in-out;
+}
 
-/* --- 1. CHRISTMAS THEME --- */
+@keyframes festiveBadgePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+/* ==========================================================================
+   1. CHRISTMAS THEME (Holiday Season & Fireside Warmth)
+   ========================================================================== */
 [data-theme="christmas"] {
-  --color-bg: #F4F8F5;
+  --color-bg: #F5FAF6;
   --color-surface: #FFFFFF;
-  --color-surface-hover: #EDF5F0;
-  --color-surface-tint: #E2EDE6;
-  --color-border: #CFE2D6;
-  --color-border-light: #E4EFE8;
+  --color-surface-hover: #EBF5EE;
+  --color-surface-tint: #DFEDE4;
+  --color-border: #CFE3D7;
+  --color-border-light: #E2EFE7;
   
   --color-primary: #C41E3A; /* Festive Ruby Red */
   --color-primary-light: #FCE8EB;
   --color-primary-hover: #9E162D;
   
-  --color-secondary: #165B33; /* Evergreen Pine */
+  --color-secondary: #165B33; /* Evergreen Spruce */
   --color-secondary-light: #E1EFE7;
   
-  --color-accent: #D4AF37; /* Warm Gold */
+  --color-accent: #D4AF37; /* Heirloom Gold */
   --color-accent-light: #FCF8EB;
   
-  --color-text-main: #1A2E22;
-  --color-text-muted: #4A6354;
-  --color-text-light: #7E9689;
+  --color-text-main: #182C20;
+  --color-text-muted: #435E4E;
+  --color-text-light: #728D7E;
   
-  --shadow-hover: 0 14px 30px rgba(196, 30, 58, 0.22);
+  --shadow-hover: 0 16px 36px rgba(196, 30, 58, 0.22);
+}
+
+[data-theme="christmas"] body {
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(196, 30, 58, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(22, 91, 51, 0.05) 0%, transparent 45%);
 }
 
 [data-theme="christmas"] .announcement-bar {
-  background: linear-gradient(90deg, #9E162D 0%, #C41E3A 35%, #165B33 70%, #0F4224 100%);
-  color: #FFF;
+  background: linear-gradient(90deg, #9E162D 0%, #C41E3A 35%, #165B33 70%, #0D3E21 100%);
+  color: #FFFDF8;
   border-bottom: 2px solid #D4AF37;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="christmas"] .navbar {
-  border-bottom: 2px solid rgba(22, 91, 51, 0.15);
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 2.5px solid #165B33;
+  box-shadow: 0 4px 20px rgba(22, 91, 51, 0.08);
 }
 
 [data-theme="christmas"] .hero-glow-backdrop {
-  background: radial-gradient(circle, rgba(196, 30, 58, 0.16) 0%, rgba(22, 91, 51, 0.14) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(196, 30, 58, 0.22) 0%, rgba(22, 91, 51, 0.16) 45%, transparent 75%);
 }
 
 [data-theme="christmas"] .hero-pill {
   background: #FCE8EB;
   border-color: #C41E3A;
   color: #C41E3A;
+  box-shadow: 0 4px 15px rgba(196, 30, 58, 0.15);
+}
+
+[data-theme="christmas"] .hero-content h1 span {
+  color: #C41E3A;
+  text-shadow: 0 2px 10px rgba(196, 30, 58, 0.15);
 }
 
 [data-theme="christmas"] .btn-primary {
   background: linear-gradient(135deg, #C41E3A, #9E162D);
-  box-shadow: 0 4px 15px rgba(196, 30, 58, 0.35);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 6px 20px rgba(196, 30, 58, 0.38);
 }
 
 [data-theme="christmas"] .btn-primary:hover {
   background: linear-gradient(135deg, #9E162D, #7E1022);
-  box-shadow: 0 8px 22px rgba(196, 30, 58, 0.45);
+  box-shadow: 0 8px 26px rgba(196, 30, 58, 0.48);
+  transform: translateY(-2px);
 }
 
 [data-theme="christmas"] .btn-secondary {
   border-color: #165B33;
   color: #165B33;
-  background: #E1EFE7;
+  background: #EAF4EE;
+}
+
+[data-theme="christmas"] .btn-secondary:hover {
+  background: #165B33;
+  color: #FFF;
 }
 
 [data-theme="christmas"] .tab-btn.active {
   background: #C41E3A;
   border-color: #C41E3A;
   color: #FFF;
+  box-shadow: 0 4px 14px rgba(196, 30, 58, 0.3);
+}
+
+[data-theme="christmas"] .product-card {
+  border: 1.5px solid #CFE3D7;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="christmas"] .product-card:hover {
+  border-color: #C41E3A;
+  box-shadow: 0 16px 36px rgba(196, 30, 58, 0.22);
+  transform: translateY(-6px);
+}
+
+[data-theme="christmas"] .festive-product-badge {
+  background: linear-gradient(135deg, #C41E3A, #9E162D);
+  color: #FFF;
+  border: 1px solid #D4AF37;
 }
 
 [data-theme="christmas"] .btn-get-this {
   background: linear-gradient(135deg, #C41E3A, #165B33);
 }
 
-/* --- 2. DIWALI THEME --- */
+/* ==========================================================================
+   2. DIWALI THEME (Festival of Lights & Auspicious Radiance)
+   ========================================================================== */
 [data-theme="diwali"] {
-  --color-bg: #FFFDF8;
+  --color-bg: #FFFDF7;
   --color-surface: #FFFFFF;
-  --color-surface-hover: #FFF8EB;
-  --color-surface-tint: #FDF0D5;
-  --color-border: #F3DEB2;
-  --color-border-light: #FAECDA;
+  --color-surface-hover: #FFF7E6;
+  --color-surface-tint: #FDF0D0;
+  --color-border: #F5DCAD;
+  --color-border-light: #FBEFD9;
   
   --color-primary: #E65100; /* Deep Saffron */
   --color-primary-light: #FFE0B2;
@@ -107,142 +174,254 @@
   --color-secondary: #6A1B9A; /* Royal Festive Plum */
   --color-secondary-light: #F3E5F5;
   
-  --color-accent: #FFB300; /* Radiant Marigold Gold */
+  --color-accent: #FFB300; /* Auspicious Marigold Gold */
   --color-accent-light: #FFF8E1;
   
-  --color-text-main: #38241D;
-  --color-text-muted: #6B493E;
-  --color-text-light: #9C796F;
+  --color-text-main: #331F17;
+  --color-text-muted: #664336;
+  --color-text-light: #997265;
   
-  --shadow-hover: 0 14px 30px rgba(230, 81, 0, 0.25);
+  --shadow-hover: 0 16px 36px rgba(230, 81, 0, 0.28);
+}
+
+[data-theme="diwali"] body {
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(255, 179, 0, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(230, 81, 0, 0.06) 0%, transparent 50%);
 }
 
 [data-theme="diwali"] .announcement-bar {
   background: linear-gradient(90deg, #4A148C 0%, #880E4F 35%, #E65100 70%, #FFB300 100%);
-  color: #FFF;
-  border-bottom: 2px solid #FFD54F;
+  color: #FFFDF0;
+  border-bottom: 2.5px solid #FFD54F;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="diwali"] .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 2.5px solid #FFB300;
+  box-shadow: 0 4px 20px rgba(255, 179, 0, 0.12);
 }
 
 [data-theme="diwali"] .hero-glow-backdrop {
-  background: radial-gradient(circle, rgba(255, 179, 0, 0.25) 0%, rgba(230, 81, 0, 0.16) 45%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 179, 0, 0.32) 0%, rgba(230, 81, 0, 0.2) 45%, transparent 75%);
 }
 
 [data-theme="diwali"] .hero-pill {
   background: #FFF8E1;
   border-color: #FFB300;
   color: #BF360C;
+  box-shadow: 0 4px 15px rgba(255, 179, 0, 0.2);
+}
+
+[data-theme="diwali"] .hero-content h1 span {
+  background: linear-gradient(135deg, #BF360C, #E65100, #FFB300);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 [data-theme="diwali"] .btn-primary {
   background: linear-gradient(135deg, #E65100, #FF8F00);
-  box-shadow: 0 4px 15px rgba(230, 81, 0, 0.35);
+  border: 1px solid rgba(255, 213, 79, 0.5);
+  box-shadow: 0 6px 20px rgba(230, 81, 0, 0.38);
 }
 
 [data-theme="diwali"] .btn-primary:hover {
   background: linear-gradient(135deg, #BF360C, #E65100);
-  box-shadow: 0 8px 22px rgba(230, 81, 0, 0.45);
+  box-shadow: 0 8px 26px rgba(230, 81, 0, 0.48);
+  transform: translateY(-2px);
+}
+
+[data-theme="diwali"] .btn-secondary {
+  border-color: #6A1B9A;
+  color: #6A1B9A;
+  background: #F3E5F5;
 }
 
 [data-theme="diwali"] .tab-btn.active {
   background: linear-gradient(135deg, #E65100, #FF8F00);
   border-color: #E65100;
   color: #FFF;
+  box-shadow: 0 4px 14px rgba(230, 81, 0, 0.35);
+}
+
+[data-theme="diwali"] .product-card {
+  border: 1.5px solid #F5DCAD;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="diwali"] .product-card:hover {
+  border-color: #FFB300;
+  box-shadow: 0 16px 36px rgba(230, 81, 0, 0.26), 0 0 15px rgba(255, 179, 0, 0.2);
+  transform: translateY(-6px);
+}
+
+[data-theme="diwali"] .festive-product-badge {
+  background: linear-gradient(135deg, #E65100, #FFB300);
+  color: #FFF;
+  border: 1px solid #FFF3E0;
 }
 
 [data-theme="diwali"] .btn-get-this {
   background: linear-gradient(135deg, #E65100, #6A1B9A);
 }
 
-/* --- 3. NEW YEAR THEME --- */
+/* ==========================================================================
+   3. NEW YEAR THEME (Midnight Luxury, Starlight Black & 24K Gold)
+   ========================================================================== */
 [data-theme="newyear"] {
-  --color-bg: #0F141C; /* Sleek Midnight Starlight */
-  --color-surface: #171E2A;
-  --color-surface-hover: #222C3D;
-  --color-surface-tint: #2B384E;
-  --color-border: #33435C;
-  --color-border-light: #242F41;
+  --color-bg: #0C1017; /* Deep Cosmic Obsidian */
+  --color-surface: #141A24;
+  --color-surface-hover: #1D2635;
+  --color-surface-tint: #263347;
+  --color-border: #2D3C52;
+  --color-border-light: #1E2838;
   
-  --color-primary: #D4AF37; /* Champagne Metallic Gold */
-  --color-primary-light: #2D2715;
-  --color-primary-hover: #E6C35C;
+  --color-primary: #D4AF37; /* Champagne 24K Gold */
+  --color-primary-light: #2E2812;
+  --color-primary-hover: #F2D26D;
   
-  --color-secondary: #8DA4BA; /* Silver Starlight */
-  --color-secondary-light: #1A2433;
+  --color-secondary: #9DB4C9; /* Celestial Platinum */
+  --color-secondary-light: #1B2433;
   
-  --color-accent: #FFDF00; /* Sparkler Yellow */
-  --color-accent-light: #2A2408;
+  --color-accent: #FFDF00; /* Starlight Glint */
+  --color-accent-light: #2C2608;
   
-  --color-text-main: #F0F6FC;
-  --color-text-muted: #A0B3C6;
-  --color-text-light: #708499;
+  --color-text-main: #F4F7FB;
+  --color-text-muted: #9BB0C7;
+  --color-text-light: #6E849E;
   
-  --shadow-hover: 0 14px 30px rgba(212, 175, 55, 0.35);
+  --shadow-hover: 0 16px 36px rgba(212, 175, 55, 0.42);
+}
+
+[data-theme="newyear"] body {
+  background-color: #0C1017;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255, 223, 0, 0.06) 0%, transparent 45%);
 }
 
 [data-theme="newyear"] .announcement-bar {
-  background: linear-gradient(90deg, #07090D 0%, #171E2A 35%, #D4AF37 70%, #07090D 100%);
+  background: linear-gradient(90deg, #05070A 0%, #171E2A 30%, #D4AF37 65%, #05070A 100%);
   color: #FFFDF0;
   border-bottom: 2px solid #FFDF00;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
 [data-theme="newyear"] .navbar {
-  background: rgba(23, 30, 42, 0.95);
-  border-bottom: 1px solid #33435C;
+  background: rgba(12, 16, 23, 0.94);
+  backdrop-filter: blur(20px);
+  border-bottom: 2px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="newyear"] .nav-link {
+  color: #DDE5EE;
+}
+
+[data-theme="newyear"] .nav-link:hover,
+[data-theme="newyear"] .nav-link.active {
+  color: #FFDF00;
+}
+
+[data-theme="newyear"] .logo-title {
+  color: #FFFDF0;
 }
 
 [data-theme="newyear"] .hero-glow-backdrop {
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, rgba(255, 223, 0, 0.12) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.28) 0%, rgba(255, 223, 0, 0.15) 45%, transparent 75%);
 }
 
 [data-theme="newyear"] .hero-pill {
-  background: #2D2715;
+  background: #231E0D;
   border-color: #D4AF37;
   color: #FFDF00;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.25);
+}
+
+[data-theme="newyear"] .hero-content h1 {
+  color: #FFFFFF;
+}
+
+@keyframes goldShimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+[data-theme="newyear"] .hero-content h1 span {
+  background: linear-gradient(90deg, #FFE082, #FFD700, #FFF59D, #FFA000, #FFE082);
+  background-size: 250% auto;
+  animation: goldShimmer 4s ease-in-out infinite alternate;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(255, 223, 0, 0.35);
 }
 
 [data-theme="newyear"] .btn-primary {
   background: linear-gradient(135deg, #D4AF37, #F5D77F);
-  color: #0F141C;
+  color: #0C1017;
   font-weight: 700;
-  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+  border: 1px solid #FFE082;
+  box-shadow: 0 6px 22px rgba(212, 175, 55, 0.45);
 }
 
 [data-theme="newyear"] .btn-primary:hover {
   background: linear-gradient(135deg, #F5D77F, #D4AF37);
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.55);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+  transform: translateY(-2px);
 }
 
 [data-theme="newyear"] .btn-secondary {
   border-color: #D4AF37;
-  color: #F0F6FC;
+  color: #F4F7FB;
   background: rgba(212, 175, 55, 0.12);
 }
 
+[data-theme="newyear"] .btn-secondary:hover {
+  background: #D4AF37;
+  color: #0C1017;
+}
+
 [data-theme="newyear"] .tab-btn {
-  background: #171E2A;
-  border-color: #33435C;
-  color: #A0B3C6;
+  background: #141A24;
+  border-color: #2D3C52;
+  color: #9BB0C7;
 }
 
 [data-theme="newyear"] .tab-btn.active {
   background: linear-gradient(135deg, #D4AF37, #AA820A);
-  color: #0F141C;
+  color: #0C1017;
   font-weight: 700;
   border-color: #FFDF00;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
 }
 
 [data-theme="newyear"] .product-card {
-  background: #171E2A;
-  border-color: #2D394E;
+  background: #141A24;
+  border: 1.5px solid #283447;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="newyear"] .product-card:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 16px 36px rgba(212, 175, 55, 0.35), 0 0 15px rgba(255, 223, 0, 0.2);
+  transform: translateY(-6px);
 }
 
 [data-theme="newyear"] .product-title {
-  color: #FFF;
+  color: #FFFDF0;
+}
+
+[data-theme="newyear"] .festive-product-badge {
+  background: linear-gradient(135deg, #D4AF37, #AA820A);
+  color: #0C1017;
+  border: 1px solid #FFE082;
 }
 
 [data-theme="newyear"] .btn-get-this {
   background: linear-gradient(135deg, #D4AF37, #AA820A);
-  color: #0F141C;
+  color: #0C1017;
   font-weight: 700;
 }
 
@@ -250,7 +429,7 @@
 [data-theme="newyear"] .story-section,
 [data-theme="newyear"] .inquiry-section,
 [data-theme="newyear"] .site-footer {
-  background: #121822;
+  background: #0F141C;
   border-color: #242F41;
 }
 
@@ -263,68 +442,94 @@
 }
 
 [data-theme="newyear"] .form-control {
-  background: #171E2A;
-  border-color: #33435C;
-  color: #F0F6FC;
+  background: #141A24;
+  border-color: #2D3C52;
+  color: #F4F7FB;
 }
 
 [data-theme="newyear"] .inquiry-card,
 [data-theme="newyear"] .story-card,
 [data-theme="newyear"] .feature-item {
-  background: #171E2A;
-  border-color: #2D394E;
+  background: #141A24;
+  border-color: #283447;
 }
 
-/* --- 4. HOLI THEME --- */
+/* ==========================================================================
+   4. HOLI THEME (Festival of Vibrant Colors & Gulal Magic)
+   ========================================================================== */
 [data-theme="holi"] {
-  --color-bg: #FFF9FC;
+  --color-bg: #FFFAFC;
   --color-surface: #FFFFFF;
-  --color-surface-hover: #FFF0F6;
-  --color-surface-tint: #FFE3EE;
-  --color-border: #FFD1E3;
-  --color-border-light: #FFEBF2;
+  --color-surface-hover: #FFF2F7;
+  --color-surface-tint: #FFE5EE;
+  --color-border: #FFD4E5;
+  --color-border-light: #FFE8F2;
   
-  --color-primary: #E91E63; /* Vibrant Gulal Magenta */
+  --color-primary: #E91E63; /* Radiant Gulal Magenta */
   --color-primary-light: #FCE4EC;
   --color-primary-hover: #C2185B;
   
   --color-secondary: #00ACC1; /* Splash Turquoise */
   --color-secondary-light: #E0F7FA;
   
-  --color-accent: #FF9800; /* Sun Saffron */
+  --color-accent: #FF9800; /* Sun Gold Saffron */
   --color-accent-light: #FFF3E0;
   
-  --color-text-main: #2A1820;
-  --color-text-muted: #664855;
-  --color-text-light: #9E7D8C;
+  --color-text-main: #2B1621;
+  --color-text-muted: #664555;
+  --color-text-light: #9C788A;
   
-  --shadow-hover: 0 14px 30px rgba(233, 30, 99, 0.28);
+  --shadow-hover: 0 16px 36px rgba(233, 30, 99, 0.28);
+}
+
+[data-theme="holi"] body {
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(233, 30, 99, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 30%, rgba(0, 172, 193, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(255, 152, 0, 0.06) 0%, transparent 45%);
 }
 
 [data-theme="holi"] .announcement-bar {
   background: linear-gradient(90deg, #E91E63 0%, #9C27B0 30%, #00ACC1 65%, #FF9800 100%);
-  color: #FFF;
-  border-bottom: 2px solid #FFEB3B;
+  color: #FFFDF8;
+  border-bottom: 2.5px solid #FFEB3B;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="holi"] .navbar {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 3px solid;
+  border-image: linear-gradient(90deg, #E91E63, #9C27B0, #00ACC1, #FF9800) 1;
 }
 
 [data-theme="holi"] .hero-glow-backdrop {
-  background: radial-gradient(circle, rgba(233, 30, 99, 0.2) 0%, rgba(0, 172, 193, 0.16) 45%, rgba(255, 152, 0, 0.12) 70%, transparent 80%);
+  background: radial-gradient(circle, rgba(233, 30, 99, 0.25) 0%, rgba(0, 172, 193, 0.18) 45%, rgba(255, 152, 0, 0.14) 70%, transparent 80%);
 }
 
 [data-theme="holi"] .hero-pill {
   background: linear-gradient(90deg, #FCE4EC, #E0F7FA);
   border-color: #E91E63;
   color: #C2185B;
+  box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2);
+}
+
+[data-theme="holi"] .hero-content h1 span {
+  background: linear-gradient(135deg, #E91E63, #9C27B0, #00ACC1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 [data-theme="holi"] .btn-primary {
   background: linear-gradient(135deg, #E91E63, #9C27B0);
-  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 6px 20px rgba(233, 30, 99, 0.38);
 }
 
 [data-theme="holi"] .btn-primary:hover {
   background: linear-gradient(135deg, #C2185B, #7B1FA2);
-  box-shadow: 0 8px 22px rgba(233, 30, 99, 0.45);
+  box-shadow: 0 8px 26px rgba(233, 30, 99, 0.48);
+  transform: translateY(-2px);
 }
 
 [data-theme="holi"] .btn-secondary {
@@ -333,66 +538,114 @@
   background: #E0F7FA;
 }
 
+[data-theme="holi"] .btn-secondary:hover {
+  background: #00ACC1;
+  color: #FFF;
+}
+
 [data-theme="holi"] .tab-btn.active {
   background: linear-gradient(135deg, #E91E63, #00ACC1);
   border-color: #E91E63;
   color: #FFF;
+  box-shadow: 0 4px 15px rgba(233, 30, 99, 0.35);
+}
+
+[data-theme="holi"] .product-card {
+  border: 1.5px solid #FFD4E5;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="holi"] .product-card:hover {
+  border-color: #E91E63;
+  box-shadow: 0 16px 36px rgba(233, 30, 99, 0.25), 0 0 15px rgba(0, 172, 193, 0.15);
+  transform: translateY(-6px);
+}
+
+[data-theme="holi"] .festive-product-badge {
+  background: linear-gradient(135deg, #E91E63, #00ACC1);
+  color: #FFF;
+  border: 1px solid #FFEBF2;
 }
 
 [data-theme="holi"] .btn-get-this {
   background: linear-gradient(135deg, #E91E63, #00ACC1);
 }
 
-/* --- 5. EID-UL-FITR THEME --- */
+/* ==========================================================================
+   5. EID-UL-FITR THEME (Sacred Emerald, Crescent Gold & Serene Blessings)
+   ========================================================================== */
 [data-theme="eid-fitr"] {
-  --color-bg: #F2F9F5;
+  --color-bg: #F3FAF5;
   --color-surface: #FFFFFF;
-  --color-surface-hover: #E7F4ED;
+  --color-surface-hover: #E8F5ED;
   --color-surface-tint: #D6EDE0;
-  --color-border: #BFE3CE;
-  --color-border-light: #DCF2E5;
+  --color-border: #C1E4CE;
+  --color-border-light: #DEEFDE;
   
   --color-primary: #0D6938; /* Sacred Emerald Green */
-  --color-primary-light: #E1F4EA;
+  --color-primary-light: #E0F3EA;
   --color-primary-hover: #084D28;
   
   --color-secondary: #C59B27; /* Radiant Crescent Gold */
   --color-secondary-light: #FBF4DE;
   
-  --color-accent: #2E7D32; /* Pure Mint */
+  --color-accent: #2E7D32; /* Pure Oasis Mint */
   --color-accent-light: #E8F5E9;
   
-  --color-text-main: #142E1F;
-  --color-text-muted: #3D604A;
-  --color-text-light: #6E8F7A;
+  --color-text-main: #122B1D;
+  --color-text-muted: #3B5D48;
+  --color-text-light: #6D8E78;
   
-  --shadow-hover: 0 14px 30px rgba(13, 105, 56, 0.25);
+  --shadow-hover: 0 16px 36px rgba(13, 105, 56, 0.25);
+}
+
+[data-theme="eid-fitr"] body {
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba(13, 105, 56, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 85%, rgba(197, 155, 39, 0.06) 0%, transparent 45%);
 }
 
 [data-theme="eid-fitr"] .announcement-bar {
-  background: linear-gradient(90deg, #06381E 0%, #0D6938 45%, #C59B27 80%, #06381E 100%);
-  color: #FFF;
-  border-bottom: 2px solid #F1D26E;
+  background: linear-gradient(90deg, #05331C 0%, #0D6938 45%, #C59B27 80%, #05331C 100%);
+  color: #FFFDF2;
+  border-bottom: 2.5px solid #F1D26E;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="eid-fitr"] .navbar {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 2.5px solid #C59B27;
+  box-shadow: 0 4px 20px rgba(13, 105, 56, 0.1);
 }
 
 [data-theme="eid-fitr"] .hero-glow-backdrop {
-  background: radial-gradient(circle, rgba(13, 105, 56, 0.2) 0%, rgba(197, 155, 39, 0.18) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(13, 105, 56, 0.24) 0%, rgba(197, 155, 39, 0.2) 45%, transparent 75%);
 }
 
 [data-theme="eid-fitr"] .hero-pill {
-  background: #E1F4EA;
+  background: #E0F3EA;
   border-color: #0D6938;
   color: #0D6938;
+  box-shadow: 0 4px 15px rgba(13, 105, 56, 0.18);
+}
+
+[data-theme="eid-fitr"] .hero-content h1 span {
+  background: linear-gradient(135deg, #0D6938, #C59B27);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 [data-theme="eid-fitr"] .btn-primary {
   background: linear-gradient(135deg, #0D6938, #1B8C4F);
-  box-shadow: 0 4px 15px rgba(13, 105, 56, 0.35);
+  border: 1px solid rgba(197, 155, 39, 0.45);
+  box-shadow: 0 6px 20px rgba(13, 105, 56, 0.38);
 }
 
 [data-theme="eid-fitr"] .btn-primary:hover {
   background: linear-gradient(135deg, #084D28, #0D6938);
-  box-shadow: 0 8px 22px rgba(13, 105, 56, 0.45);
+  box-shadow: 0 8px 26px rgba(13, 105, 56, 0.48);
+  transform: translateY(-2px);
 }
 
 [data-theme="eid-fitr"] .btn-secondary {
@@ -401,78 +654,149 @@
   background: #FBF4DE;
 }
 
+[data-theme="eid-fitr"] .btn-secondary:hover {
+  background: #C59B27;
+  color: #FFF;
+}
+
 [data-theme="eid-fitr"] .tab-btn.active {
   background: linear-gradient(135deg, #0D6938, #C59B27);
   border-color: #0D6938;
   color: #FFF;
+  box-shadow: 0 4px 14px rgba(13, 105, 56, 0.3);
+}
+
+[data-theme="eid-fitr"] .product-card {
+  border: 1.5px solid #C1E4CE;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="eid-fitr"] .product-card:hover {
+  border-color: #C59B27;
+  box-shadow: 0 16px 36px rgba(13, 105, 56, 0.22), 0 0 15px rgba(197, 155, 39, 0.2);
+  transform: translateY(-6px);
+}
+
+[data-theme="eid-fitr"] .festive-product-badge {
+  background: linear-gradient(135deg, #0D6938, #C59B27);
+  color: #FFF;
+  border: 1px solid #F1D26E;
 }
 
 [data-theme="eid-fitr"] .btn-get-this {
   background: linear-gradient(135deg, #0D6938, #C59B27);
 }
 
-/* --- 6. EID-UL-ADHA THEME --- */
+/* ==========================================================================
+   6. EID-UL-ADHA THEME (Royal Sapphire Blue, Moroccan Brass & Sacred Stars)
+   ========================================================================== */
 [data-theme="eid-adha"] {
   --color-bg: #F4F7FB;
   --color-surface: #FFFFFF;
-  --color-surface-hover: #EAF0F8;
-  --color-surface-tint: #DCE7F4;
-  --color-border: #CAD8EC;
-  --color-border-light: #E3ECF7;
+  --color-surface-hover: #E9F0F8;
+  --color-surface-tint: #DCE8F5;
+  --color-border: #C8D8ED;
+  --color-border-light: #E2ECF7;
   
   --color-primary: #153B64; /* Royal Sapphire Blue */
-  --color-primary-light: #E4ECF6;
+  --color-primary-light: #E4EDF7;
   --color-primary-hover: #0E2947;
   
   --color-secondary: #D4AF37; /* Moroccan Antique Gold */
   --color-secondary-light: #FAF4DE;
   
-  --color-accent: #B8860B; /* Warm Ochre Gold */
+  --color-accent: #B8860B; /* Deep Amber Gold */
   --color-accent-light: #FDF6E2;
   
-  --color-text-main: #132235;
-  --color-text-muted: #395270;
-  --color-text-light: #6A829E;
+  --color-text-main: #112033;
+  --color-text-muted: #38506E;
+  --color-text-light: #68809D;
   
-  --shadow-hover: 0 14px 30px rgba(21, 59, 100, 0.25);
+  --shadow-hover: 0 16px 36px rgba(21, 59, 100, 0.25);
+}
+
+[data-theme="eid-adha"] body {
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(21, 59, 100, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(212, 175, 55, 0.06) 0%, transparent 45%);
 }
 
 [data-theme="eid-adha"] .announcement-bar {
-  background: linear-gradient(90deg, #0A1E35 0%, #153B64 45%, #D4AF37 80%, #0A1E35 100%);
-  color: #FFF;
-  border-bottom: 2px solid #E6CA65;
+  background: linear-gradient(90deg, #091C30 0%, #153B64 45%, #D4AF37 80%, #091C30 100%);
+  color: #FFFDF5;
+  border-bottom: 2.5px solid #E6CA65;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="eid-adha"] .navbar {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 2.5px solid #D4AF37;
+  box-shadow: 0 4px 20px rgba(21, 59, 100, 0.1);
 }
 
 [data-theme="eid-adha"] .hero-glow-backdrop {
-  background: radial-gradient(circle, rgba(21, 59, 100, 0.22) 0%, rgba(212, 175, 55, 0.18) 50%, transparent 70%);
+  background: radial-gradient(circle, rgba(21, 59, 100, 0.26) 0%, rgba(212, 175, 55, 0.2) 45%, transparent 75%);
 }
 
 [data-theme="eid-adha"] .hero-pill {
-  background: #E4ECF6;
+  background: #E4EDF7;
   border-color: #153B64;
   color: #153B64;
+  box-shadow: 0 4px 15px rgba(21, 59, 100, 0.18);
+}
+
+[data-theme="eid-adha"] .hero-content h1 span {
+  background: linear-gradient(135deg, #153B64, #D4AF37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 [data-theme="eid-adha"] .btn-primary {
-  background: linear-gradient(135deg, #153B64, #275C96);
-  box-shadow: 0 4px 15px rgba(21, 59, 100, 0.35);
+  background: linear-gradient(135deg, #153B64, #265B96);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 6px 20px rgba(21, 59, 100, 0.38);
 }
 
 [data-theme="eid-adha"] .btn-primary:hover {
   background: linear-gradient(135deg, #0E2947, #153B64);
-  box-shadow: 0 8px 22px rgba(21, 59, 100, 0.45);
+  box-shadow: 0 8px 26px rgba(21, 59, 100, 0.48);
+  transform: translateY(-2px);
 }
 
 [data-theme="eid-adha"] .btn-secondary {
   border-color: #D4AF37;
-  color: #947514;
+  color: #8C6A0A;
   background: #FAF4DE;
+}
+
+[data-theme="eid-adha"] .btn-secondary:hover {
+  background: #D4AF37;
+  color: #FFF;
 }
 
 [data-theme="eid-adha"] .tab-btn.active {
   background: linear-gradient(135deg, #153B64, #D4AF37);
   border-color: #153B64;
   color: #FFF;
+  box-shadow: 0 4px 14px rgba(21, 59, 100, 0.3);
+}
+
+[data-theme="eid-adha"] .product-card {
+  border: 1.5px solid #C8D8ED;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="eid-adha"] .product-card:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 16px 36px rgba(21, 59, 100, 0.22), 0 0 15px rgba(212, 175, 55, 0.2);
+  transform: translateY(-6px);
+}
+
+[data-theme="eid-adha"] .festive-product-badge {
+  background: linear-gradient(135deg, #153B64, #D4AF37);
+  color: #FFF;
+  border: 1px solid #E6CA65;
 }
 
 [data-theme="eid-adha"] .btn-get-this {
@@ -480,46 +804,77 @@
 }
 
 /* ==========================================================================
-   FESTIVE THEME MODAL & SELECTOR UI
+   7. CLASSIC BOUTIQUE THEME (Artisanal Original Warm Pastel)
    ========================================================================== */
+[data-theme="default"] .festive-product-badge {
+  display: none !important;
+}
+
+/* ==========================================================================
+   FESTIVE THEME MODAL & EXHIBITION STYLING
+   ========================================================================== */
+.festive-controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--color-surface-hover);
+  border: 1px solid var(--color-border);
+  padding: 12px 18px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+}
+
+.festive-control-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
 
 .festive-theme-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
-  margin-top: 18px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 4px;
 }
 
 .theme-card {
   position: relative;
-  background: var(--color-surface);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
+  background: var(--color-surface);
   padding: 16px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.28s ease;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  justify-content: space-between;
 }
 
 .theme-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
   border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
 }
 
 .theme-card.active {
   border-color: var(--color-primary);
   background: var(--color-surface-hover);
-  box-shadow: 0 8px 24px rgba(200, 109, 118, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .theme-card-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .theme-card-title-group {
@@ -529,13 +884,13 @@
 }
 
 .theme-card-icon {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   flex-shrink: 0;
 }
 
@@ -548,17 +903,16 @@
 }
 
 .theme-card-tag {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
-  font-weight: 500;
 }
 
 .theme-active-badge {
   display: none;
-  background: #25D366;
-  color: #FFF;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
+  background: var(--color-primary);
+  color: #FFF;
   padding: 3px 8px;
   border-radius: var(--radius-full);
 }
@@ -572,36 +926,38 @@
 .theme-palette-preview {
   display: flex;
   gap: 6px;
-  margin: 10px 0;
+  margin-bottom: 12px;
 }
 
 .palette-swatch {
   height: 14px;
   flex: 1;
   border-radius: 4px;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .theme-card-desc {
-  font-size: 0.8rem;
+  font-size: 0.83rem;
   color: var(--color-text-muted);
-  line-height: 1.4;
+  line-height: 1.45;
   margin-bottom: 12px;
-  flex: 1;
+  flex-grow: 1;
 }
 
 .theme-3d-tag {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--color-primary);
-  background: var(--color-primary-light);
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
-  margin-bottom: 12px;
-  align-self: flex-start;
+  gap: 6px;
+  background: var(--color-surface-tint);
+  border: 1px solid var(--color-border);
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: 14px;
+  width: fit-content;
 }
 
 .theme-card-footer {
@@ -610,74 +966,44 @@
   margin-top: auto;
 }
 
-.theme-btn-preview {
-  flex: 1;
-  padding: 8px 12px;
+.theme-btn-preview,
+.theme-btn-apply {
+  padding: 8px 14px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text-main);
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
+  flex: 1;
+}
+
+.theme-btn-preview {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
 }
 
 .theme-btn-preview:hover {
   background: var(--color-surface-hover);
-  border-color: var(--color-primary);
-  color: var(--color-primary);
+  border-color: var(--color-text-muted);
 }
 
 .theme-btn-apply {
-  flex: 1.3;
-  padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  border: none;
   background: var(--color-primary);
+  border: 1px solid var(--color-primary);
   color: #FFF;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
 }
 
 .theme-btn-apply:hover {
   background: var(--color-primary-hover);
-  box-shadow: 0 4px 12px rgba(200, 109, 118, 0.35);
+  transform: translateY(-1px);
 }
 
-/* --- Theme Controls Toolbar in Modal --- */
-.festive-controls-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--color-surface-tint);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 12px 18px;
-  margin-top: 14px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.festive-control-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--color-text-main);
-}
-
+/* --- Toggle Switch UI --- */
 .toggle-switch {
   position: relative;
   display: inline-block;

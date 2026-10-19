@@ -1018,20 +1018,27 @@
           </div>
         </div>
 
-        <!-- 3D Animation Controls Toolbar -->
+        <!-- 3D Animation & Sound Controls Toolbar -->
         <div class="festive-controls-bar">
           <div class="festive-control-item">
             <label class="toggle-switch">
               <input type="checkbox" id="toggle3DAnim" checked>
               <span class="toggle-slider"></span>
             </label>
-            <span>3D Visual Animations Active</span>
+            <span>3D Visuals Active</span>
           </div>
           <div class="festive-control-item">
-            <label for="select3DIntensity" style="font-size: 0.82rem; margin-right: 6px;">3D Animation Density:</label>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggleFestiveSound">
+              <span class="toggle-slider"></span>
+            </label>
+            <span>Celebration Chimes</span>
+          </div>
+          <div class="festive-control-item">
+            <label for="select3DIntensity" style="font-size: 0.82rem; margin-right: 6px;">3D Density:</label>
             <select id="select3DIntensity" class="form-control form-control-sm" style="width: auto; padding: 4px 10px; font-size: 0.82rem;">
-              <option value="subtle">Subtle &amp; Elegant</option>
-              <option value="normal" selected>Normal (Recommended)</option>
+              <option value="subtle">Subtle</option>
+              <option value="normal" selected>Normal</option>
               <option value="grand">Grand &amp; Immersive</option>
             </select>
           </div>

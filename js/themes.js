@@ -1,6 +1,7 @@
 /**
- * The Crochet Boutique - Festive Themes & Template Manager
+ * The Crochet Boutique - Ultra-Premium Festive Themes & Template Manager
  * Controls full website transformation across Christmas, Diwali, New Year, Holi, Eid, and Classic.
+ * Includes Web Audio Celebration Chimes & Dynamic Festive Product Badges.
  */
 
 const FESTIVE_THEMES = {
@@ -10,15 +11,15 @@ const FESTIVE_THEMES = {
     alias: "cricshams",
     tag: "Holiday Season & Warmth",
     icon: "fa-tree",
-    badge: "🎄 Merry Christmas",
+    badge: "🎄 Holiday Special",
     announcement: "🎄 Merry Christmas & Holiday Collection • Warm Handcrafted Knits & Festive Gifts • Worldwide Shipping",
     heroPill: "🎄 Handcrafted Holiday Collection • Spreading Cozy Joy",
     heroTitlePrefix: "Festive Knits, Warm Moments & ",
     heroTitleAccent: "Holiday Magic.",
     heroSubtitle: "Celebrate the season of joy with handcrafted holiday cardigans, warm waffle scarves, and heirloom Christmas keepsakes.",
     colors: ["#C41E3A", "#165B33", "#D4AF37"],
-    animationTag: "3D Snowflakes & Baubles",
-    desc: "Festive ruby red & evergreen pine palette, 3D tumbling multifaceted snowflakes, swaying golden baubles, and sparkling snow flurry."
+    animationTag: "3D Snowflakes, Baubles & Golden Bells",
+    desc: "Festive ruby red & evergreen pine palette, 3D tumbling multifaceted snowflakes, swaying golden baubles, ringing brass bells, and frosty snow flurries."
   },
   "diwali": {
     id: "diwali",
@@ -26,31 +27,31 @@ const FESTIVE_THEMES = {
     alias: "diwali",
     tag: "Festival of Lights",
     icon: "fa-sun",
-    badge: "🪔 Happy Diwali",
+    badge: "🪔 Shubh Diwali",
     announcement: "🪔 Happy Diwali & Festive Season • Handcrafted Gifts of Love & Light • Worldwide Shipping",
     heroPill: "🪔 Handcrafted with Light • Auspicious Festival Gifts",
     heroTitlePrefix: "Golden Threads, Warm Moments & ",
     heroTitleAccent: "Festive Radiance.",
     heroSubtitle: "Illuminate your celebrations with auspicious handcrafted crochet creations, warm festive shawls, and luminous handmade treasures.",
     colors: ["#E65100", "#FFB300", "#6A1B9A"],
-    animationTag: "3D Glowing Diyas & Petals",
-    desc: "Auspicious deep saffron, golden marigold & royal plum, with 3D floating clay Diyas, dynamic flickering flames, and tumbling rangoli petals."
+    animationTag: "3D Glowing Diyas, Sky Lanterns & Petals",
+    desc: "Auspicious deep saffron, golden marigold & royal plum, with 3D floating clay Diyas, dynamic flickering flames, Akash Kandil sky lanterns, and rangoli petals."
   },
   "newyear": {
     id: "newyear",
     name: "New Year",
     alias: "new year",
-    tag: "Countdown & Midnight Luxury",
+    tag: "Midnight Luxury & Starlight",
     icon: "fa-champagne-glasses",
-    badge: "✨ Happy New Year 2026",
+    badge: "✨ 2026 Celebration Drop",
     announcement: "✨ Happy New Year 2026 • Welcome Fresh Beginnings with Handcrafted Luxury • Worldwide Shipping",
     heroPill: "✨ New Year 2026 Drop • Celebrating Fresh Beginnings",
     heroTitlePrefix: "New Beginnings, Warm Moments & ",
     heroTitleAccent: "Bespoke Elegance.",
     heroSubtitle: "Step into the new year wrapped in slow-stitched elegance, bespoke handcrafted knits, and celebratory bespoke creations.",
-    colors: ["#D4AF37", "#171E2A", "#FFDF00"],
-    animationTag: "3D Fireworks & Confetti",
-    desc: "Midnight starlight black & champagne gold theme, 3D perspective fireworks bursts with particle shockwaves, and metallic tumbling confetti."
+    colors: ["#D4AF37", "#0C1017", "#FFDF00"],
+    animationTag: "3D Aerial Fireworks & Metallic Confetti",
+    desc: "Cosmic midnight starlight black & 24K champagne gold theme, 3D perspective aerial fireworks with spherical starbursts, and spiraling metallic confetti ribbons."
   },
   "holi": {
     id: "holi",
@@ -58,14 +59,14 @@ const FESTIVE_THEMES = {
     alias: "holi",
     tag: "Festival of Vibrant Colors",
     icon: "fa-palette",
-    badge: "🎨 Happy Holi",
+    badge: "🎨 Rang Barse Edition",
     announcement: "🎨 Happy Holi • Splashes of Handmade Happiness & Joyful Colors • Worldwide Shipping",
     heroPill: "🎨 Color Fest Edition • Splashes of Handmade Happiness",
     heroTitlePrefix: "Joyful Hues, Warm Moments & ",
     heroTitleAccent: "Vibrant Crochet.",
     heroSubtitle: "Celebrate the spectrum of life with joyful handcrafted pieces, vibrant pastel gradients, and playful artisanal slow-stitches.",
     colors: ["#E91E63", "#00ACC1", "#FF9800"],
-    animationTag: "3D Gulal Clouds & Splashes",
+    animationTag: "3D Volumetric Gulal Clouds & Splashes",
     desc: "Radiant gulal magenta, turquoise & sun saffron palette with 3D swirling volumetric powder clouds and interactive color splashes."
   },
   "eid-fitr": {
@@ -74,15 +75,15 @@ const FESTIVE_THEMES = {
     alias: "eid-ul fitar",
     tag: "Eid Mubarak Celebration",
     icon: "fa-moon",
-    badge: "🌙 Eid Mubarak",
+    badge: "🌙 Eid Mubarak Special",
     announcement: "🌙 Eid Mubarak • Blessed Handcrafted Gifts for You & Your Loved Ones • Worldwide Shipping",
     heroPill: "🌙 Eid Mubarak Edition • Blessed Handmade Keepsakes",
     heroTitlePrefix: "Serene Stitches, Warm Moments & ",
     heroTitleAccent: "Crescent Blessings.",
     heroSubtitle: "Celebrate blessed Eid festivities with heirloom crochet garments, delicate modest dresses, and thoughtful handcrafted gift hampers.",
     colors: ["#0D6938", "#C59B27", "#2E7D32"],
-    animationTag: "3D Golden Crescent & Lanterns",
-    desc: "Sacred emerald green & radiant crescent gold with 3D metallic rotating crescent moon, swaying illuminated Arabic lanterns, and stardust."
+    animationTag: "3D Golden Crescent, Stars & Fanoos",
+    desc: "Sacred emerald green & radiant crescent gold with 3D metallic rotating crescent moon, swaying illuminated Arabic lanterns, and stardust constellations."
   },
   "eid-adha": {
     id: "eid-adha",
@@ -97,7 +98,7 @@ const FESTIVE_THEMES = {
     heroTitleAccent: "Sacred Celebrations.",
     heroSubtitle: "Honor the sacred celebration with bespoke artisan shawls, warm winter cardigans, and cherished handcrafted family heirlooms.",
     colors: ["#153B64", "#D4AF37", "#B8860B"],
-    animationTag: "3D Geometric Stars & Lanterns",
+    animationTag: "3D 8-Pointed Rub-el-Hizb & Moroccan Lanterns",
     desc: "Majestic sapphire blue & Moroccan antique gold with 3D rotating geometric Islamic stars, illuminated filigree lanterns, and sacred bokeh."
   },
   "default": {
@@ -106,7 +107,7 @@ const FESTIVE_THEMES = {
     alias: "classic",
     tag: "Artisanal Original",
     icon: "fa-heart",
-    badge: "🌸 Handcrafted",
+    badge: "",
     announcement: "🌸 Handcrafted with Love • Custom Color Orders Available • Worldwide Shipping",
     heroPill: "🌸 100% Stitched by Hand with Patience & Care",
     heroTitlePrefix: "Soft Stitches, Warm Moments & ",
@@ -120,12 +121,120 @@ const FESTIVE_THEMES = {
 
 let currentActiveTheme = "default";
 
+// ==========================================================================
+// PURE WEB AUDIO API FESTIVE CHIME SYNTHESIZER
+// Zero external files • Lightweight • High-Fidelity Celebratory Sound FX
+// ==========================================================================
+const FestiveAudio = {
+  ctx: null,
+  enabled: false,
+
+  init() {
+    if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AudioCtx();
+    }
+  },
+
+  playNote(freq, startTime, duration, type = "sine", gainVal = 0.15) {
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, startTime);
+
+      gain.gain.setValueAtTime(0.001, startTime);
+      gain.gain.exponentialRampToValueAtTime(gainVal, startTime + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+
+      osc.start(startTime);
+      osc.stop(startTime + duration);
+    } catch (e) {
+      console.warn("Festive audio note error:", e);
+    }
+  },
+
+  playFestiveChime(themeId) {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+
+    if (this.ctx.state === "suspended") {
+      this.ctx.resume();
+    }
+
+    const t = this.ctx.currentTime;
+
+    if (themeId === "christmas") {
+      // Jingle bells chord progression: E5, G5, E6
+      this.playNote(659.25, t, 0.4, "triangle", 0.18);
+      this.playNote(783.99, t + 0.12, 0.45, "triangle", 0.18);
+      this.playNote(1318.51, t + 0.25, 0.7, "sine", 0.2);
+    } else if (themeId === "diwali") {
+      // Warm resonant sitar/tanpura harmonic arpeggio: C4, G4, C5, D5
+      this.playNote(261.63, t, 0.6, "triangle", 0.2);
+      this.playNote(392.00, t + 0.12, 0.6, "sine", 0.18);
+      this.playNote(523.25, t + 0.24, 0.7, "sine", 0.2);
+      this.playNote(587.33, t + 0.36, 0.9, "triangle", 0.15);
+    } else if (themeId === "newyear") {
+      // Celebration grand fanfare: C5, E5, G5, C6
+      this.playNote(523.25, t, 0.35, "sine", 0.2);
+      this.playNote(659.25, t + 0.1, 0.35, "sine", 0.22);
+      this.playNote(783.99, t + 0.2, 0.4, "sine", 0.24);
+      this.playNote(1046.50, t + 0.32, 0.9, "triangle", 0.28);
+    } else if (themeId === "holi") {
+      // Playful upbeat marimba ripple: F5, A5, C6, E6
+      this.playNote(698.46, t, 0.25, "triangle", 0.2);
+      this.playNote(880.00, t + 0.08, 0.25, "triangle", 0.2);
+      this.playNote(1046.50, t + 0.16, 0.3, "sine", 0.22);
+      this.playNote(1318.51, t + 0.24, 0.6, "sine", 0.2);
+    } else if (themeId === "eid-fitr" || themeId === "eid-adha") {
+      // Serene singing bowl & celestial wind chime: D4, A4, F#5, A5
+      this.playNote(293.66, t, 0.8, "sine", 0.22);
+      this.playNote(440.00, t + 0.15, 0.85, "sine", 0.2);
+      this.playNote(739.99, t + 0.3, 0.9, "sine", 0.18);
+      this.playNote(880.00, t + 0.45, 1.2, "sine", 0.2);
+    } else {
+      // Classic boutique soft bell: C5, G5
+      this.playNote(523.25, t, 0.4, "sine", 0.15);
+      this.playNote(783.99, t + 0.15, 0.6, "sine", 0.15);
+    }
+  }
+};
+
+/**
+ * Update dynamic festive ribbon badges across all product cards
+ */
+function updateProductFestiveBadges(theme) {
+  const cards = document.querySelectorAll(".product-card");
+  cards.forEach(card => {
+    let badgeEl = card.querySelector(".festive-product-badge");
+    if (!theme || theme.id === "default" || !theme.badge) {
+      if (badgeEl) badgeEl.remove();
+      return;
+    }
+    if (!badgeEl) {
+      badgeEl = document.createElement("div");
+      badgeEl.className = "festive-product-badge";
+      const imgWrap = card.querySelector(".product-image-wrap") || card;
+      imgWrap.appendChild(badgeEl);
+    }
+    badgeEl.innerHTML = `<i class="fas ${theme.icon}"></i> ${theme.badge}`;
+  });
+}
+window.updateProductFestiveBadges = updateProductFestiveBadges;
+window.FESTIVE_THEMES = FESTIVE_THEMES;
+
 /**
  * Apply a Festive Theme across the entire website
  * @param {string} themeId - Theme identifier
- * @param {object} options - Options { persist: boolean, showToast: boolean }
+ * @param {object} options - Options { persist: boolean, showToast: boolean, playAudio: boolean }
  */
-function applyFestiveTheme(themeId, options = { persist: true, showToast: false }) {
+function applyFestiveTheme(themeId, options = { persist: true, showToast: false, playAudio: false }) {
   const theme = FESTIVE_THEMES[themeId] || FESTIVE_THEMES["default"];
   currentActiveTheme = theme.id;
 
@@ -154,12 +263,15 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false 
     heroSub.innerHTML = theme.heroSubtitle;
   }
 
-  // 4. Update 3D Canvas Animation Layer
+  // 4. Update Product Card Festive Badges
+  updateProductFestiveBadges(theme);
+
+  // 5. Update 3D Canvas Animation Layer
   if (window.Festive3DEngine) {
     window.Festive3DEngine.setTheme(theme.id);
   }
 
-  // 5. Update Quick Navbar Theme Pill if present
+  // 6. Update Quick Navbar Theme Pill if present
   const navThemeLabel = document.getElementById("navThemeLabel");
   const navThemeIcon = document.getElementById("navThemeIcon");
   if (navThemeLabel) {
@@ -169,7 +281,7 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false 
     navThemeIcon.className = `fas ${theme.icon}`;
   }
 
-  // 6. Update Active State in Modal Theme Cards
+  // 7. Update Active State in Modal Theme Cards
   const cards = document.querySelectorAll(".theme-card");
   cards.forEach(card => {
     const cid = card.getAttribute("data-theme-id");
@@ -180,7 +292,12 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false 
     }
   });
 
-  // 7. Persist to LocalStorage
+  // 8. Play Optional Web Audio Festive Chime
+  if (options.playAudio) {
+    FestiveAudio.playFestiveChime(theme.id);
+  }
+
+  // 9. Persist to LocalStorage
   if (options.persist) {
     localStorage.setItem("crochet_active_theme", theme.id);
   }
@@ -222,9 +339,9 @@ function renderFestiveThemeCards() {
       </div>
 
       <div class="theme-palette-preview">
-        <div class="palette-swatch" style="background: ${theme.colors[0]};" title="Primary"></div>
-        <div class="palette-swatch" style="background: ${theme.colors[1]};" title="Secondary"></div>
-        <div class="palette-swatch" style="background: ${theme.colors[2]};" title="Accent"></div>
+        <div class="palette-swatch" style="background: ${theme.colors[0]};" title="Primary Color"></div>
+        <div class="palette-swatch" style="background: ${theme.colors[1]};" title="Secondary Color"></div>
+        <div class="palette-swatch" style="background: ${theme.colors[2]};" title="Accent Gold/Tint"></div>
       </div>
 
       <p class="theme-card-desc">${theme.desc}</p>
@@ -245,19 +362,19 @@ function renderFestiveThemeCards() {
     // Preview button
     card.querySelector(".theme-btn-preview").addEventListener("click", (e) => {
       e.stopPropagation();
-      applyFestiveTheme(theme.id, { persist: false, showToast: true });
+      applyFestiveTheme(theme.id, { persist: false, showToast: true, playAudio: true });
     });
 
     // Apply Live button
     card.querySelector(".theme-btn-apply").addEventListener("click", (e) => {
       e.stopPropagation();
-      applyFestiveTheme(theme.id, { persist: true, showToast: true });
+      applyFestiveTheme(theme.id, { persist: true, showToast: true, playAudio: true });
       closeFestiveThemeModal();
     });
 
     // Clicking anywhere on card applies live
     card.addEventListener("click", () => {
-      applyFestiveTheme(theme.id, { persist: true, showToast: true });
+      applyFestiveTheme(theme.id, { persist: true, showToast: true, playAudio: true });
       closeFestiveThemeModal();
     });
 
@@ -290,7 +407,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Load and apply saved theme
   const savedTheme = localStorage.getItem("crochet_active_theme") || 
                      (typeof ACTIVE_FESTIVE_THEME !== "undefined" ? ACTIVE_FESTIVE_THEME : "default");
-  applyFestiveTheme(savedTheme, { persist: false });
+  applyFestiveTheme(savedTheme, { persist: false, playAudio: false });
+
+  // Re-apply product badges once catalog finishes rendering
+  setTimeout(() => {
+    const curTheme = FESTIVE_THEMES[currentActiveTheme] || FESTIVE_THEMES["default"];
+    updateProductFestiveBadges(curTheme);
+  }, 400);
 
   // Bind Open/Close Buttons
   const btnOpenTheme = document.getElementById("btnOpenThemeModal");
@@ -339,6 +462,17 @@ document.addEventListener("DOMContentLoaded", () => {
   if (select3DIntensity && window.Festive3DEngine) {
     select3DIntensity.addEventListener("change", (e) => {
       window.Festive3DEngine.setIntensity(e.target.value);
+    });
+  }
+
+  // Sound FX Toggle Switch
+  const toggleFestiveSound = document.getElementById("toggleFestiveSound");
+  if (toggleFestiveSound) {
+    toggleFestiveSound.addEventListener("change", (e) => {
+      FestiveAudio.enabled = e.target.checked;
+      if (e.target.checked) {
+        FestiveAudio.playFestiveChime(currentActiveTheme);
+      }
     });
   }
 });
