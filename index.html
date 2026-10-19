@@ -13,9 +13,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=3.5">
+  <link rel="stylesheet" href="css/style.css?v=3.6">
+  <link rel="stylesheet" href="css/themes.css?v=3.6">
 </head>
 <body ontouchstart="">
+
+  <!-- 3D Festive Background Canvas Animation Layer -->
+  <canvas id="festive3dCanvas"></canvas>
 
   <!-- Announcement Bar -->
   <aside class="announcement-bar" aria-label="Announcement">
@@ -54,6 +58,10 @@
       </ul>
 
       <div class="nav-actions">
+        <button class="nav-theme-pill" id="btnNavThemeToggle" title="Change Festive Theme & 3D Animations">
+          <i class="fas fa-wand-magic-sparkles" id="navThemeIcon"></i>
+          <span id="navThemeLabel">Festive Look</span>
+        </button>
         <a href="#inquiry" class="btn-header-inquiry">
           <i class="fas fa-bag-shopping"></i>
           <span>Order Inquiry</span>
@@ -175,6 +183,9 @@
             </button>
             <button class="btn-owner-pill btn-owner-pill-secondary" id="btnCatalogLiveSync" title="Publish to Live Website" style="background: #FFF7F8; border-color: var(--color-primary); color: var(--color-primary); font-weight: 700;">
               <i class="fas fa-globe"></i> Publish Live
+            </button>
+            <button class="btn-owner-pill btn-owner-pill-secondary" id="btnOpenThemeModal" title="Change Festive Themes & 3D Animations" style="background: linear-gradient(135deg, #FFF0F5, #FFF9E6); border-color: #D7993E; color: #9A5B00; font-weight: 700;">
+              <i class="fas fa-wand-magic-sparkles"></i> Festive Themes &amp; 3D
             </button>
           </div>
         </div>
@@ -647,6 +658,9 @@
             <button type="button" class="btn btn-secondary" id="btnModalLiveSync" style="justify-content: center; background: #FFF7F8; border-color: var(--color-primary); color: var(--color-primary); font-weight: 700;">
               <i class="fas fa-cloud-arrow-up"></i> Sync &amp; Publish to Live Website
             </button>
+            <button type="button" class="btn btn-secondary" id="btnModalFestiveTheme" style="justify-content: center; background: linear-gradient(135deg, #FFF5F7, #FFFBF0); border-color: var(--color-accent); color: #B45B64; font-weight: 700;">
+              <i class="fas fa-wand-magic-sparkles"></i> Change Festive Theme &amp; 3D Look
+            </button>
             <button type="button" class="btn btn-danger-action" id="btnModalLogout" style="justify-content: center; margin-top: 6px;">
               <i class="fas fa-sign-out-alt"></i> Exit Staff Mode (Logout)
             </button>
@@ -984,12 +998,61 @@
     </div>
   </div>
 
+  <!-- Festive Themes & 3D Animations Modal -->
+  <div class="modal-backdrop" id="festiveThemeModal">
+    <div class="modal-dialog modal-dialog-xl" style="max-width: 960px;">
+      <button class="modal-close-btn" id="festiveThemeCloseBtn" aria-label="Close modal">&times;</button>
+      <div class="editor-modal-content">
+        <div class="editor-modal-header">
+          <div class="editor-header-flex">
+            <div class="editor-modal-icon" style="background: linear-gradient(135deg, #FFE5EE, #FFF2D1); color: #C41E3A;">
+              <i class="fas fa-wand-magic-sparkles"></i>
+            </div>
+            <div>
+              <span class="section-tag">Festive Celebration Center</span>
+              <h3 style="font-family: var(--font-heading); font-size: 1.45rem; margin-top: 2px;">Festive Themes &amp; 3D Animations</h3>
+              <p style="font-size: 0.85rem; color: var(--color-text-muted); margin: 0;">
+                Transform the complete website look with festive color palettes, greetings, and real-time interactive 3D visual animations!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Animation Controls Toolbar -->
+        <div class="festive-controls-bar">
+          <div class="festive-control-item">
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle3DAnim" checked>
+              <span class="toggle-slider"></span>
+            </label>
+            <span>3D Visual Animations Active</span>
+          </div>
+          <div class="festive-control-item">
+            <label for="select3DIntensity" style="font-size: 0.82rem; margin-right: 6px;">3D Animation Density:</label>
+            <select id="select3DIntensity" class="form-control form-control-sm" style="width: auto; padding: 4px 10px; font-size: 0.82rem;">
+              <option value="subtle">Subtle &amp; Elegant</option>
+              <option value="normal" selected>Normal (Recommended)</option>
+              <option value="grand">Grand &amp; Immersive</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Theme Cards Grid -->
+        <div class="festive-theme-grid" id="festiveThemeGrid">
+          <!-- Rendered dynamically by js/themes.js -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toastContainer"></div>
 
   <!-- Scripts -->
-  <script src="js/config.js?v=3.5"></script>
-  <script src="js/products.js?v=3.5"></script>
-  <script src="js/app.js?v=3.5"></script>
+  <script src="js/config.js?v=3.6"></script>
+  <script src="js/products.js?v=3.6"></script>
+  <script src="js/festive3d.js?v=3.6"></script>
+  <script src="js/themes.js?v=3.6"></script>
+  <script src="js/app.js?v=3.6"></script>
 </body>
 </html>

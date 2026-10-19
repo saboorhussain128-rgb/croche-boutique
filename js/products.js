@@ -4,6 +4,8 @@
  * Cleaned of technical yarn/hook noise and organized into user-requested category groups.
  */
 
+const ACTIVE_FESTIVE_THEME = "default";
+
 const DEFAULT_CATEGORIES = [
   { id: "sweaters", name: "Sweaters" },
   { id: "shirts", name: "Shirts" },

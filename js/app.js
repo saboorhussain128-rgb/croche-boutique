@@ -1910,6 +1910,8 @@ Hi! I would like to know more about this piece, pricing quotes, and current orde
  * Synced live via Boutique Owner Dashboard
  */
 
+const ACTIVE_FESTIVE_THEME = ${JSON.stringify(localStorage.getItem("crochet_active_theme") || "default")};
+
 const DEFAULT_CATEGORIES = ${JSON.stringify(CATEGORIES, null, 2)};
 
 const DEFAULT_PRODUCTS = ${JSON.stringify(PRODUCTS, null, 2)};
@@ -2327,6 +2329,7 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
     if (staffLoginModal) staffLoginModal.classList.remove("active");
     document.body.style.overflow = "auto";
   }
+  window.closeStaffModal = closeStaffModal;
 
   function closeProductEditor() {
     if (productEditorModal) productEditorModal.classList.remove("active");
@@ -2399,4 +2402,5 @@ const INSTAGRAM_MEDIA_LIBRARY = MEDIA_LIBRARY;
       setTimeout(() => toast.remove(), 300);
     }, 4500);
   }
+  window.showToast = showToast;
 });

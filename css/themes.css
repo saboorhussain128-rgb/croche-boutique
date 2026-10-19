@@ -1,0 +1,758 @@
+/* ==========================================================================
+   The Crochet Boutique - Festive Themes & 3D Visual Styling
+   Supports: Christmas, Diwali, New Year, Holi, Eid-ul-Fitr, Eid-ul-Adha, Classic
+   ========================================================================== */
+
+/* --- 3D Background Canvas Layer --- */
+#festive3dCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.5s ease;
+}
+
+/* ==========================================================================
+   THEME PALETTES & ROOT OVERRIDES
+   ========================================================================== */
+
+/* --- 1. CHRISTMAS THEME --- */
+[data-theme="christmas"] {
+  --color-bg: #F4F8F5;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #EDF5F0;
+  --color-surface-tint: #E2EDE6;
+  --color-border: #CFE2D6;
+  --color-border-light: #E4EFE8;
+  
+  --color-primary: #C41E3A; /* Festive Ruby Red */
+  --color-primary-light: #FCE8EB;
+  --color-primary-hover: #9E162D;
+  
+  --color-secondary: #165B33; /* Evergreen Pine */
+  --color-secondary-light: #E1EFE7;
+  
+  --color-accent: #D4AF37; /* Warm Gold */
+  --color-accent-light: #FCF8EB;
+  
+  --color-text-main: #1A2E22;
+  --color-text-muted: #4A6354;
+  --color-text-light: #7E9689;
+  
+  --shadow-hover: 0 14px 30px rgba(196, 30, 58, 0.22);
+}
+
+[data-theme="christmas"] .announcement-bar {
+  background: linear-gradient(90deg, #9E162D 0%, #C41E3A 35%, #165B33 70%, #0F4224 100%);
+  color: #FFF;
+  border-bottom: 2px solid #D4AF37;
+}
+
+[data-theme="christmas"] .navbar {
+  border-bottom: 2px solid rgba(22, 91, 51, 0.15);
+}
+
+[data-theme="christmas"] .hero-glow-backdrop {
+  background: radial-gradient(circle, rgba(196, 30, 58, 0.16) 0%, rgba(22, 91, 51, 0.14) 45%, transparent 70%);
+}
+
+[data-theme="christmas"] .hero-pill {
+  background: #FCE8EB;
+  border-color: #C41E3A;
+  color: #C41E3A;
+}
+
+[data-theme="christmas"] .btn-primary {
+  background: linear-gradient(135deg, #C41E3A, #9E162D);
+  box-shadow: 0 4px 15px rgba(196, 30, 58, 0.35);
+}
+
+[data-theme="christmas"] .btn-primary:hover {
+  background: linear-gradient(135deg, #9E162D, #7E1022);
+  box-shadow: 0 8px 22px rgba(196, 30, 58, 0.45);
+}
+
+[data-theme="christmas"] .btn-secondary {
+  border-color: #165B33;
+  color: #165B33;
+  background: #E1EFE7;
+}
+
+[data-theme="christmas"] .tab-btn.active {
+  background: #C41E3A;
+  border-color: #C41E3A;
+  color: #FFF;
+}
+
+[data-theme="christmas"] .btn-get-this {
+  background: linear-gradient(135deg, #C41E3A, #165B33);
+}
+
+/* --- 2. DIWALI THEME --- */
+[data-theme="diwali"] {
+  --color-bg: #FFFDF8;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #FFF8EB;
+  --color-surface-tint: #FDF0D5;
+  --color-border: #F3DEB2;
+  --color-border-light: #FAECDA;
+  
+  --color-primary: #E65100; /* Deep Saffron */
+  --color-primary-light: #FFE0B2;
+  --color-primary-hover: #BF360C;
+  
+  --color-secondary: #6A1B9A; /* Royal Festive Plum */
+  --color-secondary-light: #F3E5F5;
+  
+  --color-accent: #FFB300; /* Radiant Marigold Gold */
+  --color-accent-light: #FFF8E1;
+  
+  --color-text-main: #38241D;
+  --color-text-muted: #6B493E;
+  --color-text-light: #9C796F;
+  
+  --shadow-hover: 0 14px 30px rgba(230, 81, 0, 0.25);
+}
+
+[data-theme="diwali"] .announcement-bar {
+  background: linear-gradient(90deg, #4A148C 0%, #880E4F 35%, #E65100 70%, #FFB300 100%);
+  color: #FFF;
+  border-bottom: 2px solid #FFD54F;
+}
+
+[data-theme="diwali"] .hero-glow-backdrop {
+  background: radial-gradient(circle, rgba(255, 179, 0, 0.25) 0%, rgba(230, 81, 0, 0.16) 45%, transparent 70%);
+}
+
+[data-theme="diwali"] .hero-pill {
+  background: #FFF8E1;
+  border-color: #FFB300;
+  color: #BF360C;
+}
+
+[data-theme="diwali"] .btn-primary {
+  background: linear-gradient(135deg, #E65100, #FF8F00);
+  box-shadow: 0 4px 15px rgba(230, 81, 0, 0.35);
+}
+
+[data-theme="diwali"] .btn-primary:hover {
+  background: linear-gradient(135deg, #BF360C, #E65100);
+  box-shadow: 0 8px 22px rgba(230, 81, 0, 0.45);
+}
+
+[data-theme="diwali"] .tab-btn.active {
+  background: linear-gradient(135deg, #E65100, #FF8F00);
+  border-color: #E65100;
+  color: #FFF;
+}
+
+[data-theme="diwali"] .btn-get-this {
+  background: linear-gradient(135deg, #E65100, #6A1B9A);
+}
+
+/* --- 3. NEW YEAR THEME --- */
+[data-theme="newyear"] {
+  --color-bg: #0F141C; /* Sleek Midnight Starlight */
+  --color-surface: #171E2A;
+  --color-surface-hover: #222C3D;
+  --color-surface-tint: #2B384E;
+  --color-border: #33435C;
+  --color-border-light: #242F41;
+  
+  --color-primary: #D4AF37; /* Champagne Metallic Gold */
+  --color-primary-light: #2D2715;
+  --color-primary-hover: #E6C35C;
+  
+  --color-secondary: #8DA4BA; /* Silver Starlight */
+  --color-secondary-light: #1A2433;
+  
+  --color-accent: #FFDF00; /* Sparkler Yellow */
+  --color-accent-light: #2A2408;
+  
+  --color-text-main: #F0F6FC;
+  --color-text-muted: #A0B3C6;
+  --color-text-light: #708499;
+  
+  --shadow-hover: 0 14px 30px rgba(212, 175, 55, 0.35);
+}
+
+[data-theme="newyear"] .announcement-bar {
+  background: linear-gradient(90deg, #07090D 0%, #171E2A 35%, #D4AF37 70%, #07090D 100%);
+  color: #FFFDF0;
+  border-bottom: 2px solid #FFDF00;
+}
+
+[data-theme="newyear"] .navbar {
+  background: rgba(23, 30, 42, 0.95);
+  border-bottom: 1px solid #33435C;
+}
+
+[data-theme="newyear"] .hero-glow-backdrop {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.22) 0%, rgba(255, 223, 0, 0.12) 40%, transparent 70%);
+}
+
+[data-theme="newyear"] .hero-pill {
+  background: #2D2715;
+  border-color: #D4AF37;
+  color: #FFDF00;
+}
+
+[data-theme="newyear"] .btn-primary {
+  background: linear-gradient(135deg, #D4AF37, #F5D77F);
+  color: #0F141C;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+[data-theme="newyear"] .btn-primary:hover {
+  background: linear-gradient(135deg, #F5D77F, #D4AF37);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.55);
+}
+
+[data-theme="newyear"] .btn-secondary {
+  border-color: #D4AF37;
+  color: #F0F6FC;
+  background: rgba(212, 175, 55, 0.12);
+}
+
+[data-theme="newyear"] .tab-btn {
+  background: #171E2A;
+  border-color: #33435C;
+  color: #A0B3C6;
+}
+
+[data-theme="newyear"] .tab-btn.active {
+  background: linear-gradient(135deg, #D4AF37, #AA820A);
+  color: #0F141C;
+  font-weight: 700;
+  border-color: #FFDF00;
+}
+
+[data-theme="newyear"] .product-card {
+  background: #171E2A;
+  border-color: #2D394E;
+}
+
+[data-theme="newyear"] .product-title {
+  color: #FFF;
+}
+
+[data-theme="newyear"] .btn-get-this {
+  background: linear-gradient(135deg, #D4AF37, #AA820A);
+  color: #0F141C;
+  font-weight: 700;
+}
+
+[data-theme="newyear"] .features-bar,
+[data-theme="newyear"] .story-section,
+[data-theme="newyear"] .inquiry-section,
+[data-theme="newyear"] .site-footer {
+  background: #121822;
+  border-color: #242F41;
+}
+
+[data-theme="newyear"] .section-title,
+[data-theme="newyear"] .story-heading,
+[data-theme="newyear"] .feature-title,
+[data-theme="newyear"] .inquiry-title,
+[data-theme="newyear"] .footer-brand-name {
+  color: #FFFDF0;
+}
+
+[data-theme="newyear"] .form-control {
+  background: #171E2A;
+  border-color: #33435C;
+  color: #F0F6FC;
+}
+
+[data-theme="newyear"] .inquiry-card,
+[data-theme="newyear"] .story-card,
+[data-theme="newyear"] .feature-item {
+  background: #171E2A;
+  border-color: #2D394E;
+}
+
+/* --- 4. HOLI THEME --- */
+[data-theme="holi"] {
+  --color-bg: #FFF9FC;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #FFF0F6;
+  --color-surface-tint: #FFE3EE;
+  --color-border: #FFD1E3;
+  --color-border-light: #FFEBF2;
+  
+  --color-primary: #E91E63; /* Vibrant Gulal Magenta */
+  --color-primary-light: #FCE4EC;
+  --color-primary-hover: #C2185B;
+  
+  --color-secondary: #00ACC1; /* Splash Turquoise */
+  --color-secondary-light: #E0F7FA;
+  
+  --color-accent: #FF9800; /* Sun Saffron */
+  --color-accent-light: #FFF3E0;
+  
+  --color-text-main: #2A1820;
+  --color-text-muted: #664855;
+  --color-text-light: #9E7D8C;
+  
+  --shadow-hover: 0 14px 30px rgba(233, 30, 99, 0.28);
+}
+
+[data-theme="holi"] .announcement-bar {
+  background: linear-gradient(90deg, #E91E63 0%, #9C27B0 30%, #00ACC1 65%, #FF9800 100%);
+  color: #FFF;
+  border-bottom: 2px solid #FFEB3B;
+}
+
+[data-theme="holi"] .hero-glow-backdrop {
+  background: radial-gradient(circle, rgba(233, 30, 99, 0.2) 0%, rgba(0, 172, 193, 0.16) 45%, rgba(255, 152, 0, 0.12) 70%, transparent 80%);
+}
+
+[data-theme="holi"] .hero-pill {
+  background: linear-gradient(90deg, #FCE4EC, #E0F7FA);
+  border-color: #E91E63;
+  color: #C2185B;
+}
+
+[data-theme="holi"] .btn-primary {
+  background: linear-gradient(135deg, #E91E63, #9C27B0);
+  box-shadow: 0 4px 16px rgba(233, 30, 99, 0.35);
+}
+
+[data-theme="holi"] .btn-primary:hover {
+  background: linear-gradient(135deg, #C2185B, #7B1FA2);
+  box-shadow: 0 8px 22px rgba(233, 30, 99, 0.45);
+}
+
+[data-theme="holi"] .btn-secondary {
+  border-color: #00ACC1;
+  color: #00838F;
+  background: #E0F7FA;
+}
+
+[data-theme="holi"] .tab-btn.active {
+  background: linear-gradient(135deg, #E91E63, #00ACC1);
+  border-color: #E91E63;
+  color: #FFF;
+}
+
+[data-theme="holi"] .btn-get-this {
+  background: linear-gradient(135deg, #E91E63, #00ACC1);
+}
+
+/* --- 5. EID-UL-FITR THEME --- */
+[data-theme="eid-fitr"] {
+  --color-bg: #F2F9F5;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #E7F4ED;
+  --color-surface-tint: #D6EDE0;
+  --color-border: #BFE3CE;
+  --color-border-light: #DCF2E5;
+  
+  --color-primary: #0D6938; /* Sacred Emerald Green */
+  --color-primary-light: #E1F4EA;
+  --color-primary-hover: #084D28;
+  
+  --color-secondary: #C59B27; /* Radiant Crescent Gold */
+  --color-secondary-light: #FBF4DE;
+  
+  --color-accent: #2E7D32; /* Pure Mint */
+  --color-accent-light: #E8F5E9;
+  
+  --color-text-main: #142E1F;
+  --color-text-muted: #3D604A;
+  --color-text-light: #6E8F7A;
+  
+  --shadow-hover: 0 14px 30px rgba(13, 105, 56, 0.25);
+}
+
+[data-theme="eid-fitr"] .announcement-bar {
+  background: linear-gradient(90deg, #06381E 0%, #0D6938 45%, #C59B27 80%, #06381E 100%);
+  color: #FFF;
+  border-bottom: 2px solid #F1D26E;
+}
+
+[data-theme="eid-fitr"] .hero-glow-backdrop {
+  background: radial-gradient(circle, rgba(13, 105, 56, 0.2) 0%, rgba(197, 155, 39, 0.18) 50%, transparent 70%);
+}
+
+[data-theme="eid-fitr"] .hero-pill {
+  background: #E1F4EA;
+  border-color: #0D6938;
+  color: #0D6938;
+}
+
+[data-theme="eid-fitr"] .btn-primary {
+  background: linear-gradient(135deg, #0D6938, #1B8C4F);
+  box-shadow: 0 4px 15px rgba(13, 105, 56, 0.35);
+}
+
+[data-theme="eid-fitr"] .btn-primary:hover {
+  background: linear-gradient(135deg, #084D28, #0D6938);
+  box-shadow: 0 8px 22px rgba(13, 105, 56, 0.45);
+}
+
+[data-theme="eid-fitr"] .btn-secondary {
+  border-color: #C59B27;
+  color: #8C6A0A;
+  background: #FBF4DE;
+}
+
+[data-theme="eid-fitr"] .tab-btn.active {
+  background: linear-gradient(135deg, #0D6938, #C59B27);
+  border-color: #0D6938;
+  color: #FFF;
+}
+
+[data-theme="eid-fitr"] .btn-get-this {
+  background: linear-gradient(135deg, #0D6938, #C59B27);
+}
+
+/* --- 6. EID-UL-ADHA THEME --- */
+[data-theme="eid-adha"] {
+  --color-bg: #F4F7FB;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #EAF0F8;
+  --color-surface-tint: #DCE7F4;
+  --color-border: #CAD8EC;
+  --color-border-light: #E3ECF7;
+  
+  --color-primary: #153B64; /* Royal Sapphire Blue */
+  --color-primary-light: #E4ECF6;
+  --color-primary-hover: #0E2947;
+  
+  --color-secondary: #D4AF37; /* Moroccan Antique Gold */
+  --color-secondary-light: #FAF4DE;
+  
+  --color-accent: #B8860B; /* Warm Ochre Gold */
+  --color-accent-light: #FDF6E2;
+  
+  --color-text-main: #132235;
+  --color-text-muted: #395270;
+  --color-text-light: #6A829E;
+  
+  --shadow-hover: 0 14px 30px rgba(21, 59, 100, 0.25);
+}
+
+[data-theme="eid-adha"] .announcement-bar {
+  background: linear-gradient(90deg, #0A1E35 0%, #153B64 45%, #D4AF37 80%, #0A1E35 100%);
+  color: #FFF;
+  border-bottom: 2px solid #E6CA65;
+}
+
+[data-theme="eid-adha"] .hero-glow-backdrop {
+  background: radial-gradient(circle, rgba(21, 59, 100, 0.22) 0%, rgba(212, 175, 55, 0.18) 50%, transparent 70%);
+}
+
+[data-theme="eid-adha"] .hero-pill {
+  background: #E4ECF6;
+  border-color: #153B64;
+  color: #153B64;
+}
+
+[data-theme="eid-adha"] .btn-primary {
+  background: linear-gradient(135deg, #153B64, #275C96);
+  box-shadow: 0 4px 15px rgba(21, 59, 100, 0.35);
+}
+
+[data-theme="eid-adha"] .btn-primary:hover {
+  background: linear-gradient(135deg, #0E2947, #153B64);
+  box-shadow: 0 8px 22px rgba(21, 59, 100, 0.45);
+}
+
+[data-theme="eid-adha"] .btn-secondary {
+  border-color: #D4AF37;
+  color: #947514;
+  background: #FAF4DE;
+}
+
+[data-theme="eid-adha"] .tab-btn.active {
+  background: linear-gradient(135deg, #153B64, #D4AF37);
+  border-color: #153B64;
+  color: #FFF;
+}
+
+[data-theme="eid-adha"] .btn-get-this {
+  background: linear-gradient(135deg, #153B64, #D4AF37);
+}
+
+/* ==========================================================================
+   FESTIVE THEME MODAL & SELECTOR UI
+   ========================================================================== */
+
+.festive-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.theme-card {
+  position: relative;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.theme-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+}
+
+.theme-card.active {
+  border-color: var(--color-primary);
+  background: var(--color-surface-hover);
+  box-shadow: 0 8px 24px rgba(200, 109, 118, 0.25);
+}
+
+.theme-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.theme-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.theme-card-name {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  line-height: 1.2;
+}
+
+.theme-card-tag {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.theme-active-badge {
+  display: none;
+  background: #25D366;
+  color: #FFF;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+}
+
+.theme-card.active .theme-active-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.theme-palette-preview {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.palette-swatch {
+  height: 14px;
+  flex: 1;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.theme-card-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.theme-3d-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+
+.theme-card-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.theme-btn-preview {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-main);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.theme-btn-preview:hover {
+  background: var(--color-surface-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.theme-btn-apply {
+  flex: 1.3;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--color-primary);
+  color: #FFF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.theme-btn-apply:hover {
+  background: var(--color-primary-hover);
+  box-shadow: 0 4px 12px rgba(200, 109, 118, 0.35);
+}
+
+/* --- Theme Controls Toolbar in Modal --- */
+.festive-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-surface-tint);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.festive-control-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #CCC;
+  transition: 0.3s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background-color: #25D366;
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+/* --- Quick Navbar Theme Pill --- */
+.nav-theme-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #FFF0F5, #FFF9E6);
+  border: 1.5px solid #D7993E;
+  color: #9A5B00;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 6px rgba(215, 153, 62, 0.2);
+}
+
+.nav-theme-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(215, 153, 62, 0.35);
+  background: linear-gradient(135deg, #FFE5EE, #FFF2D1);
+}
+
+@media (max-width: 768px) {
+  .festive-theme-grid {
+    grid-template-columns: 1fr;
+  }
+  .festive-controls-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
