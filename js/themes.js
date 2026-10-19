@@ -222,26 +222,12 @@ const FestiveAudio = {
 };
 
 /**
- * Update dynamic festive ribbon badges across all product cards
+ * Remove any festive badges from product cards so products remain 100% clean
  */
-function updateProductFestiveBadges(theme) {
-  const cards = document.querySelectorAll(".product-card");
-  cards.forEach(card => {
-    let badgeEl = card.querySelector(".festive-product-badge");
-    if (!theme || theme.id === "default" || !theme.badge) {
-      if (badgeEl) badgeEl.remove();
-      return;
-    }
-    if (!badgeEl) {
-      badgeEl = document.createElement("div");
-      badgeEl.className = "festive-product-badge";
-      const imgWrap = card.querySelector(".product-image-wrap") || card;
-      imgWrap.appendChild(badgeEl);
-    }
-    badgeEl.innerHTML = `<i class="fas ${theme.icon}"></i> ${theme.badge}`;
-  });
+function removeProductFestiveBadges() {
+  document.querySelectorAll(".festive-product-badge").forEach(el => el.remove());
 }
-window.updateProductFestiveBadges = updateProductFestiveBadges;
+window.removeProductFestiveBadges = removeProductFestiveBadges;
 window.FESTIVE_THEMES = FESTIVE_THEMES;
 
 /**
@@ -278,8 +264,8 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false,
     heroSub.innerHTML = theme.heroSubtitle;
   }
 
-  // 4. Update Product Card Festive Badges
-  updateProductFestiveBadges(theme);
+  // 4. Products remain completely clean (remove any badge)
+  removeProductFestiveBadges();
 
   // 5. Update 3D Canvas Animation Layer (Confined strictly to Hero Top Section)
   if (window.Festive3DEngine) {
@@ -442,11 +428,8 @@ document.addEventListener("DOMContentLoaded", () => {
                      (typeof ACTIVE_FESTIVE_THEME !== "undefined" ? ACTIVE_FESTIVE_THEME : "default");
   applyFestiveTheme(savedTheme, { persist: false, playAudio: false });
 
-  // Re-apply product badges once catalog finishes rendering
-  setTimeout(() => {
-    const curTheme = FESTIVE_THEMES[currentActiveTheme] || FESTIVE_THEMES["default"];
-    updateProductFestiveBadges(curTheme);
-  }, 400);
+  // Ensure products remain clean without any badges
+  removeProductFestiveBadges();
 
   // Bind Open/Close Buttons
   const btnOpenTheme = document.getElementById("btnOpenThemeModal");

@@ -7,6 +7,9 @@
 .hero {
   position: relative !important;
   overflow: hidden !important;
+  contain: paint !important;
+  transform: translateZ(0) !important;
+  isolation: isolate !important;
 }
 
 #festive3dCanvas {
@@ -15,8 +18,8 @@
   left: 0 !important;
   width: 100% !important;
   height: 100% !important;
-  pointer-events: none;
-  z-index: 2;
+  pointer-events: none !important;
+  z-index: 1 !important;
   transition: opacity 0.5s ease;
 }
 
@@ -29,31 +32,11 @@
   z-index: 5;
 }
 
-/* --- Interactive Festive Product Card Ribbon Badge --- */
-.festive-product-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 4;
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(8px);
-  pointer-events: none;
-  animation: festiveBadgePulse 3s infinite ease-in-out;
-}
-
-@keyframes festiveBadgePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.04); }
-}
+/* Products section creates an opaque, high-z-index barrier */
+.products-section {
+  position: relative !important;
+  z-index: 25 !important;
+  background-color: var(--color-bg) !important;
 
 /* ==========================================================================
    1. CHRISTMAS THEME (Holiday Season & Fireside Warmth)
@@ -160,11 +143,7 @@
   transform: translateY(-6px);
 }
 
-[data-theme="christmas"] .festive-product-badge {
-  background: linear-gradient(135deg, #C41E3A, #9E162D);
-  color: #FFF;
-  border: 1px solid #D4AF37;
-}
+
 
 [data-theme="christmas"] .btn-get-this {
   background: linear-gradient(135deg, #C41E3A, #165B33);
@@ -271,11 +250,7 @@
   transform: translateY(-6px);
 }
 
-[data-theme="diwali"] .festive-product-badge {
-  background: linear-gradient(135deg, #E65100, #FFB300);
-  color: #FFF;
-  border: 1px solid #FFF3E0;
-}
+
 
 [data-theme="diwali"] .btn-get-this {
   background: linear-gradient(135deg, #E65100, #6A1B9A);
@@ -427,11 +402,7 @@
   color: #FFFDF0;
 }
 
-[data-theme="newyear"] .festive-product-badge {
-  background: linear-gradient(135deg, #D4AF37, #AA820A);
-  color: #0C1017;
-  border: 1px solid #FFE082;
-}
+
 
 [data-theme="newyear"] .btn-get-this {
   background: linear-gradient(135deg, #D4AF37, #AA820A);
@@ -575,11 +546,7 @@
   transform: translateY(-6px);
 }
 
-[data-theme="holi"] .festive-product-badge {
-  background: linear-gradient(135deg, #E91E63, #00ACC1);
-  color: #FFF;
-  border: 1px solid #FFEBF2;
-}
+
 
 [data-theme="holi"] .btn-get-this {
   background: linear-gradient(135deg, #E91E63, #00ACC1);
@@ -691,11 +658,7 @@
   transform: translateY(-6px);
 }
 
-[data-theme="eid-fitr"] .festive-product-badge {
-  background: linear-gradient(135deg, #0D6938, #C59B27);
-  color: #FFF;
-  border: 1px solid #F1D26E;
-}
+
 
 [data-theme="eid-fitr"] .btn-get-this {
   background: linear-gradient(135deg, #0D6938, #C59B27);
@@ -807,12 +770,6 @@
   transform: translateY(-6px);
 }
 
-[data-theme="eid-adha"] .festive-product-badge {
-  background: linear-gradient(135deg, #153B64, #D4AF37);
-  color: #FFF;
-  border: 1px solid #E6CA65;
-}
-
 [data-theme="eid-adha"] .btn-get-this {
   background: linear-gradient(135deg, #153B64, #D4AF37);
 }
@@ -820,9 +777,6 @@
 /* ==========================================================================
    7. CLASSIC BOUTIQUE THEME (Artisanal Original Warm Pastel)
    ========================================================================== */
-[data-theme="default"] .festive-product-badge {
-  display: none !important;
-}
 
 /* ==========================================================================
    FESTIVE THEME MODAL & EXHIBITION STYLING

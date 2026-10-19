@@ -944,16 +944,33 @@
 
   function initCanvas() {
     canvas = document.getElementById("festive3dCanvas");
+    const heroEl = document.querySelector(".hero");
+
     if (!canvas) {
       canvas = document.createElement("canvas");
       canvas.id = "festive3dCanvas";
-      const heroEl = document.querySelector(".hero");
-      if (heroEl) {
-        heroEl.prepend(canvas);
-      } else {
-        document.body.prepend(canvas);
-      }
     }
+
+    if (heroEl) {
+      if (canvas.parentElement !== heroEl) {
+        heroEl.prepend(canvas);
+      }
+      heroEl.style.setProperty("position", "relative", "important");
+      heroEl.style.setProperty("overflow", "hidden", "important");
+      heroEl.style.setProperty("contain", "paint", "important");
+      heroEl.style.setProperty("transform", "translateZ(0)", "important");
+      heroEl.style.setProperty("isolation", "isolate", "important");
+    }
+
+    canvas.style.setProperty("position", "absolute", "important");
+    canvas.style.setProperty("top", "0px", "important");
+    canvas.style.setProperty("left", "0px", "important");
+    canvas.style.setProperty("width", "100%", "important");
+    canvas.style.setProperty("height", "100%", "important");
+    canvas.style.setProperty("pointer-events", "none", "important");
+    canvas.style.setProperty("z-index", "1", "important");
+    canvas.style.setProperty("display", "block", "important");
+
     ctx = canvas.getContext("2d");
     resize();
     window.addEventListener("resize", resize);
@@ -1141,8 +1158,18 @@
   }
 
   function renderLoop() {
-    if (!ctx) return;
+    if (!ctx || !canvas) return;
     ctx.clearRect(0, 0, width, height);
+
+    const heroEl = document.querySelector(".hero");
+    if (heroEl) {
+      const rect = heroEl.getBoundingClientRect();
+      // If hero top section is completely scrolled out of view, do NOT render any particles
+      if (rect.bottom <= 0) {
+        animFrameId = requestAnimationFrame(renderLoop);
+        return;
+      }
+    }
 
     camX += (targetCamX - camX) * 0.05;
     camY += (targetCamY - camY) * 0.05;

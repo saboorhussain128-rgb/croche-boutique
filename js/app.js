@@ -1472,11 +1472,6 @@ Hi ${custName}! Thank you for your inquiry with @croche_boutiq. Our artisan will
 
       productsGrid.appendChild(card);
     });
-
-    if (window.updateProductFestiveBadges && window.FESTIVE_THEMES) {
-      const activeThemeId = localStorage.getItem("crochet_active_theme") || "default";
-      window.updateProductFestiveBadges(window.FESTIVE_THEMES[activeThemeId] || window.FESTIVE_THEMES["default"]);
-    }
   }
 
   // 18. Render Instagram Feed
