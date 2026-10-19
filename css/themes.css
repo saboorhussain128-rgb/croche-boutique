@@ -3,16 +3,30 @@
    Supports: Christmas, Diwali, New Year, Holi, Eid-ul-Fitr, Eid-ul-Adha, Classic
    ========================================================================== */
 
-/* --- 3D Background Canvas Layer --- */
+/* --- 3D Canvas Layer (Strictly Confined to Hero Top Section) --- */
+.hero {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
 #festive3dCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   pointer-events: none;
-  z-index: 12;
+  z-index: 2;
   transition: opacity 0.5s ease;
+}
+
+.hero-glow-backdrop {
+  z-index: 1;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 5;
 }
 
 /* --- Interactive Festive Product Card Ribbon Badge --- */
@@ -1080,5 +1094,265 @@
   .festive-controls-bar {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   FESTIVE BOTTOM SHOWCASE BANNER & FOOTER STYLING
+   ========================================================================== */
+.festive-bottom-banner {
+  padding: 44px 0;
+  background: var(--color-surface);
+  border-top: 2px solid var(--color-border);
+  border-bottom: 2px solid var(--color-border);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.festive-bottom-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.festive-bottom-emblem {
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.1rem;
+  background: var(--color-surface-hover);
+  color: var(--color-primary);
+  flex-shrink: 0;
+  border: 1.5px solid var(--color-border);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  transition: var(--transition);
+}
+
+.festive-bottom-text {
+  flex-grow: 1;
+  min-width: 260px;
+}
+
+.festive-bottom-text h3 {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  color: var(--color-text-main);
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.festive-bottom-text p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+  max-width: 650px;
+  line-height: 1.5;
+}
+
+.festive-bottom-action {
+  flex-shrink: 0;
+}
+
+/* 1. Christmas Bottom Theme */
+[data-theme="christmas"] .festive-bottom-banner {
+  background: linear-gradient(135deg, #F0F7F2 0%, #FFFFFF 50%, #FCF5F5 100%);
+  border-top: 2.5px solid #165B33;
+  border-bottom: 2.5px solid #C41E3A;
+}
+
+[data-theme="christmas"] .festive-bottom-emblem {
+  background: #FCE8EB;
+  color: #C41E3A;
+  border-color: #D4AF37;
+  box-shadow: 0 4px 18px rgba(196, 30, 58, 0.2);
+}
+
+[data-theme="christmas"] .footer {
+  background: linear-gradient(180deg, #114225 0%, #082615 100%);
+  border-top: 3.5px solid #D4AF37;
+  color: #E2EFE7;
+}
+
+[data-theme="christmas"] .footer-brand h4,
+[data-theme="christmas"] .footer-col h5 {
+  color: #FFFDF8;
+}
+
+[data-theme="christmas"] .footer-links a:hover {
+  color: #FFD54F;
+}
+
+/* 2. Diwali Bottom Theme */
+[data-theme="diwali"] .festive-bottom-banner {
+  background: linear-gradient(135deg, #FFF9EB 0%, #FFFFFF 50%, #FFF3DB 100%);
+  border-top: 3px solid #FFB300;
+  border-bottom: 3px solid #E65100;
+}
+
+[data-theme="diwali"] .festive-bottom-emblem {
+  background: #FFF3E0;
+  color: #E65100;
+  border-color: #FFB300;
+  box-shadow: 0 4px 20px rgba(255, 179, 0, 0.35);
+}
+
+[data-theme="diwali"] .footer {
+  background: linear-gradient(180deg, #350A20 0%, #1A030E 100%);
+  border-top: 3.5px solid #FFB300;
+  color: #F8E5EE;
+}
+
+[data-theme="diwali"] .footer-brand h4,
+[data-theme="diwali"] .footer-col h5 {
+  color: #FFD54F;
+}
+
+[data-theme="diwali"] .footer-links a:hover {
+  color: #FFB300;
+}
+
+/* 3. New Year Bottom Theme */
+[data-theme="newyear"] .festive-bottom-banner {
+  background: linear-gradient(135deg, #131A26 0%, #0F141E 50%, #0A0D14 100%);
+  border-top: 2.5px solid #D4AF37;
+  border-bottom: 2.5px solid #D4AF37;
+}
+
+[data-theme="newyear"] .festive-bottom-emblem {
+  background: #241E0A;
+  color: #FFDF00;
+  border-color: #D4AF37;
+  box-shadow: 0 4px 22px rgba(212, 175, 55, 0.45);
+}
+
+[data-theme="newyear"] .festive-bottom-text h3 {
+  color: #FFFDF0;
+}
+
+[data-theme="newyear"] .festive-bottom-text p {
+  color: #9BB0C7;
+}
+
+[data-theme="newyear"] .footer {
+  background: linear-gradient(180deg, #090C12 0%, #040508 100%);
+  border-top: 3px solid #D4AF37;
+  color: #D3DEEB;
+}
+
+[data-theme="newyear"] .footer-brand h4,
+[data-theme="newyear"] .footer-col h5 {
+  color: #FFE082;
+}
+
+[data-theme="newyear"] .footer-links a:hover {
+  color: #FFDF00;
+}
+
+/* 4. Holi Bottom Theme */
+[data-theme="holi"] .festive-bottom-banner {
+  background: linear-gradient(135deg, #FFF0F6 0%, #FFFFFF 50%, #E0F7FA 100%);
+  border-top: 3.5px solid;
+  border-image: linear-gradient(90deg, #E91E63, #9C27B0, #00ACC1, #FF9800) 1;
+  border-bottom: 2px solid #FFD4E5;
+}
+
+[data-theme="holi"] .festive-bottom-emblem {
+  background: #FFF;
+  color: #E91E63;
+  border-color: #00ACC1;
+  box-shadow: 0 4px 18px rgba(233, 30, 99, 0.25);
+}
+
+[data-theme="holi"] .footer {
+  background: linear-gradient(180deg, #24141E 0%, #12090E 100%);
+  border-top: 3.5px solid;
+  border-image: linear-gradient(90deg, #E91E63, #9C27B0, #00ACC1, #FF9800) 1;
+  color: #F8E8F0;
+}
+
+[data-theme="holi"] .footer-brand h4,
+[data-theme="holi"] .footer-col h5 {
+  color: #FF80AB;
+}
+
+[data-theme="holi"] .footer-links a:hover {
+  color: #00E5FF;
+}
+
+/* 5. Eid-ul-Fitr Bottom Theme */
+[data-theme="eid-fitr"] .festive-bottom-banner {
+  background: linear-gradient(135deg, #EAF5EE 0%, #FFFFFF 50%, #FAF4DE 100%);
+  border-top: 3px solid #0D6938;
+  border-bottom: 3px solid #C59B27;
+}
+
+[data-theme="eid-fitr"] .festive-bottom-emblem {
+  background: #E0F3EA;
+  color: #0D6938;
+  border-color: #C59B27;
+  box-shadow: 0 4px 18px rgba(13, 105, 56, 0.2);
+}
+
+[data-theme="eid-fitr"] .footer {
+  background: linear-gradient(180deg, #07381D 0%, #031E0F 100%);
+  border-top: 3.5px solid #C59B27;
+  color: #DEEFE4;
+}
+
+[data-theme="eid-fitr"] .footer-brand h4,
+[data-theme="eid-fitr"] .footer-col h5 {
+  color: #F1D26E;
+}
+
+[data-theme="eid-fitr"] .footer-links a:hover {
+  color: #F1D26E;
+}
+
+/* 6. Eid-ul-Adha Bottom Theme */
+[data-theme="eid-adha"] .festive-bottom-banner {
+  background: linear-gradient(135deg, #E8EFF7 0%, #FFFFFF 50%, #FAF4DE 100%);
+  border-top: 3px solid #153B64;
+  border-bottom: 3px solid #D4AF37;
+}
+
+[data-theme="eid-adha"] .festive-bottom-emblem {
+  background: #E4EDF7;
+  color: #153B64;
+  border-color: #D4AF37;
+  box-shadow: 0 4px 18px rgba(21, 59, 100, 0.2);
+}
+
+[data-theme="eid-adha"] .footer {
+  background: linear-gradient(180deg, #0A1C30 0%, #040E18 100%);
+  border-top: 3.5px solid #D4AF37;
+  color: #D8E5F3;
+}
+
+[data-theme="eid-adha"] .footer-brand h4,
+[data-theme="eid-adha"] .footer-col h5 {
+  color: #E6CA65;
+}
+
+[data-theme="eid-adha"] .footer-links a:hover {
+  color: #FFDF00;
+}
+
+@media (max-width: 768px) {
+  .festive-bottom-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .festive-bottom-action {
+    width: 100%;
+  }
+  .festive-bottom-action .btn {
+    width: 100%;
+    justify-content: center;
   }
 }

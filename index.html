@@ -18,9 +18,6 @@
 </head>
 <body ontouchstart="">
 
-  <!-- 3D Festive Background Canvas Animation Layer -->
-  <canvas id="festive3dCanvas"></canvas>
-
   <!-- Announcement Bar -->
   <aside class="announcement-bar" aria-label="Announcement">
     <div class="announcement-inner">
@@ -74,7 +71,10 @@
   </nav>
 
   <!-- Hero Section -->
-  <header class="hero">
+  <header class="hero" id="heroSection">
+    <!-- 3D Festive Animation Canvas Layer (Strictly confined to Top Hero Section) -->
+    <canvas id="festive3dCanvas"></canvas>
+
     <!-- Animated background aura -->
     <div class="hero-glow-backdrop" aria-hidden="true"></div>
     <div class="hero-sparkle-orb orb-1" aria-hidden="true"></div>
@@ -512,6 +512,26 @@
             Once you submit an inquiry, we verify details with you and provide payment instructions (bank transfer, online payments, or digital wallets depending on your region). We package each piece securely with tracking provided upon dispatch.
           </div>
         </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Festive Bottom Decorative Showcase Banner -->
+  <section class="festive-bottom-banner" id="festiveBottomBanner" aria-label="Festive Season Showcase">
+    <div class="container">
+      <div class="festive-bottom-content">
+        <div class="festive-bottom-emblem" id="festiveBottomEmblem">
+          <i class="fas fa-sparkles"></i>
+        </div>
+        <div class="festive-bottom-text">
+          <h3 id="festiveBottomTitle">Celebrate with Handcrafted Warmth</h3>
+          <p id="festiveBottomSubtitle">Bespoke heirloom crochet knits, cozy seasonal keepsakes &amp; thoughtful festive gifts.</p>
+        </div>
+        <div class="festive-bottom-action">
+          <a href="#inquiry" class="btn btn-primary" id="festiveBottomCta">
+            <i class="fas fa-gift"></i> Request Custom Festive Order
+          </a>
+        </div>
       </div>
     </div>
   </section>

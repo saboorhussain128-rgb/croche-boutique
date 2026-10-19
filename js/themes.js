@@ -1,7 +1,7 @@
 /**
  * The Crochet Boutique - Ultra-Premium Festive Themes & Template Manager
  * Controls full website transformation across Christmas, Diwali, New Year, Holi, Eid, and Classic.
- * Includes Web Audio Celebration Chimes & Dynamic Festive Product Badges.
+ * Includes Web Audio Celebration Chimes, Festive Bottom Showcase Banners & Dynamic Product Badges.
  */
 
 const FESTIVE_THEMES = {
@@ -18,8 +18,11 @@ const FESTIVE_THEMES = {
     heroTitleAccent: "Holiday Magic.",
     heroSubtitle: "Celebrate the season of joy with handcrafted holiday cardigans, warm waffle scarves, and heirloom Christmas keepsakes.",
     colors: ["#C41E3A", "#165B33", "#D4AF37"],
-    animationTag: "3D Snowflakes, Baubles & Golden Bells",
-    desc: "Festive ruby red & evergreen pine palette, 3D tumbling multifaceted snowflakes, swaying golden baubles, ringing brass bells, and frosty snow flurries."
+    animationTag: "3D Snowflakes, Baubles & Golden Bells (Hero Top)",
+    desc: "Festive ruby red & evergreen pine palette, 3D tumbling multifaceted snowflakes, swaying golden baubles, and ringing brass bells strictly in the hero top section.",
+    bottomTitle: "Merry Christmas & Holiday Collection",
+    bottomSubtitle: "Celebrate the season of joy with warm handcrafted crochet sweaters, cozy waffle mufflers, and heirloom keepsakes.",
+    bottomCta: "Order Holiday Knits"
   },
   "diwali": {
     id: "diwali",
@@ -34,8 +37,11 @@ const FESTIVE_THEMES = {
     heroTitleAccent: "Festive Radiance.",
     heroSubtitle: "Illuminate your celebrations with auspicious handcrafted crochet creations, warm festive shawls, and luminous handmade treasures.",
     colors: ["#E65100", "#FFB300", "#6A1B9A"],
-    animationTag: "3D Glowing Diyas, Sky Lanterns & Petals",
-    desc: "Auspicious deep saffron, golden marigold & royal plum, with 3D floating clay Diyas, dynamic flickering flames, Akash Kandil sky lanterns, and rangoli petals."
+    animationTag: "3D Glowing Diyas, Sky Lanterns & Petals (Hero Top)",
+    desc: "Auspicious deep saffron, golden marigold & royal plum, with 3D floating clay Diyas, dynamic flickering flames, and Akash Kandil sky lanterns in hero top.",
+    bottomTitle: "Auspicious Handcrafted Diwali Gifts & Decor",
+    bottomSubtitle: "Illuminate your festive home with handmade crochet torans, auspicious festive shawls, and luminous handcrafted gifts.",
+    bottomCta: "Order Diwali Special"
   },
   "newyear": {
     id: "newyear",
@@ -50,8 +56,11 @@ const FESTIVE_THEMES = {
     heroTitleAccent: "Bespoke Elegance.",
     heroSubtitle: "Step into the new year wrapped in slow-stitched elegance, bespoke handcrafted knits, and celebratory bespoke creations.",
     colors: ["#D4AF37", "#0C1017", "#FFDF00"],
-    animationTag: "3D Aerial Fireworks & Metallic Confetti",
-    desc: "Cosmic midnight starlight black & 24K champagne gold theme, 3D perspective aerial fireworks with spherical starbursts, and spiraling metallic confetti ribbons."
+    animationTag: "3D Aerial Fireworks & Metallic Confetti (Hero Top)",
+    desc: "Cosmic midnight starlight black & 24K champagne gold theme, 3D perspective aerial fireworks with spherical starbursts in the hero top sky.",
+    bottomTitle: "Celebrate New Beginnings in Handcrafted Luxury",
+    bottomSubtitle: "Step into 2026 wrapped in bespoke slow-stitched elegance, artisanal knits, and celebratory bespoke creations.",
+    bottomCta: "Order New Year Drop"
   },
   "holi": {
     id: "holi",
@@ -66,8 +75,11 @@ const FESTIVE_THEMES = {
     heroTitleAccent: "Vibrant Crochet.",
     heroSubtitle: "Celebrate the spectrum of life with joyful handcrafted pieces, vibrant pastel gradients, and playful artisanal slow-stitches.",
     colors: ["#E91E63", "#00ACC1", "#FF9800"],
-    animationTag: "3D Volumetric Gulal Clouds & Splashes",
-    desc: "Radiant gulal magenta, turquoise & sun saffron palette with 3D swirling volumetric powder clouds and interactive color splashes."
+    animationTag: "3D Volumetric Gulal Clouds (Hero Top)",
+    desc: "Radiant gulal magenta, turquoise & sun saffron palette with 3D swirling volumetric powder clouds and interactive color splashes in the hero.",
+    bottomTitle: "Vibrant Handcrafted Splashes of Happiness",
+    bottomSubtitle: "Celebrate life's joyful colors with playful pastel granny squares, rainbow bucket hats, and artisanal slow-stitched pieces.",
+    bottomCta: "Order Holi Colors"
   },
   "eid-fitr": {
     id: "eid-fitr",
@@ -82,8 +94,11 @@ const FESTIVE_THEMES = {
     heroTitleAccent: "Crescent Blessings.",
     heroSubtitle: "Celebrate blessed Eid festivities with heirloom crochet garments, delicate modest dresses, and thoughtful handcrafted gift hampers.",
     colors: ["#0D6938", "#C59B27", "#2E7D32"],
-    animationTag: "3D Golden Crescent, Stars & Fanoos",
-    desc: "Sacred emerald green & radiant crescent gold with 3D metallic rotating crescent moon, swaying illuminated Arabic lanterns, and stardust constellations."
+    animationTag: "3D Golden Crescent, Stars & Fanoos (Hero Top)",
+    desc: "Sacred emerald green & radiant crescent gold with 3D metallic rotating crescent moon, swaying illuminated Arabic lanterns in hero top.",
+    bottomTitle: "Blessed Eid Mubarak Celebrations & Keepsakes",
+    bottomSubtitle: "Heirloom handcrafted garments, modest festive dresses, and delicate gift hampers woven with barakah & love.",
+    bottomCta: "Order Eid Mubarak Piece"
   },
   "eid-adha": {
     id: "eid-adha",
@@ -98,8 +113,11 @@ const FESTIVE_THEMES = {
     heroTitleAccent: "Sacred Celebrations.",
     heroSubtitle: "Honor the sacred celebration with bespoke artisan shawls, warm winter cardigans, and cherished handcrafted family heirlooms.",
     colors: ["#153B64", "#D4AF37", "#B8860B"],
-    animationTag: "3D 8-Pointed Rub-el-Hizb & Moroccan Lanterns",
-    desc: "Majestic sapphire blue & Moroccan antique gold with 3D rotating geometric Islamic stars, illuminated filigree lanterns, and sacred bokeh."
+    animationTag: "3D 8-Pointed Rub-el-Hizb & Moroccan Lanterns (Hero Top)",
+    desc: "Majestic sapphire blue & Moroccan antique gold with 3D rotating geometric Islamic stars, illuminated filigree lanterns in hero top.",
+    bottomTitle: "Sacred Devotion & Imperial Handcrafted Knits",
+    bottomSubtitle: "Honor the sacred celebration with bespoke artisan shawls, warm winter cardigans, and treasured handcrafted heirlooms.",
+    bottomCta: "Order Eid-ul-Adha Special"
   },
   "default": {
     id: "default",
@@ -114,8 +132,11 @@ const FESTIVE_THEMES = {
     heroTitleAccent: "Bespoke Crochet.",
     heroSubtitle: "Welcome to The Crochet Boutique! From heirloom baby sets to chunky granny square totes — every piece is individually handcrafted just for you.",
     colors: ["#C86D76", "#537566", "#D7993E"],
-    animationTag: "3D Rose Petals",
-    desc: "Cozy artisanal pastel dusty rose, sage green & warm cream aesthetic with soft slow-floating cherry blossom petals."
+    animationTag: "3D Rose Petals (Hero Top)",
+    desc: "Cozy artisanal pastel dusty rose, sage green & warm cream aesthetic with soft slow-floating cherry blossom petals in the hero top.",
+    bottomTitle: "Slow-Crafted with Patience, Love & Warmth",
+    bottomSubtitle: "From heirloom baby sets to custom color block tops — every single piece is individually handcrafted just for you in Hyderabad.",
+    bottomCta: "Request Custom Piece"
   }
 };
 
@@ -170,36 +191,30 @@ const FestiveAudio = {
     const t = this.ctx.currentTime;
 
     if (themeId === "christmas") {
-      // Jingle bells chord progression: E5, G5, E6
       this.playNote(659.25, t, 0.4, "triangle", 0.18);
       this.playNote(783.99, t + 0.12, 0.45, "triangle", 0.18);
       this.playNote(1318.51, t + 0.25, 0.7, "sine", 0.2);
     } else if (themeId === "diwali") {
-      // Warm resonant sitar/tanpura harmonic arpeggio: C4, G4, C5, D5
       this.playNote(261.63, t, 0.6, "triangle", 0.2);
       this.playNote(392.00, t + 0.12, 0.6, "sine", 0.18);
       this.playNote(523.25, t + 0.24, 0.7, "sine", 0.2);
       this.playNote(587.33, t + 0.36, 0.9, "triangle", 0.15);
     } else if (themeId === "newyear") {
-      // Celebration grand fanfare: C5, E5, G5, C6
       this.playNote(523.25, t, 0.35, "sine", 0.2);
       this.playNote(659.25, t + 0.1, 0.35, "sine", 0.22);
       this.playNote(783.99, t + 0.2, 0.4, "sine", 0.24);
       this.playNote(1046.50, t + 0.32, 0.9, "triangle", 0.28);
     } else if (themeId === "holi") {
-      // Playful upbeat marimba ripple: F5, A5, C6, E6
       this.playNote(698.46, t, 0.25, "triangle", 0.2);
       this.playNote(880.00, t + 0.08, 0.25, "triangle", 0.2);
       this.playNote(1046.50, t + 0.16, 0.3, "sine", 0.22);
       this.playNote(1318.51, t + 0.24, 0.6, "sine", 0.2);
     } else if (themeId === "eid-fitr" || themeId === "eid-adha") {
-      // Serene singing bowl & celestial wind chime: D4, A4, F#5, A5
       this.playNote(293.66, t, 0.8, "sine", 0.22);
       this.playNote(440.00, t + 0.15, 0.85, "sine", 0.2);
       this.playNote(739.99, t + 0.3, 0.9, "sine", 0.18);
       this.playNote(880.00, t + 0.45, 1.2, "sine", 0.2);
     } else {
-      // Classic boutique soft bell: C5, G5
       this.playNote(523.25, t, 0.4, "sine", 0.15);
       this.playNote(783.99, t + 0.15, 0.6, "sine", 0.15);
     }
@@ -266,12 +281,30 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false,
   // 4. Update Product Card Festive Badges
   updateProductFestiveBadges(theme);
 
-  // 5. Update 3D Canvas Animation Layer
+  // 5. Update 3D Canvas Animation Layer (Confined strictly to Hero Top Section)
   if (window.Festive3DEngine) {
     window.Festive3DEngine.setTheme(theme.id);
   }
 
-  // 6. Update Quick Navbar Theme Pill if present
+  // 6. Transform Festive Bottom Showcase Banner
+  const bottomEmblem = document.getElementById("festiveBottomEmblem");
+  if (bottomEmblem) {
+    bottomEmblem.innerHTML = `<i class="fas ${theme.icon}"></i>`;
+  }
+  const bottomTitle = document.getElementById("festiveBottomTitle");
+  if (bottomTitle && theme.bottomTitle) {
+    bottomTitle.textContent = theme.bottomTitle;
+  }
+  const bottomSubtitle = document.getElementById("festiveBottomSubtitle");
+  if (bottomSubtitle && theme.bottomSubtitle) {
+    bottomSubtitle.textContent = theme.bottomSubtitle;
+  }
+  const bottomCta = document.getElementById("festiveBottomCta");
+  if (bottomCta && theme.bottomCta) {
+    bottomCta.innerHTML = `<i class="fas fa-gift"></i> ${theme.bottomCta}`;
+  }
+
+  // 7. Update Quick Navbar Theme Pill if present
   const navThemeLabel = document.getElementById("navThemeLabel");
   const navThemeIcon = document.getElementById("navThemeIcon");
   if (navThemeLabel) {
@@ -281,7 +314,7 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false,
     navThemeIcon.className = `fas ${theme.icon}`;
   }
 
-  // 7. Update Active State in Modal Theme Cards
+  // 8. Update Active State in Modal Theme Cards
   const cards = document.querySelectorAll(".theme-card");
   cards.forEach(card => {
     const cid = card.getAttribute("data-theme-id");
@@ -292,18 +325,18 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false,
     }
   });
 
-  // 8. Play Optional Web Audio Festive Chime
+  // 9. Play Optional Web Audio Festive Chime
   if (options.playAudio) {
     FestiveAudio.playFestiveChime(theme.id);
   }
 
-  // 9. Persist to LocalStorage
+  // 10. Persist to LocalStorage
   if (options.persist) {
     localStorage.setItem("crochet_active_theme", theme.id);
   }
 
   if (options.showToast && typeof showToast === "function") {
-    showToast(`✨ Applied "${theme.name}" Theme & 3D Animations!`);
+    showToast(`✨ Applied "${theme.name}" Theme!`);
   }
 }
 
