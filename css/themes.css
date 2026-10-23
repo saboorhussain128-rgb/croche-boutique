@@ -1022,7 +1022,7 @@
 .nav-theme-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   padding: 6px 14px;
   border-radius: var(--radius-full);
   background: linear-gradient(135deg, #FFF0F5, #FFF9E6);
@@ -1039,6 +1039,118 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(215, 153, 62, 0.35);
   background: linear-gradient(135deg, #FFE5EE, #FFF2D1);
+}
+
+.nav-theme-icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   AUTHENTIC INDIAN CLAY DIYA (DEEPAVALI) STYLING & FLICKER ANIMATION
+   ========================================================================== */
+.diya-svg-icon {
+  display: inline-block;
+  vertical-align: -0.18em;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 1px 2px rgba(191, 54, 12, 0.35));
+}
+
+@keyframes diyaFlameFlicker {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 3px rgba(255, 179, 0, 0.85));
+  }
+  50% {
+    transform: scale(1.08, 1.14) translateY(-0.7px);
+    filter: drop-shadow(0 0 8px rgba(255, 143, 0, 0.98));
+  }
+}
+
+.diya-flame-group {
+  transform-origin: 12px 10px;
+  animation: diyaFlameFlicker 1.8s ease-in-out infinite;
+}
+
+.nav-theme-pill:hover .diya-svg-icon,
+.theme-card:hover .diya-svg-icon,
+.festive-bottom-emblem:hover .diya-svg-icon {
+  transform: scale(1.15);
+}
+
+/* Theme-Specific Quick Navbar Theme Pill Customization */
+[data-theme="diwali"] .nav-theme-pill {
+  background: linear-gradient(135deg, #FFF8E1, #FFE0B2);
+  border: 1.5px solid #FFB300;
+  color: #BF360C;
+  box-shadow: 0 2px 10px rgba(255, 179, 0, 0.28);
+}
+[data-theme="diwali"] .nav-theme-pill:hover {
+  background: linear-gradient(135deg, #FFF3D0, #FFCC80);
+  border-color: #E65100;
+  color: #8D2700;
+  box-shadow: 0 4px 16px rgba(230, 81, 0, 0.38);
+}
+
+[data-theme="christmas"] .nav-theme-pill {
+  background: linear-gradient(135deg, #FCE8EB, #EAF4EE);
+  border: 1.5px solid #C41E3A;
+  color: #C41E3A;
+  box-shadow: 0 2px 8px rgba(196, 30, 58, 0.2);
+}
+[data-theme="christmas"] .nav-theme-pill:hover {
+  background: linear-gradient(135deg, #FAD1D8, #D8EADF);
+  box-shadow: 0 4px 14px rgba(196, 30, 58, 0.32);
+}
+
+[data-theme="newyear"] .nav-theme-pill {
+  background: linear-gradient(135deg, #1C2333, #0C1017);
+  border: 1.5px solid #D4AF37;
+  color: #FFDF00;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25);
+}
+[data-theme="newyear"] .nav-theme-pill:hover {
+  background: linear-gradient(135deg, #262F44, #141B26);
+  border-color: #FFE066;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+}
+
+[data-theme="holi"] .nav-theme-pill {
+  background: linear-gradient(135deg, #FFEBEE, #E0F7FA);
+  border: 1.5px solid #E91E63;
+  color: #C2185B;
+  box-shadow: 0 2px 8px rgba(233, 30, 99, 0.22);
+}
+[data-theme="holi"] .nav-theme-pill:hover {
+  background: linear-gradient(135deg, #FFD9E2, #CCF2F6);
+  box-shadow: 0 4px 14px rgba(233, 30, 99, 0.32);
+}
+
+[data-theme="eid-fitr"] .nav-theme-pill {
+  background: linear-gradient(135deg, #E8F5ED, #FDF7E7);
+  border: 1.5px solid #0D6938;
+  color: #0D6938;
+  box-shadow: 0 2px 8px rgba(13, 105, 56, 0.2);
+}
+[data-theme="eid-fitr"] .nav-theme-pill:hover {
+  background: linear-gradient(135deg, #D4EDDE, #F8E8C2);
+  border-color: #C59B27;
+  box-shadow: 0 4px 14px rgba(13, 105, 56, 0.3);
+}
+
+[data-theme="eid-adha"] .nav-theme-pill {
+  background: linear-gradient(135deg, #E6EEF8, #FAF2DC);
+  border: 1.5px solid #153B64;
+  color: #153B64;
+  box-shadow: 0 2px 8px rgba(21, 59, 100, 0.2);
+}
+[data-theme="eid-adha"] .nav-theme-pill:hover {
+  background: linear-gradient(135deg, #D0E0F3, #F4E5BD);
+  border-color: #D4AF37;
+  box-shadow: 0 4px 14px rgba(21, 59, 100, 0.3);
 }
 
 @media (max-width: 768px) {

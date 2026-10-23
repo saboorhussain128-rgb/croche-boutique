@@ -29,10 +29,10 @@ const FESTIVE_THEMES = {
     name: "Diwali (Deepavali)",
     alias: "diwali",
     tag: "Festival of Lights",
-    icon: "fa-sun",
+    icon: "diya",
     badge: "🪔 Shubh Diwali",
     announcement: "🪔 Happy Diwali & Festive Season • Handcrafted Gifts of Love & Light • Worldwide Shipping",
-    heroPill: "🪔 Handcrafted with Light • Auspicious Festival Gifts",
+    heroPill: "Handcrafted with Light • Auspicious Festival Gifts",
     heroTitlePrefix: "Golden Threads, Warm Moments & ",
     heroTitleAccent: "Festive Radiance.",
     heroSubtitle: "Illuminate your celebrations with auspicious handcrafted crochet creations, warm festive shawls, and luminous handmade treasures.",
@@ -231,6 +231,43 @@ window.removeProductFestiveBadges = removeProductFestiveBadges;
 window.FESTIVE_THEMES = FESTIVE_THEMES;
 
 /**
+ * Render authentic icon HTML for a festive theme.
+ * For Diwali (Deepavali), renders an authentic handcrafted glowing clay Diya SVG.
+ * For other festive themes, renders the corresponding FontAwesome icon.
+ */
+function renderThemeIcon(themeId, size = "1.15em", extraClass = "") {
+  if (themeId === "diwali" || themeId === "diya") {
+    return `<svg class="diya-svg-icon ${extraClass}" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diwali Diya Lamp" style="width:${size}; height:${size}; vertical-align: -0.18em; display: inline-block; overflow: visible;">
+      <defs>
+        <linearGradient id="navDiyaFlame" x1="12" y1="1" x2="12" y2="13" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFF9C4"/>
+          <stop offset="30%" stop-color="#FFD54F"/>
+          <stop offset="70%" stop-color="#FF8F00"/>
+          <stop offset="100%" stop-color="#E65100"/>
+        </linearGradient>
+        <linearGradient id="navDiyaBowl" x1="2" y1="13" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FF7043"/>
+          <stop offset="45%" stop-color="#E65100"/>
+          <stop offset="100%" stop-color="#BF360C"/>
+        </linearGradient>
+      </defs>
+      <g class="diya-flame-group">
+        <circle cx="12" cy="7.5" r="5" fill="#FFB300" opacity="0.28"/>
+        <path d="M12 1.5 C10.4 4.2 8 6.8 8 9.6 A4 4 0 0 0 16 9.6 C16 6.8 13.6 4.2 12 1.5 Z" fill="url(#navDiyaFlame)"/>
+        <path d="M12 4.2 C11.2 5.8 10 7.2 10 9.2 A2 2 0 0 0 14 9.2 C14 7.2 12.8 5.8 12 4.2 Z" fill="#FFFFFF" opacity="0.95"/>
+      </g>
+      <path d="M2.2 13.6 C3.1 18.2 7.1 21.6 12 21.6 C16.9 21.6 20.9 18.2 21.8 13.6 C19.2 15.3 15.8 16.2 12 16.2 C8.2 16.2 4.8 15.3 2.2 13.6 Z" fill="url(#navDiyaBowl)"/>
+      <ellipse cx="12" cy="13.6" rx="8.8" ry="2.2" fill="#D84315"/>
+      <ellipse cx="12" cy="13.6" rx="7.2" ry="1.4" fill="#FFA000"/>
+      <path d="M9.4 21.4 C9.4 22.3 10.5 23 12 23 C13.5 23 14.6 22.3 14.6 21.4 Z" fill="#A72D00"/>
+    </svg>`;
+  }
+  const theme = FESTIVE_THEMES[themeId] || FESTIVE_THEMES["default"];
+  return `<i class="fas ${theme.icon} ${extraClass}"></i>`;
+}
+window.renderThemeIcon = renderThemeIcon;
+
+/**
  * Apply a Festive Theme across the entire website
  * @param {string} themeId - Theme identifier
  * @param {object} options - Options { persist: boolean, showToast: boolean, playAudio: boolean }
@@ -251,7 +288,8 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false,
   // 3. Transform Hero Section
   const heroPill = document.querySelector(".hero-pill");
   if (heroPill) {
-    heroPill.innerHTML = `<i class="fas ${theme.icon}"></i> ${theme.heroPill}`;
+    const cleanHeroText = theme.heroPill.replace(/^[🪔🎄✨🎨🌙🕌🌸]\s*/, "");
+    heroPill.innerHTML = `${renderThemeIcon(theme.id, "1.15em")} ${cleanHeroText}`;
   }
 
   const heroHeading = document.querySelector(".hero-content h1");
@@ -275,7 +313,7 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false,
   // 6. Transform Festive Bottom Showcase Banner
   const bottomEmblem = document.getElementById("festiveBottomEmblem");
   if (bottomEmblem) {
-    bottomEmblem.innerHTML = `<i class="fas ${theme.icon}"></i>`;
+    bottomEmblem.innerHTML = renderThemeIcon(theme.id, "2.2rem");
   }
   const bottomTitle = document.getElementById("festiveBottomTitle");
   if (bottomTitle && theme.bottomTitle) {
@@ -297,7 +335,7 @@ function applyFestiveTheme(themeId, options = { persist: true, showToast: false,
     navThemeLabel.textContent = theme.name;
   }
   if (navThemeIcon) {
-    navThemeIcon.className = `fas ${theme.icon}`;
+    navThemeIcon.innerHTML = renderThemeIcon(theme.id, "1.25em");
   }
 
   // 8. Update Active State in Modal Theme Cards
@@ -345,7 +383,7 @@ function renderFestiveThemeCards() {
       <div class="theme-card-header">
         <div class="theme-card-title-group">
           <div class="theme-card-icon" style="background: ${theme.colors[0]}20; color: ${theme.colors[0]};">
-            <i class="fas ${theme.icon}"></i>
+            ${renderThemeIcon(theme.id, "1.5rem")}
           </div>
           <div>
             <div class="theme-card-name">${theme.name}</div>
